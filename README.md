@@ -1,4 +1,4 @@
-# ( 별책부록 )
+# 북빌리지 📙
 
 ```java
 도서대여프로그램
@@ -48,4 +48,5 @@
  
  ---
  ## *DB설계*
+ <img width="1186" alt="bookstore" src="https://user-images.githubusercontent.com/78000536/146110477-2fe9aae2-f03b-4ef0-a22e-c1b8ea6ea3dd.png">
  
