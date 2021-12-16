@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Main from "@/views/Main";
-import Login from "@/views/common/Login";
+import Login from "@/views/common/login/Login";
 
 // 1. Vue - VueRouter 연결
 Vue.use(VueRouter);

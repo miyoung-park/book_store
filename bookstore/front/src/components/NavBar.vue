@@ -3,7 +3,7 @@
   <v-navigation-drawer
       style="background: #E0F2F1"
       permanent
-
+      expand-on-hover
   > <!--expand-on-hover-->
     <!-- 어떤 계정이 로그인 했느냐에 따라 정보 변경-->
     <v-list-item v-if="info.user != ''">
@@ -83,28 +83,28 @@ export default {
       items: [
         { title: '로그인', icon: 'mdi-account-circle', url: '/login' },
         // test
-        { title: '고객관리', icon: 'mdi-account-circle', url:'/admin/customers' },
-        { title: '도서관리', icon: 'mdi-book', url:'/admin/manage/books' },
-        { title: '대여관리', icon: 'mdi-book-multiple', url:'/admin/rentals' },
+        { title: '고객관리', icon: 'mdi-account-circle', url:'/admin/list/customers' },
+        { title: '도서관리', icon: 'mdi-book', url:'/admin/list/books' },
+        { title: '대여관리', icon: 'mdi-book-multiple', url:'/admin/list/rentals' },
         { title: '프로필', icon: 'mdi-account-settings' , url:'/customer/detail'},
         { title: '포인트관리', icon: 'mdi-credit-card-multiple' , url:'/customer/point'},
-        { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/books'}
+        { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/list/rental'}
       ]
     }
   },
   methods: {
     adminLogin(){
       this.items =  [
-        { title: '고객관리', icon: 'mdi-account-circle', url:'/admin/customers' },
-        { title: '도서관리', icon: 'mdi-book', url:'/admin/books' },
-        { title: '대여관리', icon: 'mdi-book-multiple', url:'/admin/rentals' },
+        { title: '고객관리', icon: 'mdi-account-circle', url:'/admin/list/customers' },
+        { title: '도서관리', icon: 'mdi-book', url:'/admin/list/books' },
+        { title: '대여관리', icon: 'mdi-book-multiple', url:'/admin/list/rentals' },
                     ]
     },
     customerLogin(){
       this.items =  [
         { title: '프로필', icon: 'mdi-account-settings' , url:'/customer/detail'},
         { title: '포인트관리', icon: 'mdi-credit-card-multiple' , url:'/customer/point'},
-        { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/rental'}
+        { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/list/rental'}
       ]
     },
   }
