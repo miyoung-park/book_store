@@ -1,0 +1,64 @@
+<template>
+  <div class="login_section">
+    <div class="login_form">
+        <v-text-field
+            label="아이디"
+            :rules="idRules"
+            hide-details="auto"
+        ></v-text-field>
+      <v-text-field
+          label="비밀번호"
+          :rules="pwRules"
+          hide-details="auto"
+      ></v-text-field>
+    </div>
+    <div class="login_btn">
+      <v-btn class="ma-2"
+             style="background-color: #E6EE9C"
+      >사용자 로그인</v-btn>
+      <v-btn class="ma-2"
+             style="background-color: darkseagreen"
+      >관리자 로그인</v-btn>
+    </div>
+  </div>
+</template>
+
+<script>
+export default {
+  name: "Login",
+  data(){
+    return {
+      loginObj : {
+        loginId: '',
+        loginPw: '',
+      },
+      idRules: [ value => !!value || '아이디를 입력하세요.']
+      ,
+      pwRules: [ value => !!value || '비밀번호를 입력하세요.']
+    }
+  }
+}
+</script>
+
+<style scoped>
+.login_section{
+  width: 100%;
+  height: 500px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+}
+.login_form {
+  width: 400px;
+  margin-bottom: 50px;
+}
+.login_btn{
+  display: flex;
+  flex-direction: column;
+}
+button {
+  background-color: darkslateblue;
+}
+</style>
