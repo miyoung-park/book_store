@@ -1,7 +1,8 @@
 # 북빌리지 📙
 
 ```java
-도서대여프로그램
+모든 Book을 빌릴 수 있는 북빌리지,
+도서 대여 시스템
 ```
 ---
 ## *개발환경*
@@ -48,5 +49,5 @@
  
  ---
  ## *DB설계*
- <img width="1186" alt="bookstore" src="https://user-images.githubusercontent.com/78000536/146110477-2fe9aae2-f03b-4ef0-a22e-c1b8ea6ea3dd.png">
+ <img width="919" alt="bookvillage" src="https://user-images.githubusercontent.com/78000536/146476739-cddd6936-e642-4db6-b580-962a2c523e1e.png">
  
