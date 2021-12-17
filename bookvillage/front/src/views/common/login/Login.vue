@@ -15,10 +15,7 @@
     <div class="login_btn">
       <v-btn class="ma-2"
              style="background-color: #E6EE9C"
-      >사용자 로그인</v-btn>
-      <v-btn class="ma-2"
-             style="background-color: darkseagreen"
-      >관리자 로그인</v-btn>
+      >로그인</v-btn>
     </div>
   </div>
 </template>
@@ -52,11 +49,7 @@ export default {
 }
 .login_form {
   width: 400px;
-  margin-bottom: 50px;
-}
-.login_btn{
-  display: flex;
-  flex-direction: column;
+  margin-bottom: 30px;
 }
 button {
   background-color: darkslateblue;

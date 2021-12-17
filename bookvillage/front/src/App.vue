@@ -31,8 +31,6 @@ export default {
 }
 .main_section {
   width: 100%;
-  margin-left: 10px;
 }
-
 </style>
 

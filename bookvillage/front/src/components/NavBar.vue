@@ -3,22 +3,34 @@
   <v-navigation-drawer
       style="background: #E0F2F1"
       permanent
-      expand-on-hover
+
   > <!--expand-on-hover-->
     <!-- 어떤 계정이 로그인 했느냐에 따라 정보 변경-->
-    <v-list-item v-if="info.user != ''">
+    <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="text-h6">
           {{info.name}}
+          <v-btn
+              class="logout_btn"
+              fab
+              dark
+              small
+              color="primary"
+          >
+            <v-icon dark>
+              mdi-minus
+            </v-icon>
+          </v-btn>
         </v-list-item-title>
         <v-list-item-subtitle>
           {{info.user}}
         </v-list-item-subtitle>
       </v-list-item-content>
     </v-list-item>
+    <v-divider></v-divider>
+
 
     <!-- 어떤 계정이 로그인했느냐에 따라 메뉴 변경-->
-    <v-divider v-if="info.user != ''"></v-divider>
     <v-list dense nav >
       <v-list-item
           v-for="item in items"
@@ -53,16 +65,6 @@
         </v-list-item-content>
       </v-list-item>
     </v-list>
-
-    <!-- 로그인시 로그아웃 버튼 show-->
-    <template v-slot:append v-if="info.user != ''">
-      <div class="pa-2">
-        <v-btn block>
-          <v-icon>mdi-account-circle</v-icon>
-          Logout
-        </v-btn>
-      </div>
-    </template>
   </v-navigation-drawer>
   </div>
 </template>
@@ -73,12 +75,11 @@ export default {
   data () {
     return {
       info: {
-              name : ''
-            , user : ''
+              name : 'miyoung'
+            , user : 'aldud1529'
       },
       defaultItems: [
         { title: '도서검색', icon: 'mdi-magnify', url: '/' },
-        { title: '도서대여', icon: 'mdi-book-plus', url: '/customer/rental' },
       ],
       items: [
         { title: '로그인', icon: 'mdi-account-circle', url: '/login' },
@@ -87,7 +88,7 @@ export default {
         { title: '도서관리', icon: 'mdi-book', url:'/admin/list/books' },
         { title: '대여관리', icon: 'mdi-book-multiple', url:'/admin/list/rentals' },
         { title: '프로필', icon: 'mdi-account-settings' , url:'/customer/detail'},
-        { title: '포인트관리', icon: 'mdi-credit-card-multiple' , url:'/customer/point'},
+        { title: '포인트관리', icon: 'mdi-credit-card-multiple' , url:'/customer/list/point'},
         { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/list/rental'}
       ]
     }
@@ -112,5 +113,13 @@ export default {
 </script>
 
 <style scoped>
-
+.nav_section {
+  height: 100%;
+}
+.logout_btn{
+  width: 20px;
+  height: 20px !important;
+  font-size: x-small !important;
+  font-family: 'Gowun Dodum', sans-serif;
+}
 </style>

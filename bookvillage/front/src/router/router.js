@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Main from "@/views/Main";
+import ListBooks from "@/views/book/ListBooks";
 import Login from "@/views/common/login/Login";
 
 // 1. Vue - VueRouter 연결
@@ -10,12 +10,13 @@ Vue.use(VueRouter);
 const routes = [
                     {
                         path: '/',   // url 경로
-                        component : Main,// 매핑하고 싶은 컴포넌트(import필요!)
+                        component : ListBooks // 매핑하고 싶은 컴포넌트(import필요!)
                     },
                     {
                         path: '/login',
                         component: Login
-                    }
+                    },
+
                 ]
 
 // 3. router 인스턴스 생성
