@@ -4,21 +4,23 @@
       <Header/>
     </header>
       <div class="whole_section">
-        <NavBar/>
         <div class="main_section">
-          <router-view></router-view>
+          <router-view/>
         </div>
       </div>
+    <footer>
+      <Footer/>
+    </footer>
   </v-app>
 </template>
 <script>
 import Header from "@/components/Header";
-import NavBar from "@/components/NavBar";
+import Footer from "@/components/Footer";
 export default {
   name: 'App',
   components: {
     Header,
-    NavBar
+    Footer
   }
 };
 </script>

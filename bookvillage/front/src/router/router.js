@@ -1,21 +1,62 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import ListBooks from "@/views/book/ListBooks";
+import Admin from "@/components/user/admin/Admin";
+import Customer from "@/components/user/customer/Customer";
 import Login from "@/views/common/login/Login";
-
+import DetailBook from "@/views/book/DetailBook";
+import ListRentals from "@/views/rental/ListRentals";//
+import Main from "@/views/Main";
 // 1. Vue - VueRouter 연결
 Vue.use(VueRouter);
 
-// 2. routes 정의
+/*
+const bookProps = (route) => {
+    const props =  {}
+    props.query = route.query;
+    return props;
+}; */
+
+
 const routes = [
-                    {
-                        path: '/',   // url 경로
-                        component : ListBooks // 매핑하고 싶은 컴포넌트(import필요!)
-                    },
-                    {
-                        path: '/login',
-                        component: Login
-                    },
+                {
+                    path:'/',
+                    component: Main,
+                    children:[
+                        {
+                            path: 'login',
+                            component: Login
+                        },
+                        {
+                            path: 'list/book',
+                            component: ListBooks
+                        },
+                        {
+                            path: 'book/detail/:bookSeq',
+                            component: DetailBook
+                        },
+                        {
+                            path: '/admin',
+                            component: Admin,
+                            children :[
+                                {
+                                    path: '/list/books',
+                                    component: ListBooks
+                                }
+                            ]
+                        },
+                        {
+                            path: '/customer',
+                            component: Customer,
+                            children: [
+                                {
+                                    path: '/list/rentals',
+                                    component: ListRentals
+                                }
+                            ]
+                        }
+                    ]
+                },
 
                 ]
 

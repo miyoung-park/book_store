@@ -3,31 +3,20 @@
   <v-navigation-drawer
       style="background: #E0F2F1"
       permanent
-
   > <!--expand-on-hover-->
     <!-- 어떤 계정이 로그인 했느냐에 따라 정보 변경-->
-    <v-list-item>
+    <v-list-item v-if="info.user != ''">
       <v-list-item-content>
         <v-list-item-title class="text-h6">
           {{info.name}}
-          <v-btn
-              class="logout_btn"
-              fab
-              dark
-              small
-              color="primary"
-          >
-            <v-icon dark>
-              mdi-minus
-            </v-icon>
-          </v-btn>
         </v-list-item-title>
         <v-list-item-subtitle>
           {{info.user}}
         </v-list-item-subtitle>
       </v-list-item-content>
+      <button class="logout_btn" small> 로그아웃</button>
     </v-list-item>
-    <v-divider></v-divider>
+    <v-divider v-if="info.user != ''"></v-divider>
 
 
     <!-- 어떤 계정이 로그인했느냐에 따라 메뉴 변경-->
@@ -71,7 +60,7 @@
 
 <script>
 export default {
-  name: "NavBar",
+  name: "CustomerNavBar",
   data () {
     return {
       info: {
@@ -84,9 +73,6 @@ export default {
       items: [
         { title: '로그인', icon: 'mdi-account-circle', url: '/login' },
         // test
-        { title: '고객관리', icon: 'mdi-account-circle', url:'/admin/list/customers' },
-        { title: '도서관리', icon: 'mdi-book', url:'/admin/list/books' },
-        { title: '대여관리', icon: 'mdi-book-multiple', url:'/admin/list/rentals' },
         { title: '프로필', icon: 'mdi-account-settings' , url:'/customer/detail'},
         { title: '포인트관리', icon: 'mdi-credit-card-multiple' , url:'/customer/list/point'},
         { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/list/rental'}
@@ -117,9 +103,11 @@ export default {
   height: 100%;
 }
 .logout_btn{
-  width: 20px;
-  height: 20px !important;
+  width: 55px;
+  height: 25px !important;
   font-size: x-small !important;
+  background-color: darkseagreen;
+  border-radius: 10px;
   font-family: 'Gowun Dodum', sans-serif;
 }
 </style>

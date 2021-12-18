@@ -15,7 +15,10 @@
     <div class="login_btn">
       <v-btn class="ma-2"
              style="background-color: #E6EE9C"
-      >로그인</v-btn>
+      >사용자로그인</v-btn>
+      <v-btn class="ma-2"
+             style="background-color: darkseagreen"
+      >관리자로그인</v-btn>
     </div>
   </div>
 </template>
