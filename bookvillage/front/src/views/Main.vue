@@ -1,9 +1,6 @@
 <template>
-  <div>
     <router-view/>
-  </div>
 </template>
-
 <script>
 export default {
   name: "Main"
@@ -11,5 +8,4 @@ export default {
 </script>
 
 <style scoped>
-
 </style>

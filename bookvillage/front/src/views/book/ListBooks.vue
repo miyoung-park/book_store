@@ -70,6 +70,7 @@ export default {
 <style scoped>
 .content{
   width: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -77,8 +78,10 @@ export default {
 }
 .search_section {
   width: 40%;
+
 }
 .table_section {
- width: 80%;
+  width: 80%;
+  margin-top: 50px;
 }
 </style>

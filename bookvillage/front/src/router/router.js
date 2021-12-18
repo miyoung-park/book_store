@@ -40,7 +40,7 @@ const routes = [
                             component: Admin,
                             children :[
                                 {
-                                    path: '/list/books',
+                                    path: 'list/books',
                                     component: ListBooks
                                 }
                             ]

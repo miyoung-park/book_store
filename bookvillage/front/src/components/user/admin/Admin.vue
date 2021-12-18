@@ -1,12 +1,8 @@
 <template>
-  <div>
-    <div class="whole_section">
-      <AdminNavBar/>
       <div class="main_section">
+        <AdminNavBar/>
         <router-view/>
-      </div>
     </div>
-  </div>
 </template>
 
 <script>
@@ -20,8 +16,9 @@ export default {
 </script>
 
 <style scoped>
-div {
+.main_section {
   width: 100%;
   height: 100%;
+  display: flex;
 }
 </style>

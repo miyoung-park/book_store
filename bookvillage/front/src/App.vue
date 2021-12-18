@@ -3,11 +3,9 @@
     <header>
       <Header/>
     </header>
-      <div class="whole_section">
-        <div class="main_section">
-          <router-view/>
-        </div>
-      </div>
+    <div class="whole_section">
+        <router-view/>
+    </div>
     <footer>
       <Footer/>
     </footer>
@@ -31,8 +29,4 @@ export default {
   display: flex;
   font-family: 'Gowun Dodum', sans-serif;
 }
-.main_section {
-  width: 100%;
-}
 </style>
-
