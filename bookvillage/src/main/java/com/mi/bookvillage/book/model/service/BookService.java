@@ -1,10 +1,20 @@
 package com.mi.bookvillage.book.model.service;
 
+import com.mi.bookvillage.book.model.dao.BookDAO;
 import com.mi.bookvillage.book.model.vo.BookVO;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-public interface BookService {
+@Service
+public class BookService {
 
-    List<BookVO> getBookList();
+    private BookDAO bookDao;
+
+    public BookService(BookDAO bookDao){
+        this.bookDao = bookDao;
+    }
+    public List<BookVO> getBookList() {
+        return bookDao.getBookList();
+    }
 }

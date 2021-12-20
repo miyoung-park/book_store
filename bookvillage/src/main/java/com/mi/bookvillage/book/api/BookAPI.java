@@ -1,4 +1,4 @@
-package com.mi.bookvillage.book.controller;
+package com.mi.bookvillage.book.api;
 
 import com.mi.bookvillage.book.model.service.BookService;
 import com.mi.bookvillage.book.model.vo.BookVO;
