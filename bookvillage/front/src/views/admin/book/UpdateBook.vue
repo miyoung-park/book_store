@@ -1,11 +1,16 @@
 <template>
-    <router-view/>
+  <div> updateBook</div>
+
+
 </template>
+
 <script>
 export default {
-  name: "Main"
+  name: "UpdateBook",
+
 }
 </script>
 
 <style scoped>
+
 </style>

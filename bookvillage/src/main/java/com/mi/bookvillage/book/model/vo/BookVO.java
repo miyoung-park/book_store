@@ -4,6 +4,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Date;
+
 @Getter @Setter
 @NoArgsConstructor
 public class BookVO {
@@ -12,8 +14,8 @@ public class BookVO {
     private String bookTitle;
     private String bookPrice;
     private String bookRentalFee;
-    private int bookRentalPeriod;
     private String bookMemo;
+    private String bookRegDt;
 
 
 }

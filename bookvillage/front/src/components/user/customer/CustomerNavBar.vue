@@ -8,10 +8,10 @@
     <v-list-item v-if="info.user != ''">
       <v-list-item-content>
         <v-list-item-title class="text-h6">
-          {{info.name}}
+          {{info.userId}}
         </v-list-item-title>
         <v-list-item-subtitle>
-          {{info.user}}
+          {{info.userName}}
         </v-list-item-subtitle>
       </v-list-item-content>
       <button class="logout_btn" small> 로그아웃</button>
@@ -20,40 +20,26 @@
 
 
     <!-- 어떤 계정이 로그인했느냐에 따라 메뉴 변경-->
-    <v-list dense nav >
-      <v-list-item
-          v-for="item in items"
-          :key="item.title"
-          :to="item.url"
-          link
+    <v-list shaped>
+      <v-list-item-group
+          color="primary"
       >
-        <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+        <v-list-item
+            v-for="(item, i) in items"
+            :key="i"
+            :to="item.url"
+        >
+          <v-list-item-icon>
+            <v-icon v-text="item.icon"></v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
     </v-list>
 
-    <v-divider></v-divider>
 
-    <!-- default 로 가져가는 도서 검색 / 대여 파트-->
-    <v-list dense nav>
-      <v-list-item
-          v-for="defaultItem in defaultItems"
-          :key="defaultItem.title"
-          :to="defaultItem.url"
-          link
-      >
-        <v-list-item-icon>
-          <v-icon>{{ defaultItem.icon }}</v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>{{ defaultItem.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
   </v-navigation-drawer>
   </div>
 </template>
@@ -64,36 +50,18 @@ export default {
   data () {
     return {
       info: {
-              name : 'miyoung'
-            , user : 'aldud1529'
+              userId : 'id'
+            , userName : 'name'
       },
-      defaultItems: [
-        { title: '도서검색', icon: 'mdi-magnify', url: '/' },
-      ],
       items: [
-        { title: '로그인', icon: 'mdi-account-circle', url: '/login' },
-        // test
         { title: '프로필', icon: 'mdi-account-settings' , url:'/customer/detail'},
-        { title: '포인트관리', icon: 'mdi-credit-card-multiple' , url:'/customer/list/point'},
+        { title: '포인트', icon: 'mdi-credit-card-multiple' , url:'/customer/point'},
         { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/list/rental'}
       ]
     }
   },
   methods: {
-    adminLogin(){
-      this.items =  [
-        { title: '고객관리', icon: 'mdi-account-circle', url:'/admin/list/customers' },
-        { title: '도서관리', icon: 'mdi-book', url:'/admin/list/books' },
-        { title: '대여관리', icon: 'mdi-book-multiple', url:'/admin/list/rentals' },
-                    ]
-    },
-    customerLogin(){
-      this.items =  [
-        { title: '프로필', icon: 'mdi-account-settings' , url:'/customer/detail'},
-        { title: '포인트관리', icon: 'mdi-credit-card-multiple' , url:'/customer/point'},
-        { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/list/rental'}
-      ]
-    },
+
   }
 }
 </script>

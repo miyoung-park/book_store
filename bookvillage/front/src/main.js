@@ -6,6 +6,7 @@ import { store } from '@/store/index'
 import axios from 'axios'
 import axiosInst from '@/axios/AxiosInst'
 import { adminService } from '@/service/adminService'
+import { bookService } from "@/service/bookService";
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
@@ -16,6 +17,7 @@ new Vue({
   router,
   store,
   provide: {
-    'adminService': new adminService
+    'adminService': new adminService,
+    'bookService' : new bookService
   },
 }).$mount('#app')

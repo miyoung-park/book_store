@@ -1,12 +1,26 @@
 <template>
   <div class="header-section">
-    <a><router-link to="/list/book">📗 Book Village 📙</router-link></a>
+    <a><router-link to='/'>📗 Book Village 📙</router-link></a>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Header"
+  name: "Header",
+  data(){
+    return {
+      url : '',
+    }
+  },
+  mounted() {
+    this.getRole();
+  },
+  methods: {
+    getRole(){
+      const role = this.$store.getters.getRole;
+      this.url = role + '/list/book';
+    }
+  }
 }
 </script>
 

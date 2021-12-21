@@ -20,21 +20,33 @@
 
 
     <!-- 어떤 계정이 로그인했느냐에 따라 메뉴 변경-->
-    <v-list dense nav >
-      <v-list-item
+    <v-list>
+      <v-list-group
           v-for="item in items"
           :key="item.title"
-          :to="item.url"
-          link
+          v-model="item.active"
+          :prepend-icon="item.icon"
+          no-action
       >
-        <v-list-item-icon>
-          <v-icon>{{ item.icon }}</v-icon>
-        </v-list-item-icon>
-        <v-list-item-content>
-          <v-list-item-title>{{ item.title }}</v-list-item-title>
-        </v-list-item-content>
-      </v-list-item>
+        <template v-slot:activator>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title"></v-list-item-title>
+          </v-list-item-content>
+        </template>
+
+        <v-list-item
+            v-for="child in item.items"
+            :key="child.title"
+            :to="child.url"
+        >
+          <v-list-item-content>
+            <v-list-item-title v-text="child.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-group>
     </v-list>
+
+
 
   </v-navigation-drawer>
   </div>
@@ -45,14 +57,35 @@ export default {
   name: "AdminNavBar",
   data () {
     return {
+      admins: [
+        ['Management', 'mdi-account-multiple-outline'],
+        ['Settings', 'mdi-cog-outline'],
+      ],
       info: {
         userId: '',
         userName: ''
       },
       items: [
-        { title: '고객관리', icon: 'mdi-account-circle', url:'/admin/list/customers' },
-        { title: '도서관리', icon: 'mdi-book', url:'/admin/list/book' },
-        { title: '대여관리', icon: 'mdi-book-multiple', url:'/admin/list/rentals' },
+        {   title: '고객관리'
+          ,  icon: 'mdi-account-circle'
+          , items: [
+                    { title: '고객목록', url: '/admin/customer/list'},
+                    { title: '고객등록', url: '/admin/customer/add'}
+                    ]
+        },
+        {   title: '도서관리'
+          ,  icon: 'mdi-book'
+          , items: [
+            { title: '도서목록', url: '/admin/book/list'},
+            { title: '도서등록', url: '/admin/book/add'}
+          ]
+        },
+        {   title: '대여관리'
+          ,  icon: 'mdi-book-multiple'
+          , items: [
+            { title: '대여목록', url: '/admin/rental/list'}
+          ]
+        },
       ]
     }
   },
@@ -82,7 +115,7 @@ export default {
 
 <style scoped>
 .nav_section {
-  height: 100%;
+  height: 100vh;
 }
 .logout_btn{
   width: 55px;
