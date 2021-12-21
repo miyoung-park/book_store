@@ -2,8 +2,8 @@
   <div>
     <header>
       <div class="header-section">
-        <a><router-link to='/admin/book/list'>📗 Book Village📙</router-link></a>
-        <p> Admin Page </p>
+        <a><router-link to='/admin/book/list'>📗 Book Village 📙</router-link></a>
+        <p>[ Admin Page ]</p>
       </div>
     </header>
     <div class="main_section">
@@ -31,8 +31,9 @@ export default {
 <style scoped>
 .main_section {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   display: flex;
+  font-family: 'Gowun Dodum', sans-serif;
 }
 .header-section {
   height: 150px;

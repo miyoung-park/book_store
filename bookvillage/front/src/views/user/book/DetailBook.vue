@@ -2,6 +2,7 @@
   <v-card
       class="mx-auto my-12"
       max-width="374"
+      min-height="100%"
   >
     <template slot="progress">
       <v-progress-linear
@@ -20,18 +21,11 @@
     <v-card-title>{{bookInfo.bookTitle}}</v-card-title>
 
     <v-card-text>
-
-
       <div class="my-2">가격 : {{bookInfo.bookPrice}} 원</div>
       <div class="my-2">대여료 : {{bookInfo.bookRentalFee}} 포인트</div>
       <div class="my-2">등록날짜 : {{bookInfo.bookRegDt}}</div>
       <div>기타: {{bookInfo.bookMemo}}</div>
     </v-card-text>
-    <v-divider></v-divider>
-    <div class="btn_section">
-      <v-btn text class="btn_update" @click="goUpdateBook">도서수정</v-btn>
-      <v-btn text class="btn_delete" @click="goDeleteBook">도서삭제</v-btn>
-    </div>
   </v-card>
 </template>
 
@@ -40,6 +34,7 @@ export default {
   name: "DetailBook",
   data(){
     return {
+      isAdmin: false,
       bookSeq: '',
       bookInfo: [
         { bookSeq: '' },
@@ -54,6 +49,7 @@ export default {
   inject:['bookService'],
   created() {
     this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
+    this.isAdmin = this.$store.getters.getRole == 'admin' ? true : false;
   },
   mounted() {
     this.getBookDetail();

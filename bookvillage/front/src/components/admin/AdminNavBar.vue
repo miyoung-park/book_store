@@ -115,7 +115,7 @@ export default {
 
 <style scoped>
 .nav_section {
-  height: 100vh;
+  min-height: 100%;
 }
 .logout_btn{
   width: 55px;

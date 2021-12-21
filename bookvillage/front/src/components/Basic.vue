@@ -2,11 +2,11 @@
  <div>
    <header>
      <div class="header-section">
-       <a><router-link to='/list/book'>📗 Book Village 📙</router-link></a>
+       <a><router-link to='/'>📗 Book Village 📙</router-link></a>
      </div>
    </header>
    <div class="main_section">
-     <CustomerNavBar/>
+     <BasicNavBar/>
      <router-view/>
    </div>
    <footer>
@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import CustomerNavBar from './CustomerNavBar';
+import BasicNavBar from './BasicNavBar';
 import Footer from "@/components/Footer";
 export default {
-  name: "Customer",
+  name: "Basic",
   components: {
-    CustomerNavBar,
+    BasicNavBar,
     Footer
   }
 }
@@ -30,8 +30,9 @@ export default {
 <style scoped>
 .main_section {
   width: 100%;
-  height: 100%;
+  min-height: 100%;
   display: flex;
+  font-family: 'Gowun Dodum', sans-serif;
 }
 .header-section {
   height: 100px;

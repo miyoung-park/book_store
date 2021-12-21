@@ -20,7 +20,7 @@
 
 
     <!-- 어떤 계정이 로그인했느냐에 따라 메뉴 변경-->
-    <v-list shaped>
+    <v-list shaped v-if="info.user != ''">
       <v-list-item-group
           color="primary"
       >
@@ -46,7 +46,7 @@
 
 <script>
 export default {
-  name: "CustomerNavBar",
+  name: "BasicNavBar",
   data () {
     return {
       info: {
@@ -68,7 +68,7 @@ export default {
 
 <style scoped>
 .nav_section {
-  height: 100%;
+  min-height: 100%;
 }
 .logout_btn{
   width: 55px;

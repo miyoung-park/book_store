@@ -28,7 +28,7 @@
 <script>
 import AxiosInst from "@/axios/AxiosInst";
 export default {
-  name: "Books",
+  name: "AdminListBooks",
   data () {
     return {
       search: '',
@@ -48,7 +48,7 @@ export default {
     goDetail(book){
       const _bookSeq = book.bookSeq
       this.$router.push({
-        path: '/book/detail/'+ _bookSeq
+        path: '/admin/book/detail/'+ _bookSeq
       });
     },
      async getList(){
