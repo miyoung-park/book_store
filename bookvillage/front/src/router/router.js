@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import { store } from '@/store/index'
 import ListBooks from "@/views/book/ListBooks";
 import Admin from "@/components/user/admin/Admin";
 import Customer from "@/components/user/customer/Customer";
@@ -17,6 +18,15 @@ const bookProps = (route) => {
     return props;
 }; */
 
+function checkAdminRight(to , from, next){
+    const role = store.getters.getRole;
+    if(role != 'admin'){
+        alert('접근할 수 없습니다.')
+        next({path: '/main'})
+    }
+    next();
+}
+
 
 const routes = [
                 {
@@ -24,12 +34,16 @@ const routes = [
                     component: Main,
                     children:[
                         {
-                            path: 'login',
-                            component: Login
+                            path: 'main',
+                            component: ListBooks
                         },
                         {
                             path: 'list/book',
                             component: ListBooks
+                        },
+                        {
+                            path: 'login',
+                            component: Login
                         },
                         {
                             path: 'book/detail/:bookSeq',
@@ -38,6 +52,7 @@ const routes = [
                         {
                             path: '/admin',
                             component: Admin,
+                            beforeEnter: checkAdminRight,
                             children :[
                                 {
                                     path: 'list/books',

@@ -14,7 +14,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableWebSecurity
-public class WebSecurity extends WebSecurityConfigurerAdapter {
+public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
     /* WebSecurityConfigurerAdapter 상속시,
      *

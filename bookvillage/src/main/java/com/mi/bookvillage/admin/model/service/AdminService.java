@@ -14,11 +14,20 @@ public class AdminService {
     
     public AdminVO loginAdmin(AdminVO adminVo){
         try{
-            adminDAO.loginAdmin(adminVo);
-            return
-        }catch(Exception e){
+            AdminVO admin = adminDAO.loginAdmin(adminVo);
+            return admin;
+        } catch(Exception e){
             e.printStackTrace();
             System.out.println("unmatched password");
+            return null;
         }
+    }
+
+    public AdminVO getAdminInfo(String userId){
+        AdminVO admin = adminDAO.getAdminInfo(userId);
+        if(admin == null){
+            // Exception
+        }
+        return admin;
     }
 }

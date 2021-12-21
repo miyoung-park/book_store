@@ -1,6 +1,6 @@
 <template>
   <div class="header-section">
-    <a><router-link to="/">📗 Book Village 📙</router-link></a>
+    <a><router-link to="/list/book">📗 Book Village 📙</router-link></a>
   </div>
 </template>
 

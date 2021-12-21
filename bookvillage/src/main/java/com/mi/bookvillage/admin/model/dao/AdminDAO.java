@@ -5,7 +5,6 @@ import org.apache.ibatis.annotations.Mapper;
 
 @Mapper
 public interface AdminDAO {
-
-
-    void loginAdmin(AdminVO adminVO);
+    AdminVO loginAdmin(AdminVO adminVO);
+    AdminVO getAdminInfo(String userId);
 }

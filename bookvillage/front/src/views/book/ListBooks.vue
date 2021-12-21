@@ -82,6 +82,7 @@ export default {
 }
 .table_section {
   width: 80%;
+  height: 100%;
   margin-top: 50px;
 }
 </style>

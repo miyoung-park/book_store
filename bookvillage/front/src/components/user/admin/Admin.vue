@@ -1,8 +1,8 @@
 <template>
-      <div class="main_section">
-        <AdminNavBar/>
-        <router-view/>
-    </div>
+  <div class="main_section">
+    <AdminNavBar/>
+    <router-view/>
+  </div>
 </template>
 
 <script>

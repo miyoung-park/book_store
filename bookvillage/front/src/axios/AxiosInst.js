@@ -1,12 +1,19 @@
 import Axios from 'axios'
-// import {store} from '@/store/index'
+import {store} from '@/store/index'
 
 const AxiosInst = Axios.create({
     baseURL: 'http://localhost:8080'
 });
 
-AxiosInst.interceptors.response.use(
+AxiosInst.interceptors.request.use(
     // token
+    (config) => {
+        let access_token = store.getters.getToken;
+        if(access_token){
+            config.headers.Authorization = `${access_token}`;
+        }
+        return config;
+    }
 
 )
 

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main_section">
     <CustomerNavBar/>
     <router-view/>
   </div>
@@ -16,5 +16,9 @@ export default {
 </script>
 
 <style scoped>
-
+.main_section {
+  width: 100%;
+  height: 100%;
+  display: flex;
+}
 </style>
