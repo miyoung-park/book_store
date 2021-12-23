@@ -70,6 +70,7 @@ export default {
 .nav_section {
   height: 100%;
   position: fixed;
+  font-family: 'Gowun Dodum', sans-serif;
 }
 .logout_btn{
   width: 55px;
@@ -77,6 +78,5 @@ export default {
   font-size: x-small !important;
   background-color: darkseagreen;
   border-radius: 10px;
-  font-family: 'Gowun Dodum', sans-serif;
 }
 </style>
