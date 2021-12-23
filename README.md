@@ -49,5 +49,4 @@
  
  ---
  ## *DB설계*
- <img width="919" alt="bookvillage" src="https://user-images.githubusercontent.com/78000536/146476739-cddd6936-e642-4db6-b580-962a2c523e1e.png">
- 
+<img width="1036" alt="bookvillage" src="https://user-images.githubusercontent.com/78000536/147171599-98bf885c-549d-4c64-981f-5012edc147bc.png">
