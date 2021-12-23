@@ -20,6 +20,7 @@ import UpdateCustomer from "@/views/admin/customer/UpdateCustomer";
 import AdminListRental from "@/views/admin/rental/AdminListRental";
 import PointList from "@/views/user/customer/point/PointList";
 import DetailRental from "@/views/user/customer/rental/DetailRental";
+import AdminDetailCustomer from "@/views/admin/customer/AdminDetailCustomer";
 
 
 // 1. Vue - VueRouter 연결
@@ -114,6 +115,10 @@ const routes = [
                         {
                             path: 'customer/add',
                             component: AddCustomer
+                        },
+                        {
+                            path: 'customer/detail',
+                            component: AdminDetailCustomer
                         },
                         {
                             path: 'customer/update',

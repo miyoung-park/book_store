@@ -18,6 +18,7 @@
           :search="search"
           @click:row="goDetail"
           :items-per-page="5"
+          style="height: 85%"
       >
       </v-data-table>
 
@@ -38,7 +39,6 @@ export default {
         { text: '도서 이미지', value: 'bookImage'},
         { text: '도서 가격', value: 'bookPrice' },
         { text: '대여비', value: 'bookRentalFee' },
-        { text: '대여기간', value: 'bookRentalPeriod' },
         { text: '메모', value: 'bookMemo' },
       ],
       books: [],
@@ -70,19 +70,19 @@ export default {
 <style scoped>
 .content{
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 .search_section {
-  width: 40%;
-
+  width: 50%;
 }
 .table_section {
   width: 80%;
   height: 100%;
-  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>

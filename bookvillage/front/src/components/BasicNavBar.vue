@@ -68,7 +68,8 @@ export default {
 
 <style scoped>
 .nav_section {
-  min-height: 100%;
+  height: 100%;
+  position: fixed;
 }
 .logout_btn{
   width: 55px;

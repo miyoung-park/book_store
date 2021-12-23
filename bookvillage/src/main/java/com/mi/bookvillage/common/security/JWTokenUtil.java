@@ -11,7 +11,7 @@ import java.util.Map;
 public class JWTokenUtil {
 
     private static String SECRET_KEY = "access_token";
-    private static int EXPIRE_MINUTE = 1000 * 60 * 10; // 1분
+    private static int EXPIRE_MINUTE = 1000 * 60 * 30; // 1분
 
     /**
      * ACCESS_TOKEN 토큰 발급 클래스

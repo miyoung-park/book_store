@@ -1,37 +1,37 @@
 <template>
-  <div>
+  <div class="whole_section">
     <header>
-      <div class="header-section">
-        <a><router-link to='/admin/book/list'>📗 Book Village 📙</router-link></a>
-        <p>[ Admin Page ]</p>
+      <div>
+        <AdminNavBar/>
+        <div class="header-section">
+          <a><router-link to='/admin/book/list'>📗 Book Village 📙</router-link></a>
+          <p>[ Admin Page ]</p>
+        </div>
       </div>
     </header>
     <div class="main_section">
-      <AdminNavBar/>
       <router-view/>
     </div>
-    <footer>
-      <Footer/>
-    </footer>
   </div>
 </template>
 
 <script>
 import AdminNavBar from './AdminNavBar'
-import Footer from "@/components/Footer";
 export default {
   name: "Admin",
   components: {
-    AdminNavBar,
-    Footer
+    AdminNavBar
   }
 }
 </script>
 
 <style scoped>
+.whole_section {
+  height: 100%;
+}
 .main_section {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   display: flex;
   font-family: 'Gowun Dodum', sans-serif;
 }
@@ -52,5 +52,8 @@ export default {
 }
 .header-section p {
   text-decoration: none;
+}
+nav {
+  height: 100%;
 }
 </style>

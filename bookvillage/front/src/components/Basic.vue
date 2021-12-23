@@ -1,36 +1,36 @@
 <template>
- <div>
-   <header>
-     <div class="header-section">
-       <a><router-link to='/'>📗 Book Village 📙</router-link></a>
-     </div>
-   </header>
+ <div class="whole_section">
+     <header>
+       <div>
+         <BasicNavBar/>
+         <div class="header-section">
+           <a><router-link to='/'>📗 Book Village 📙</router-link></a>
+         </div>
+       </div>
+     </header>
    <div class="main_section">
-     <BasicNavBar/>
      <router-view/>
    </div>
-   <footer>
-     <Footer/>
-   </footer>
  </div>
 </template>
 
 <script>
 import BasicNavBar from './BasicNavBar';
-import Footer from "@/components/Footer";
 export default {
   name: "Basic",
   components: {
-    BasicNavBar,
-    Footer
+    BasicNavBar
   }
 }
 </script>
 
 <style scoped>
+.whole_section {
+  height: 100%;
+}
 .main_section {
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   display: flex;
   font-family: 'Gowun Dodum', sans-serif;
 }

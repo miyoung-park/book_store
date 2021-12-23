@@ -38,7 +38,6 @@ export default {
         { text: '도서 이미지', value: 'bookImage'},
         { text: '도서 가격', value: 'bookPrice' },
         { text: '대여비', value: 'bookRentalFee' },
-        { text: '대여기간', value: 'bookRentalPeriod' },
         { text: '메모', value: 'bookMemo' },
       ],
       books: [],
@@ -70,7 +69,6 @@ export default {
 <style scoped>
 .content{
   width: 100%;
-  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;

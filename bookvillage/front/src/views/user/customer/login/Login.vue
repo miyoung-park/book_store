@@ -50,7 +50,7 @@ export default {
       try {
         const payloads = await this.adminService.adminLogin(this.userObj);
         if( payloads != null){
-          await this.$store.dispatch('setToken', payloads);
+          this.$store.dispatch('setToken', payloads);
           this.$router.push({
             path: '/admin/book/list'
           }).catch((e)=>{console.log(e)})

@@ -1,29 +1,23 @@
 <template>
   <div class="detail_section">
     <v-card
-        class="mx-auto my-12"
-        max-width="374"
-        style="margin-bottom: 30px !important"
+        class="mx-auto my-8"
+        width="350"
+        max-height="500"
+        style="margin-bottom: 30px !important; display: flex; flex-direction: column"
     >
-      <template slot="progress">
-        <v-progress-linear
-            color="deep-purple"
-            height="10"
-            indeterminate
-        ></v-progress-linear>
-      </template>
+      <v-card-title
+          style="font-size: small"
+      >번호 : {{bookInfo.bookSeq}}</v-card-title>
+      <div class="image_section">
+        <v-img
+            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        ></v-img>
+      </div>
 
-      <v-card-title style="font-size: small">번호 : {{bookInfo.bookSeq}}</v-card-title>
-      <v-img
-          height="250"
-          src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-      ></v-img>
-
-      <v-card-title>{{bookInfo.bookTitle}}</v-card-title>
+      <v-card-title class="">{{bookInfo.bookTitle}}</v-card-title>
 
       <v-card-text>
-
-
         <div class="my-2">가격 : {{bookInfo.bookPrice}} 원</div>
         <div class="my-2">대여료 : {{bookInfo.bookRentalFee}} 포인트</div>
         <div class="my-2">등록날짜 : {{bookInfo.bookRegDt}}</div>
@@ -120,5 +114,11 @@ export default {
 }
 .btn_list {
   background-color: burlywood;
+}
+.image_section{
+  display: flex;
+  width: 160px;
+  height: 200px;
+  margin: auto;
 }
 </style>

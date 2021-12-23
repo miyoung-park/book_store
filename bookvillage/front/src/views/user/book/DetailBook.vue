@@ -4,14 +4,6 @@
       max-width="374"
       min-height="100%"
   >
-    <template slot="progress">
-      <v-progress-linear
-          color="deep-purple"
-          height="10"
-          indeterminate
-      ></v-progress-linear>
-    </template>
-
     <v-card-title style="font-size: small">번호 : {{bookInfo.bookSeq}}</v-card-title>
     <v-img
         height="250"

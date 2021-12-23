@@ -3,6 +3,7 @@
   <v-navigation-drawer
       style="background: #E0F2F1"
       permanent
+      expand-on-hover
   > <!--expand-on-hover-->
     <!-- 어떤 계정이 로그인 했느냐에 따라 정보 변경-->
     <v-list-item v-if="info.userId != ''">
@@ -115,7 +116,8 @@ export default {
 
 <style scoped>
 .nav_section {
-  min-height: 100%;
+  height: 100%;
+  position: fixed;
 }
 .logout_btn{
   width: 55px;

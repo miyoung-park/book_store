@@ -1,15 +1,21 @@
 <template>
-  <v-app>
+  <v-app class="app">
     <router-view/>
+    <Footer/>
   </v-app>
 </template>
+
 <script>
+import Footer from "@/components/Footer";
 export default {
   name: 'App',
+  components: {
+    Footer
+  }
 };
 </script>
 <style scoped>
-div {
-  font-family: 'Gowun Dodum', sans-serif;
+.app {
+  height: 100%;
 }
 </style>
