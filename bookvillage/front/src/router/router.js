@@ -22,7 +22,6 @@ import PointList from "@/views/user/customer/point/PointList";
 import DetailRental from "@/views/user/customer/rental/DetailRental";
 import AdminDetailCustomer from "@/views/admin/customer/AdminDetailCustomer";
 
-
 // 1. Vue - VueRouter 연결
 Vue.use(VueRouter);
 
@@ -89,6 +88,7 @@ const routes = [
                 },
                  {
                     path: '/admin',
+                     redirect: 'admin/book/list',
                     component: Admin,
                     beforeEnter: checkAdminRight,
                     children :[
@@ -117,11 +117,11 @@ const routes = [
                             component: AddCustomer
                         },
                         {
-                            path: 'customer/detail',
+                            path: 'customer/detail/:userSeq',
                             component: AdminDetailCustomer
                         },
                         {
-                            path: 'customer/update',
+                            path: 'customer/update/:userSeq',
                             component: UpdateCustomer
                         },
                         {

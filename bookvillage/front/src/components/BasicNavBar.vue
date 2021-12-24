@@ -3,6 +3,7 @@
   <v-navigation-drawer
       style="background: #E0F2F1"
       permanent
+      expand-on-hover
   > <!--expand-on-hover-->
     <!-- 어떤 계정이 로그인 했느냐에 따라 정보 변경-->
     <v-list-item v-if="info.user != ''">
@@ -55,8 +56,9 @@ export default {
       },
       items: [
         { title: '프로필', icon: 'mdi-account-settings' , url:'/customer/detail'},
-        { title: '포인트', icon: 'mdi-credit-card-multiple' , url:'/customer/point'},
-        { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/list/rental'}
+        { title: '포인트', icon: 'mdi-credit-card-multiple' , url:'/customer/point/list'},
+        { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/rental/list'},
+        { title: '도서목록', icon: 'mdi-book', url:'/'}
       ]
     }
   },
@@ -70,6 +72,7 @@ export default {
 .nav_section {
   height: 100%;
   position: fixed;
+  z-index: 1;
   font-family: 'Gowun Dodum', sans-serif;
 }
 .logout_btn{

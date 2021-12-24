@@ -75,7 +75,7 @@ export default {
 
 }
 .login_form {
-  width: 400px;
+  width: 40vw;
   margin-bottom: 30px;
 }
 button {

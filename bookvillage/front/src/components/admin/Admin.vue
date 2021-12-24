@@ -4,7 +4,7 @@
       <div>
         <AdminNavBar/>
         <div class="header-section">
-          <a><router-link to='/admin/book/list'>📗 Book Village 📙</router-link></a>
+          <a @click="goHomepage">📗 Book Village 📙</a>
           <p>[ Admin Page ]</p>
         </div>
       </div>
@@ -21,6 +21,20 @@ export default {
   name: "Admin",
   components: {
     AdminNavBar
+  },
+  methods: {
+    goHomepage(){
+      const path = window.location.pathname;
+      const status = path.split("/")[1];
+      console.log(status)
+      if( status == 'admin' ){
+        if(this.$route.path !== '/admin/book/list'){
+          return this.$router.push("/admin")
+        }
+       return;
+      }
+      return this.$router.push("/")
+    }
   }
 }
 </script>

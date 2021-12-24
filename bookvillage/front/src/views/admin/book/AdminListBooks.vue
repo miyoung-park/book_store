@@ -40,6 +40,7 @@ export default {
         { text: '도서 가격', value: 'bookPrice' },
         { text: '대여비', value: 'bookRentalFee' },
         { text: '메모', value: 'bookMemo' },
+        { text: '도서현황' , value: '' }
       ],
       books: [],
     }

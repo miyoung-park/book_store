@@ -118,6 +118,8 @@ export default {
 .nav_section {
   height: 100%;
   position: fixed;
+  z-index: 1;
+  font-family: 'Gowun Dodum', sans-serif;
 }
 .logout_btn{
   width: 55px;

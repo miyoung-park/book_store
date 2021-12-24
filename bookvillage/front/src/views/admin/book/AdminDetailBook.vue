@@ -3,7 +3,7 @@
     <v-card
         class="mx-auto my-8"
         width="350"
-        max-height="500"
+        max-height="550"
         style="margin-bottom: 30px !important; display: flex; flex-direction: column"
     >
       <v-card-title
@@ -48,7 +48,7 @@ export default {
         { bookRentalFee: '' },
         { bookMemo: '' },
         { bookRegDt: '' },
-      ]
+      ],
     }
   },
   inject:['bookService'],
@@ -64,7 +64,9 @@ export default {
         this.bookInfo = response.data;
     },
     goUpdateBook(){
-
+      this.$router.push({
+        path: '/admin/book/update/' + this.bookSeq
+      })
     },
     async goDeleteBook(){
       if(confirm('정말 삭제하시겠습니까 ?')){
