@@ -41,14 +41,7 @@ function checkAdminRight(to , from, next){
     }
     next();
 }
-/*
-function checkCustomerRight(to , from, next){
-    if(role != 'customer'){
-        alert('접근할 수 없습니다.')
-        next({path: '/main'})
-    }
-    next();
-} */
+
 
 const routes = [
                 {
