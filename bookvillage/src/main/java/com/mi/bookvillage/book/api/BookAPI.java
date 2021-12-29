@@ -6,14 +6,17 @@ import com.mi.bookvillage.common.response.APIResponse;
 import com.mi.bookvillage.common.response.APIResponseBuilder;
 import com.mi.bookvillage.common.response.APIResponseBuilderFactory;
 import com.mi.bookvillage.common.util.file.FileUtil;
+import com.mi.bookvillage.common.util.file.FileVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import javax.validation.Valid;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -62,14 +65,17 @@ public class BookAPI {
      * @return
      */
     @RequestMapping(value = "/book/add" , method = RequestMethod.POST)
-    public APIResponse addBook( @ModelAttribute @Valid BookVO book
-                               ,@RequestParam(required = false) List<MultipartFile> files ) {
+    public APIResponse addBook( @ModelAttribute BookVO book
+                               ,@RequestParam List<MultipartFile> files ) {
 
-        System.out.println(book);
-        System.out.println(files);
-        FileUtil.uploadFiles(files, book.getBookSeq());
-
-       return null;
+        try {
+            List<FileVO> fileList = FileUtil.uploadFiles(files, book.getBookSeq());
+            bookService.addBook(book , fileList);
+            return apiResponseBuilderFactory.success().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -78,7 +84,7 @@ public class BookAPI {
      * @return
      */
     @RequestMapping(value = "/book/update/{bookSeq}" , method = RequestMethod.POST)
-    public APIResponse updateook(@ModelAttribute BookVO book) {
+    public APIResponse updateBook(@ModelAttribute BookVO book) {
         return null;
     }
 
@@ -87,7 +93,7 @@ public class BookAPI {
      * @param bookSeq
      * @return
      */
-    @RequestMapping(value = "/admin/book/delete/{bookSeq}",method = RequestMethod.DELETE)
+    @RequestMapping(value = "/book/delete/{bookSeq}",method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteBook(@PathVariable int bookSeq){
         bookService.deleteBook(bookSeq);
         return ResponseEntity.ok().build();

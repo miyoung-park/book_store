@@ -21,11 +21,43 @@
         WHERE BOOK_SEQ = #{bookSeq}
     </select>
 
+
+    <insert id="addBook" useGeneratedKeys="true" keyProperty="bookSeq">
+        INSERT INTO BOOK (
+                          BOOK_TITLE,
+                          BOOK_PRICE,
+                          BOOK_RENTAL_FEE,
+                          BOOK_MEMO
+                          )
+                   VALUES (
+                           #{bookTItle},
+                           #{bookPrice},
+                           #{bookRentalFee},
+                           #{bookMemo}
+                          )
+    </insert>
+
+    <insert id="addFile">
+        INSERT INTO BOOK_FILE(
+                                BOOK_SEQ,
+                                ORIGIN_FILE_NAME,
+                                RENAME_FILE_NAME,
+                                SAVE_PATH
+                                )
+                        VALUES (
+                                   #{bookTItle},
+                                   #{bookPrice},
+                                   #{bookRentalFee},
+                                   #{bookMemo}
+                               )
+    </insert>
+
     <delete id="deleteBook">
         DELETE
           FROM BOOK
          WHERE BOOK_SEQ = #{bookSeq}
     </delete>
+
 
 
 

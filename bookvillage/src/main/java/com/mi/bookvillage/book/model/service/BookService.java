@@ -2,6 +2,7 @@ package com.mi.bookvillage.book.model.service;
 
 import com.mi.bookvillage.book.model.dao.BookDAO;
 import com.mi.bookvillage.book.model.vo.BookVO;
+import com.mi.bookvillage.common.util.file.FileVO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,13 +16,20 @@ public class BookService {
         this.bookDao = bookDao;
     }
 
-
     public List<BookVO> getBookList() {
         return bookDao.getBookList();
     }
 
     public BookVO getBookDetail(int bookSeq){
         return bookDao.getBookDetail(bookSeq);
+    }
+
+    public void addBook(BookVO bookVO , List<FileVO> files){
+        int bookSeq = bookDao.addBook(bookVO);
+        for(int i = 0; i < files.size(); i ++) {
+            files.get(i).setBookSeq(bookSeq);
+            bookDao.addFile(files.get(i));
+        }
     }
 
     public void deleteBook(int bookSeq) {
