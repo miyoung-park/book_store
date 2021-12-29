@@ -9,19 +9,11 @@ import java.util.Map;
 
 public class APIResponseBuilder {
 
-    @Setter
-    @Getter
-    FilterProvider filterProvider;
-
     Map<String, Object> responseBodyMap = null;
     Object responseBodyObject = null;
 
+    // 기본 생성자
     public APIResponseBuilder(){
-
-    }
-    // 생성자 주입방식
-    public APIResponseBuilder( FilterProvider filterProvider ){
-        this.filterProvider = filterProvider;
     }
 
     public APIResponse build() {
@@ -42,7 +34,7 @@ public class APIResponseBuilder {
 
         responseBody.put("data", response == null ? "": response);
 
-        APIResponse apiResponse = new APIResponse( response , filterProvider);
+        APIResponse apiResponse = new APIResponse( response );
         return apiResponse;
 
     }

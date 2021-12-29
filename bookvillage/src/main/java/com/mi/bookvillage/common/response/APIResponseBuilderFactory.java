@@ -24,6 +24,10 @@ public class APIResponseBuilderFactory {
         ( 보통은 갯수를 알 필요가 없는 For 문에서 사용한다. )
     */
 
+    /**
+     * APIResponseBuilder 인스턴스 생성
+     * @return
+     */
     public APIResponseBuilder success(){
         APIResponseBuilder instance = new APIResponseBuilder();
         return instance;

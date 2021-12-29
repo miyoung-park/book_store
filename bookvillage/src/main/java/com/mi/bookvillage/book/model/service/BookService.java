@@ -19,14 +19,12 @@ public class BookService {
     public List<BookVO> getBookList() {
         return bookDao.getBookList();
     }
+
     public BookVO getBookDetail(int bookSeq){
         return bookDao.getBookDetail(bookSeq);
     }
+
     public void deleteBook(int bookSeq) {
-        try{
-            bookDao.deleteBook(bookSeq);
-        }catch (Exception e){
-            throw null;
-        }
+        bookDao.deleteBook(bookSeq);
     }
 }

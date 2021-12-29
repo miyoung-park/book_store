@@ -13,17 +13,14 @@ public class APIResponse extends MappingJacksonValue {
     @JsonIgnore
     private Map<String, Object> header;
 
-    public APIResponse(Object value, FilterProvider filterProvider) {
+    public APIResponse(Object value) {
         super(value);
-        setFilters(filterProvider);
     }
-
 
     @Override
     public void setValue(Object value) {
         super.setValue(value);
     }
-
 
     @JsonAnyGetter
     @JsonProperty("header")

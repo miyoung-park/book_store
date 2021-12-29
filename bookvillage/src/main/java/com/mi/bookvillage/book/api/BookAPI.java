@@ -5,14 +5,15 @@ import com.mi.bookvillage.book.model.vo.BookVO;
 import com.mi.bookvillage.common.response.APIResponse;
 import com.mi.bookvillage.common.response.APIResponseBuilder;
 import com.mi.bookvillage.common.response.APIResponseBuilderFactory;
+import com.mi.bookvillage.common.util.file.FileUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -36,22 +37,49 @@ public class BookAPI {
      */
     @RequestMapping(value = "/book/list" , method = RequestMethod.GET)
     public APIResponse getBookList(){
-
         List<BookVO> bookList = bookService.getBookList();
-
+                // APIResponseBuilder 인스턴스 생성    // 데이터 세팅       // build
         return apiResponseBuilderFactory.success().setData(bookList).build();
     }
 
     /**
-     * 도서 내용 조회
+     * 도서 조회
      * @param bookSeq
      * @return
      */
     @RequestMapping(value = "/book/detail/{bookSeq}" , method = RequestMethod.GET)
-    public ResponseEntity<?> getBookDetail(@PathVariable int bookSeq){
-        BookVO bookVo = bookService.getBookDetail(bookSeq);
+    public APIResponse getBookDetail(@PathVariable int bookSeq) {
+        BookVO book = bookService.getBookDetail(bookSeq);
+        if( book == null) {
+            throw new RuntimeException("Cannot find book");
+        }
+        return apiResponseBuilderFactory.success().setData(book).build();
+    }
 
-        return ResponseEntity.ok(bookVo);
+    /**
+     * 도서 등록 업데이트
+     * @param book
+     * @return
+     */
+    @RequestMapping(value = "/book/add" , method = RequestMethod.POST)
+    public APIResponse addBook( @ModelAttribute @Valid BookVO book
+                               ,@RequestParam(required = false) List<MultipartFile> files ) {
+
+        System.out.println(book);
+        System.out.println(files);
+        FileUtil.uploadFiles(files, book.getBookSeq());
+
+       return null;
+    }
+
+    /**
+     * 도서 정보 업데이트
+     * @param book
+     * @return
+     */
+    @RequestMapping(value = "/book/update/{bookSeq}" , method = RequestMethod.POST)
+    public APIResponse updateook(@ModelAttribute BookVO book) {
+        return null;
     }
 
     /**

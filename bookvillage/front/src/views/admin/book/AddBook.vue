@@ -30,6 +30,7 @@
             v-model="bookInfo.bookImage"
             truncate-length="15"
             label="도서이미지"
+            multiple
             @change="showImage(bookInfo.bookImage)"
           ></v-file-input>
         </div>
