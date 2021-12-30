@@ -56,11 +56,16 @@ public class BookAPI {
         if( book == null) {
             throw new RuntimeException("Cannot find book");
         }
-        return apiResponseBuilderFactory.success().setData(book).build();
+        List<FileVO> files = bookService.getBookFile(bookSeq);
+
+        return apiResponseBuilderFactory.success()
+                                        .putValue("bookInfo" , book)
+                                        .putValue("files", files)
+                                        .build();
     }
 
     /**
-     * 도서 등록 업데이트
+     * 도서 등록
      * @param book
      * @return
      */
@@ -87,6 +92,9 @@ public class BookAPI {
     public APIResponse updateBook(@ModelAttribute BookVO book) {
         return null;
     }
+
+
+
 
     /**
      * 도서 삭제

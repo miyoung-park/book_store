@@ -10,10 +10,39 @@
           style="font-size: small"
       >번호 : {{bookInfo.bookSeq}}</v-card-title>
       <div class="image_section">
-        <v-img
-            src="https://cdn.vuetifyjs.com/images/cards/cooking.png"
-        ></v-img>
+
+        <v-row>
+          <v-col
+              v-for="file in files"
+              :key="file.fileSeq"
+              class="d-flex child-flex"
+              cols="4"
+          >
+            <v-img
+                :src="concat(file)"
+                aspect-ratio="1"
+                class="grey lighten-2"
+            >
+              <template v-slot:placeholder>
+                <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                >
+                </v-row>
+              </template>
+            </v-img>
+          </v-col>
+        </v-row>
       </div>
+
+
+
+
+
+
+
+
 
       <v-card-title class="">{{bookInfo.bookTitle}}</v-card-title>
 
@@ -49,6 +78,7 @@ export default {
         { bookMemo: '' },
         { bookRegDt: '' },
       ],
+      files: [],
     }
   },
   inject:['bookService'],
@@ -60,8 +90,14 @@ export default {
   },
   methods: {
     async getBookDetail(){
-       const response = await this.bookService.getBookDetail(this.bookSeq);
-        this.bookInfo = response.data;
+       const data = await this.bookService.getBookDetail(this.bookSeq);
+       this.bookInfo = data.bookInfo;
+       this.files = data.files;
+       console.log(this.files)
+    },
+    concat(file){
+      console.log(file)
+      return file.savePath + file.renameFileName
     },
     goUpdateBook(){
       this.$router.push({
@@ -119,8 +155,12 @@ export default {
 }
 .image_section{
   display: flex;
-  width: 160px;
+  width: 100%;
   height: 200px;
   margin: auto;
+}
+.image_section .row {
+  display: flex;
+  justify-content: center;
 }
 </style>

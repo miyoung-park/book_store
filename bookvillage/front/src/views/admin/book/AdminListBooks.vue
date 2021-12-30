@@ -19,6 +19,8 @@
           @click:row="goDetail"
           :items-per-page="5"
           style="height: 85%"
+          sort-by="bookSeq"
+          :sort-desc= true
       >
       </v-data-table>
 
@@ -36,9 +38,8 @@ export default {
       headers: [
         { text: '도서 번호', value: 'bookSeq', align: 'start' },
         { text: '도서 제목', value: 'bookTitle'},
-        { text: '도서 이미지', value: 'bookImage'},
-        { text: '도서 가격', value: 'bookPrice' },
-        { text: '대여비', value: 'bookRentalFee' },
+        { text: '도서 가격', value: 'bookPrice'},
+        { text: '대여비', value: 'bookRentalFee'},
         { text: '메모', value: 'bookMemo' },
         { text: '도서현황' , value: '' }
       ],

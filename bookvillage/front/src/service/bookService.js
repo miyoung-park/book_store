@@ -6,7 +6,7 @@ export class bookService {
         return $axiosInst
             .get('/book/detail/' + bookSeq)
             .then( response => {
-                return response;
+                return response.data;
             }).catch(error => {
                 return error;
             })
@@ -24,10 +24,11 @@ export class bookService {
 
     addBook(bookObj , bookImages){
         const formData = new FormData();
-        formData.append('bookObj', bookObj.bookTitle);
+        console.log(bookObj)
         formData.append('bookTitle' , bookObj.bookTitle);
-        formData.append('bookPrice',bookObj.bookTitle);
-        formData.append('bookMemo', bookObj.bookTitle);
+        formData.append('bookPrice',bookObj.bookPrice);
+        formData.append('bookRentalFee',bookObj.bookRentalFee);
+        formData.append('bookMemo', bookObj.bookMemo);
         if(bookImages != null){
             for(let i = 0 ; i < bookImages.length; i ++){
                 formData.append('files' , bookImages[i]);

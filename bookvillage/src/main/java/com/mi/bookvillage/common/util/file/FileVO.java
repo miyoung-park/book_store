@@ -17,17 +17,11 @@ public class FileVO {
     @Getter @Setter
     private String originFileName;
 
-    @JsonIgnore
     @Getter @Setter
     private String renameFileName;
 
-    @JsonIgnore
     @Getter @Setter
     private String savePath;
 
-    private String path = "/Users/miyoung/Desktop/wdfall_study/study/personal_project/book_village/resources/upload/";
 
-    public String getFullPath() {
-        return path + savePath;
-    }
 }

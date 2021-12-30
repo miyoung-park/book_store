@@ -4,25 +4,22 @@
         <div class="field_section">
           <v-text-field
               v-model="bookInfo.bookTitle"
-              :counter="10"
               label="도서제목"
               required
           ></v-text-field>
           <v-text-field
               v-model="bookInfo.bookPrice"
-              :counter="10"
               label="도서가격"
               required
           ></v-text-field>
           <v-text-field
               v-model="bookInfo.bookRentalFee"
-              :counter="10"
               label="대여료"
               required
           ></v-text-field>
           <v-text-field
               v-model="bookInfo.bookMemo"
-              :counter="10"
+              :counter="100"
               label="메모"
               required
           ></v-text-field>

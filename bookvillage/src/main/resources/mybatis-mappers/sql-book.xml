@@ -22,7 +22,7 @@
     </select>
 
 
-    <insert id="addBook" useGeneratedKeys="true" keyProperty="bookSeq">
+    <insert id="addBook" >
         INSERT INTO BOOK (
                           BOOK_TITLE,
                           BOOK_PRICE,
@@ -30,11 +30,14 @@
                           BOOK_MEMO
                           )
                    VALUES (
-                           #{bookTItle},
+                           #{bookTitle},
                            #{bookPrice},
                            #{bookRentalFee},
                            #{bookMemo}
                           )
+        <selectKey keyProperty="bookSeq" resultType="Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
     </insert>
 
     <insert id="addFile">
@@ -45,12 +48,23 @@
                                 SAVE_PATH
                                 )
                         VALUES (
-                                   #{bookTItle},
-                                   #{bookPrice},
-                                   #{bookRentalFee},
-                                   #{bookMemo}
+                                   #{bookSeq},
+                                   #{originFileName},
+                                   #{renameFileName},
+                                   #{savePath}
                                )
     </insert>
+
+    <select id="getBookFile" resultType="com.mi.bookvillage.common.util.file.FileVO">
+        SELECT FILE_SEQ,
+               BOOK_SEQ,
+               ORIGIN_FILE_NAME,
+               RENAME_FILE_NAME,
+               SAVE_PATH,
+               REG_DATE
+         FROM BOOK_FILE
+        WHERE BOOK_SEQ = #{bookSeq}
+    </select>
 
     <delete id="deleteBook">
         DELETE

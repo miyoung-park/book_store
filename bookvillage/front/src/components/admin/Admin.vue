@@ -26,7 +26,6 @@ export default {
     goHomepage(){
       const path = window.location.pathname;
       const status = path.split("/")[1];
-      console.log(status)
       if( status == 'admin' ){
         if(this.$route.path !== '/admin/book/list'){
           return this.$router.push("/admin")
