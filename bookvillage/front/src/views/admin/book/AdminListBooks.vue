@@ -16,12 +16,13 @@
     </div>
     <div class="table_section">
       <v-data-table
+          class="table"
           :headers="headers"
           :items="books"
           :search="search"
           @click:row="goDetail"
           :items-per-page="5"
-          style="height: 85%; cursor: pointer"
+          style="height: 85%"
           sort-by="bookSeq"
           :sort-desc= true
       >
@@ -44,7 +45,7 @@ export default {
         { text: '도서 가격', value: 'bookPrice'},
         { text: '대여비', value: 'bookRentalFee'},
         { text: '메모', value: 'bookMemo' },
-        { text: '도서현황' , value: '' }
+        { text: '대여현황' , value: '' }
       ],
       books: [],
     }
@@ -97,4 +98,5 @@ export default {
 .btn_list {
   background-color: darksalmon;
 }
+
 </style>

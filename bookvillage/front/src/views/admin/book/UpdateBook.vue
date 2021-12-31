@@ -4,48 +4,54 @@
       <div class="field_section">
         <v-text-field
             v-model="bookInfo.bookTitle"
-            :counter="10"
             label="도서제목"
             required
         ></v-text-field>
         <v-text-field
             v-model="bookInfo.bookPrice"
-            :counter="10"
             label="도서가격"
             required
         ></v-text-field>
         <v-text-field
             v-model="bookInfo.bookRentalFee"
-            :counter="10"
             label="대여료"
             required
         ></v-text-field>
         <v-text-field
             v-model="bookInfo.bookMemo"
-            :counter="10"
-            label="메모"
+            label="개요"
             required
         ></v-text-field>
-        <v-file-input
+        <v-text-field
             v-model="bookInfo.bookImage"
-            truncate-length="15"
             label="기존이미지"
-            @change="showImage(bookInfo.bookImage)"
-        ></v-file-input>
+            multiple
+        >
+        </v-text-field>
+
         <v-file-input
             v-model="bookNewImage"
-            truncate-length="15"
             label="새이미지"
             @change="showImage(bookNewImage)"
+            multiple
         ></v-file-input>
       </div>
       <div class="image_section">
-        <div class="image">
-          <img class="previewImage" :src="uploadImageFile">
-          <a style="color: black"> &lt; 기존 이미지 &gt; </a>
+        <div class="bookImage_section">
+          <a style="color: black">&lt; 기존 이미지 &gt;</a>
+          <div class="bookImage" >
+            <div v-for="image in bookImages" :key="image.fileSeq">
+              <img class="previewImage" :src="concat(image)">
+              <v-card-text readonly>{{image.originFileName}}X</v-card-text>
+            </div>
+          </div>
         </div>
-        <div class="newImage" v-if="isView">
-          <img class="previewImage" :src="uploadImageFile">
+        <div class="newImageSection" v-if="isView">
+          <div v-for="imageUrl in uploadImageFile" :key="imageUrl">
+            <div class="image">
+              <img class="previewImage" :src="imageUrl">
+            </div>
+          </div>
           <a style="color: black">&lt; 새 이미지 &gt;</a>
         </div>
       </div>
@@ -67,10 +73,10 @@ export default {
         { bookTitle: ''},
         { bookPrice: ''},
         { bookRentalFee: ''},
-        { bookMemo: ''},
-        { bookImage: null}
+        { bookMemo: ''}
       ],
-      bookNewImage: null,
+      bookImages: [],
+      bookNewImage: [],
       uploadImageFile: null,
       isView: false
     }
@@ -84,17 +90,29 @@ export default {
   methods: {
     async getBookDetail(){
       const response = await this.bookService.getBookDetail(this.bookSeq);
-      this.bookInfo = response.data;
+      this.bookInfo = response.bookInfo;
+      this.bookImages = response.files
     },
-    showImage(){
-      if( this.bookNewImage != null ) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          this.uploadImageFile  = e.target.result;
+    concat(image){
+      return image.savePath + image.renameFileName
+    },
+    showImage(bookNewImage){
+      if( bookNewImage.length > 0 ) {
+        if( bookNewImage.length > 4) {
+          alert('파일은 4개까지만 업로드 가능합니다.');
+          bookNewImage.length = 0;
+          return;
         }
-        reader.readAsDataURL(this.bookNewImage)
+        for( let i = 0; i < bookNewImage.length; i++){
+          const reader = new FileReader();
+          reader.onload = event => {
+            this.uploadImageFile.push(event.target.result);
+          }
+          reader.readAsDataURL(bookNewImage[i])
+        }
         return this.isView = true;
       }
+      this.uploadImageFile = [];
       return this.isView = false;
     },
     updateBook(){
@@ -136,16 +154,9 @@ export default {
   margin: auto 0 auto 60px;
 }
 .previewImage {
-  width: 100%;
+  width: 25%;
 }
-.image {
-  width: 100%;
-  margin-right: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-.newImage {
+.newImageSection {
   width: 100%;
   display: flex;
   justify-content: center;

@@ -25,7 +25,7 @@ public class AdminAPI {
     public ResponseEntity<?> loginAdmin(@RequestBody AdminVO adminVO) {
         AdminVO admin = adminService.loginAdmin(adminVO);
         if( admin == null ){
-            // Exception 발생
+            throw new RuntimeException("Invalid User Information");
         }
         // 토큰 발급 기능
         Map<String, Object> tokenMap = new HashMap<>();

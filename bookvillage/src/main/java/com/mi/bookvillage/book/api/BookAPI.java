@@ -71,8 +71,7 @@ public class BookAPI {
      */
     @RequestMapping(value = "/book/add" , method = RequestMethod.POST)
     public APIResponse addBook( @ModelAttribute BookVO book
-                               ,@RequestParam List<MultipartFile> files ) {
-
+                               ,@RequestParam(required = false) List<MultipartFile> files ) {
         try {
             List<FileVO> fileList = FileUtil.uploadFiles(files, book.getBookSeq());
             bookService.addBook(book , fileList);
@@ -80,7 +79,7 @@ public class BookAPI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return null;
+        return apiResponseBuilderFactory.success().build();
     }
 
     /**

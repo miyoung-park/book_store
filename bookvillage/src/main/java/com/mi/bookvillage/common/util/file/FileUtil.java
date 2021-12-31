@@ -11,15 +11,14 @@ import java.util.UUID;
 
 public class FileUtil {
 
-    private static final String path = "/Users/miyoung/Desktop/wdfall_study/study/personal_project/book_village/bookvillage/front/public";
+    private static final String Basic_Path = "/Users/miyoung/Desktop/wdfall_study/study/personal_project/book_village/bookvillage/front/public";
 
     public static List<FileVO> uploadFiles( List<MultipartFile> files , int bookSeq ) throws IOException {
-
         List<FileVO> fileList = new ArrayList<>();
         // 저장경로 설정
         String savePath = getSavePath();
-
-        if( files.size() > 0 && !files.get(0).getOriginalFilename().equals("")){
+        // 파일 DB에 저장
+        if( files != null){
             for( MultipartFile multipartFiles : files ) {
                 FileVO fileVO = new FileVO();
                 fileVO.setOriginFileName(multipartFiles.getOriginalFilename());
@@ -28,7 +27,6 @@ public class FileUtil {
                 fileVO.setSavePath(savePath);
                 fileList.add(fileVO);
 
-                // 파일 저장
                 saveFile(fileVO, multipartFiles);
             }
         }
@@ -45,12 +43,18 @@ public class FileUtil {
         return savePath;
     }
 
+    /**
+     * 파일 저장
+     * @param fileVO
+     * @param multipartFiles
+     * @throws IOException
+     */
     private static void saveFile(FileVO fileVO , MultipartFile multipartFiles) throws IOException {
         // 파일로 저장
-        File file = new File(path + getSavePath() + fileVO.getRenameFileName());
+        File file = new File(Basic_Path + getSavePath() + fileVO.getRenameFileName());
 
         if(!file.exists()) { // 예외처리 -- 폴더가 존재하지 않을 경우엔 새로 만들어주기
-            new File(path + getSavePath()).mkdirs();
+            new File(Basic_Path + getSavePath()).mkdirs();
         }
         //파일객체 한 번에 옮겨주기
         multipartFiles.transferTo(file);

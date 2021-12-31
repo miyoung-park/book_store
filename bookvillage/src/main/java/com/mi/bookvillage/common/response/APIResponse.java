@@ -22,10 +22,4 @@ public class APIResponse extends MappingJacksonValue {
         super.setValue(value);
     }
 
-    @JsonAnyGetter
-    @JsonProperty("header")
-    public Map<String, Object> getHeader() {
-        return header;
-    }
-
 }

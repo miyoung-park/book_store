@@ -19,11 +19,17 @@ public class CustomerAPI {
         this.customerService = customerService;
     }
 
+
+
+
+
     @RequestMapping(value = "/list" , method = RequestMethod.GET)
     public ResponseEntity<?> getListCustomer(){
         List<CustomerVO> customerList = customerService.getListCustomer();
 
         return ResponseEntity.ok(customerList);
     }
+
+
 
 }

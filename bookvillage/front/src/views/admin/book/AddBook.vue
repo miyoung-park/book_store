@@ -20,7 +20,7 @@
           <v-text-field
               v-model="bookInfo.bookMemo"
               :counter="100"
-              label="메모"
+              label="개요"
               required
           ></v-text-field>
           <v-file-input
@@ -64,9 +64,12 @@ export default {
     }
   },
   methods: {
-    addBook(){
-      const response = this.bookService.addBook(this.bookInfo , this.bookImage);
-      console.log(response);
+    async addBook(){
+      await this.bookService.addBook(this.bookInfo , this.bookImage);
+      alert('도서 정보가 등록되었습니다.');
+      this.$router.push({
+        path: '/admin/book/list'
+      }).catch(e => {console.log(e)})
     },
     showImage(images){
       if( images.length > 0 ) {

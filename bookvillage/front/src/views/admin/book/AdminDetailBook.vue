@@ -24,7 +24,7 @@
         <div class="my-2">가격 : {{bookInfo.bookPrice}} 원</div>
         <div class="my-2">대여료 : {{bookInfo.bookRentalFee}} 포인트</div>
         <div class="my-2">등록날짜 : {{bookInfo.bookRegDt}}</div>
-        <div class="my-2">설명: {{bookInfo.bookMemo}}</div>
+        <div class="my-2">개요: {{bookInfo.bookMemo}}</div>
       </v-card-text>
       <v-divider></v-divider>
       <div class="btn_section">
