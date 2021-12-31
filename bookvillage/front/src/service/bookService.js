@@ -2,6 +2,16 @@ import $axiosInst from "@/axios/AxiosInst";
 
 export class bookService {
 
+    getBookList(){
+        return $axiosInst
+            .get('/book/list')
+            .then( response => {
+                return response.data;
+            }).catch( error => {
+                return error;
+            })
+    }
+
     getBookDetail(bookSeq){
         return $axiosInst
             .get('/book/detail/' + bookSeq)

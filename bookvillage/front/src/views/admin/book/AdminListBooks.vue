@@ -11,6 +11,9 @@
         ></v-text-field>
       </v-card-title>
     </div>
+    <div class="list_section">
+      <v-btn text class="btn_list" @click="goWriteBook">도서등록</v-btn>
+    </div>
     <div class="table_section">
       <v-data-table
           :headers="headers"
@@ -18,20 +21,20 @@
           :search="search"
           @click:row="goDetail"
           :items-per-page="5"
-          style="height: 85%"
+          style="height: 85%; cursor: pointer"
           sort-by="bookSeq"
           :sort-desc= true
       >
       </v-data-table>
-
     </div>
+
   </div>
 </template>
 
 <script>
-import AxiosInst from "@/axios/AxiosInst";
 export default {
   name: "AdminListBooks",
+  inject: ['bookService'],
   data () {
     return {
       search: '',
@@ -54,13 +57,13 @@ export default {
       });
     },
      async getList(){
-      return await AxiosInst
-                  .get('/book/list')
-                  .then( response => {
-                    this.books = response.data;
-                  }).catch( error => {
-                    console.log(error);
-                })
+      const response = await this.bookService.getBookList();
+      this.books = response;
+    },
+    goWriteBook(){
+      this.$router.push({
+        path: "/admin/book/add"
+      })
     }
   },
   mounted() {
@@ -86,5 +89,12 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
+}
+.list_section{
+  display: flex;
+  justify-content: flex-end;
+}
+.btn_list {
+  background-color: darksalmon;
 }
 </style>

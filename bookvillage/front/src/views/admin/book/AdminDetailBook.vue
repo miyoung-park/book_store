@@ -2,7 +2,7 @@
   <div class="detail_section">
     <v-card
         class="mx-auto my-8"
-        width="350"
+        width="500"
         max-height="550"
         style="margin-bottom: 30px !important; display: flex; flex-direction: column"
     >
@@ -10,47 +10,21 @@
           style="font-size: small"
       >번호 : {{bookInfo.bookSeq}}</v-card-title>
       <div class="image_section">
-
-        <v-row>
-          <v-col
-              v-for="file in files"
-              :key="file.fileSeq"
-              class="d-flex child-flex"
-              cols="4"
+        <div v-for="file in files"
+             :key="file.fileSeq">
+          <v-img
+              class="image"
+              :src="concat(file)"
           >
-            <v-img
-                :src="concat(file)"
-                aspect-ratio="1"
-                class="grey lighten-2"
-            >
-              <template v-slot:placeholder>
-                <v-row
-                    class="fill-height ma-0"
-                    align="center"
-                    justify="center"
-                >
-                </v-row>
-              </template>
-            </v-img>
-          </v-col>
-        </v-row>
+          </v-img>
+        </div>
       </div>
-
-
-
-
-
-
-
-
-
-      <v-card-title class="">{{bookInfo.bookTitle}}</v-card-title>
-
+      <v-card-title >{{bookInfo.bookTitle}}</v-card-title>
       <v-card-text>
         <div class="my-2">가격 : {{bookInfo.bookPrice}} 원</div>
         <div class="my-2">대여료 : {{bookInfo.bookRentalFee}} 포인트</div>
         <div class="my-2">등록날짜 : {{bookInfo.bookRegDt}}</div>
-        <div>기타: {{bookInfo.bookMemo}}</div>
+        <div class="my-2">설명: {{bookInfo.bookMemo}}</div>
       </v-card-text>
       <v-divider></v-divider>
       <div class="btn_section">
@@ -93,10 +67,8 @@ export default {
        const data = await this.bookService.getBookDetail(this.bookSeq);
        this.bookInfo = data.bookInfo;
        this.files = data.files;
-       console.log(this.files)
     },
     concat(file){
-      console.log(file)
       return file.savePath + file.renameFileName
     },
     goUpdateBook(){
@@ -155,12 +127,15 @@ export default {
 }
 .image_section{
   display: flex;
+  justify-content: space-around;
+  align-items: center;
   width: 100%;
-  height: 200px;
   margin: auto;
 }
-.image_section .row {
+.image {
+  width: 100px;
   display: flex;
-  justify-content: center;
+  margin: auto;
 }
+
 </style>

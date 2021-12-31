@@ -22,7 +22,7 @@
     </select>
 
 
-    <insert id="addBook" >
+    <insert id="addBook" useGeneratedKeys="true" keyProperty="bookSeq">
         INSERT INTO BOOK (
                           BOOK_TITLE,
                           BOOK_PRICE,
@@ -35,9 +35,6 @@
                            #{bookRentalFee},
                            #{bookMemo}
                           )
-        <selectKey keyProperty="bookSeq" resultType="Integer">
-            SELECT LAST_INSERT_ID()
-        </selectKey>
     </insert>
 
     <insert id="addFile">

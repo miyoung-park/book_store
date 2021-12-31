@@ -25,10 +25,10 @@ public class BookService {
     }
 
     public void addBook(BookVO bookVO , List<FileVO> files){
-        int bookSeq = bookDao.addBook(bookVO);
-        System.out.println(bookSeq);
+        bookDao.addBook(bookVO);
+        System.out.println(bookVO);
         for(int i = 0; i < files.size(); i ++) {
-            files.get(i).setBookSeq(bookSeq);
+            files.get(i).setBookSeq(bookVO.getBookSeq());
             bookDao.addFile(files.get(i));
         }
     }

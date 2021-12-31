@@ -127,7 +127,8 @@ export default {
   margin: auto;
 }
 .previewImage {
-  width: 75%;
+  width: 100px;
+  height: 150px;
 }
 .image {
   width: 100%;
