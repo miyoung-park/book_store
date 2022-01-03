@@ -42,17 +42,20 @@
           <div class="bookImage" >
             <div v-for="image in bookImages" :key="image.fileSeq">
               <img class="previewImage" :src="concat(image)">
-              <v-card-text readonly>{{image.originFileName}}X</v-card-text>
+              <v-card-text readonly style="cursor: pointer">
+                {{image.originFileName}}  X
+              </v-card-text>
             </div>
           </div>
         </div>
+        <v-divider></v-divider>
         <div class="newImageSection" v-if="isView">
+          <a style="color: black">&lt; 새 이미지 &gt;</a>
           <div v-for="imageUrl in uploadImageFile" :key="imageUrl">
             <div class="image">
               <img class="previewImage" :src="imageUrl">
             </div>
           </div>
-          <a style="color: black">&lt; 새 이미지 &gt;</a>
         </div>
       </div>
     </div>
@@ -132,7 +135,7 @@ export default {
   margin: auto;
 }
 .input_section {
-  width: 80%;
+  width: 90%;
   display: flex;
   justify-content: center;
   margin-bottom: 30px;
@@ -146,20 +149,28 @@ export default {
   justify-content: center;
 }
 .image_section {
-  width: 40%;
+  width: 50%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   text-align: center;
-  margin: auto 0 auto 60px;
+  margin: auto 0 auto 30px;
+}
+.image {
+  width: 25%;
 }
 .previewImage {
-  width: 25%;
+  width: 100%;
 }
 .newImageSection {
   width: 100%;
   display: flex;
   justify-content: center;
   flex-direction: column;
+}
+.bookImage{
+  display: flex;
+  text-align: center;
 }
 </style>
