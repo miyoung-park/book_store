@@ -2,6 +2,7 @@ package com.mi.bookvillage.customer.model.service;
 
 import com.mi.bookvillage.customer.model.dao.CustomerDAO;
 import com.mi.bookvillage.customer.model.vo.CustomerVO;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,16 +11,21 @@ import java.util.List;
 public class CustomerService {
 
     private CustomerDAO customerDAO;
+    private BCryptPasswordEncoder encoder;
 
-    public CustomerService(CustomerDAO customerDAO){
+    public CustomerService(CustomerDAO customerDAO , BCryptPasswordEncoder encoder){
         this.customerDAO = customerDAO;
+        this.encoder = encoder;
     }
 
     public List<CustomerVO> getCustomerList(){
         return customerDAO.getCustomerList();
     }
 
+
     public void addCustomer(CustomerVO customerVO){
+        String encodedPassword = encoder.encode(customerVO.getUserPw());
+        customerVO.setUserPw(encodedPassword);
         customerDAO.addCustomer(customerVO);
     }
 

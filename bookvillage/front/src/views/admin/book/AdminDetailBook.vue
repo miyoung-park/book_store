@@ -59,8 +59,8 @@ export default {
   created() {
     this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
     },
-  mounted() {
-    this.getBookDetail();
+  async mounted() {
+    await this.getBookDetail();
   },
   methods: {
     async getBookDetail(){
@@ -76,18 +76,18 @@ export default {
         path: '/admin/book/update/' + this.bookSeq
       })
     },
-    async goDeleteBook(){
+     goDeleteBook(){
       if(confirm('정말 삭제하시겠습니까 ?')){
         try {
-          await this.bookService.deleteBook(this.bookSeq);
+           this.bookService.deleteBook(this.bookSeq);
           alert('도서정보 삭제가 완료되었습니다.')
-          this.$router.push({
-            path: '/admin/book/list'
-          }).catch((e)=> {console.log(e)})
         }catch(error) {
           console.log(error);
           alert('도서정보 삭제가 실패했습니다. 다시 진행해주세요.')
         }
+        this.$router.push({
+          path: '/admin/book/list'
+        }).catch((e)=> {console.log(e)})
       }
       return;
     },

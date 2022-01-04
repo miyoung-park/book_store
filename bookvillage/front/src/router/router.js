@@ -42,7 +42,6 @@ function checkAdminRight(to , from, next){
     next();
 }
 
-
 const routes = [
                 {
                     path: '/',

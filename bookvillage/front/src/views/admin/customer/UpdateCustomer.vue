@@ -13,13 +13,6 @@
             type="password"
             required
         ></v-text-field>
-        <v-text-field
-            v-model="checkPw"
-            label="비밀번호 확인"
-            type="password"
-            required
-            @change="checkPassword"
-        ></v-text-field>
         <p style="font-size: small; color: crimson">{{validPw}}</p>
         <v-text-field
             v-model="customerInfo.userName"
@@ -95,11 +88,9 @@ export default {
       const response = await this.customerService.getCustomerDetail(this.customerInfo.userSeq);
       this.customerInfo = response;
     },
-    checkPassword(){
-
-    },
     updateCustomer(){
-
+      this.customerService.updateCustomer(this.customerInfo);
+      alert('고객정보가 수정되었습니다.');
     }
   },
   mounted() {

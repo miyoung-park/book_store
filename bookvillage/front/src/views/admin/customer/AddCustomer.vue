@@ -95,6 +95,10 @@ export default {
     },
     addCustomer(){
      this.customerService.addCustomer(this.customerInfo);
+     alert('고객 정보가 등록되었습니다.');
+     this.$router.push({
+       path : '/admin/customer/list'
+     })
     }
   }
 }

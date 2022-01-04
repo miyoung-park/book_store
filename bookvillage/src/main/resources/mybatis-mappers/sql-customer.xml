@@ -7,13 +7,14 @@
              , USER_NAME
              , USER_ID
              , USER_PW
-             , DATE_FORMAT(USER_BIRTH, '%Y-%m-%d') AS USER_BIRTH
+             , USER_BIRTH
              , USER_TELL
              , DATE_FORMAT(USER_REG_DT, '%Y-%m-%d %H:%i') AS USER_REG_DT
              , DATE_FORMAT(USER_UPDATE_DT, '%Y-%m-%d %H:%i') AS USER_UPDATE_DT
              , USER_ROLE
           FROM CUSTOMER
     </select>
+
 
     <insert id="addCustomer">
         INSERT INTO CUSTOMER (
@@ -38,7 +39,7 @@
                USER_ID ,
                USER_PW ,
                USER_NAME,
-               DATE_FORMAT(USER_BIRTH, '%Y-%m-%d') AS USER_BIRTH,
+               USER_BIRTH,
                USER_TELL,
                USER_REG_DT
          FROM CUSTOMER

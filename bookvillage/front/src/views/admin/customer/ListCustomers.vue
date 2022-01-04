@@ -43,6 +43,9 @@ export default {
       customers: [],
     }
   },
+  async mounted() {
+    await this.getList();
+  },
   methods: {
     goDetail(customer){
       const _userSeq = customer.userSeq
@@ -52,11 +55,9 @@ export default {
     },
     async getList(){
      const response = await this.customerService.getCustomerList();
+     console.log(response);
      this.customers = response;
     }
-  },
-  mounted() {
-    this.getList();
   }
 }
 </script>

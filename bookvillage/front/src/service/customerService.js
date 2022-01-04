@@ -32,6 +32,17 @@ export class customerService {
             })
     }
 
+
+    updateCustomer(customerObj) {
+        return $axiosInst
+            .put('/customer/update/' , customerObj)
+            .then( response => {
+                return response.data;
+            }).catch( error => {
+                return error;
+            })
+    }
+
     deleteCustomer(userSeq){
          return $axiosInst
              .delete('/customer/delete/' + userSeq)
