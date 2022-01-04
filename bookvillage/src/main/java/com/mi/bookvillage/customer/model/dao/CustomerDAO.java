@@ -10,5 +10,9 @@ import java.util.List;
 public interface CustomerDAO {
 
 
-    List<CustomerVO> getListCustomer();
+    List<CustomerVO> getCustomerList();
+    void addCustomer(CustomerVO customerVO);
+    CustomerVO getCustomerDetail(int userSeq);
+    void updateCustomer(CustomerVO customerVO);
+    void deleteCustomer(int userSeq);
 }

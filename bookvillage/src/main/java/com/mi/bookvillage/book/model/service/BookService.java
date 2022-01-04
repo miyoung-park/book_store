@@ -24,11 +24,12 @@ public class BookService {
         return bookDao.getBookDetail(bookSeq);
     }
 
-    public void addBook(BookVO bookVO , List<FileVO> files){
+    public void addBook(BookVO bookVO){
         bookDao.addBook(bookVO);
-        System.out.println(files);
+    }
+
+    public void addFile(List<FileVO> files){
         for(int i = 0; i < files.size(); i ++) {
-            files.get(i).setBookSeq(bookVO.getBookSeq());
             bookDao.addFile(files.get(i));
         }
     }
@@ -38,7 +39,24 @@ public class BookService {
         return fileList;
     }
 
-    public void deleteBook(int bookSeq) {
-        bookDao.deleteBook(bookSeq);
+    public void updateBook(BookVO bookVO){
+        bookDao.updateBook(bookVO);
     }
+
+    public void deleteBook(int bookSeq) {
+        // 해당 도서정보 삭제
+        bookDao.deleteBook(bookSeq);
+        // 해당 도서이미지 삭제
+        bookDao.deleteFilesWithBook(bookSeq);
+    }
+
+    public void deleteFiles(List<Integer> deleteFiles){
+        if( deleteFiles != null && deleteFiles.size() > 0 ){
+            for( int i = 0; i < deleteFiles.size(); i++) {
+                bookDao.deleteFiles(deleteFiles.get(i));
+            }
+        }
+    }
+
+
 }

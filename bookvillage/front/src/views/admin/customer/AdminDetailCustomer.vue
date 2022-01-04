@@ -29,30 +29,52 @@
 <script>
 export default {
   name: "AdminDetailCustomer",
+  inject: ['customerService'],
   data() {
     return {
-      customerInfo: [
-          {userSeq: ''},
-          {userId: ''},
-          {userName: ''},
-          {userBirth: ''},
-          {userTell: ''},
-          {userRegDt: ''},
-      ],
+      customerInfo: {
+          userSeq: '',
+          userId: '',
+          userName: '',
+          userBirth: '',
+          userTell: '',
+          userRegDt: '',
+      },
     }
   },
+  // 데이터 매핑
+  created() {
+    this.customerInfo.userSeq  = this.$route.params.userSeq;
+  },
   methods: {
+    async getCustomerDetail(){
+      const response = await this.customerService.getCustomerDetail(this.customerInfo.userSeq);
+      this.customerInfo = response;
+    },
     goListCustomer(){
       this.$router.push({
         path: '/admin/customer/list'
       })
     },
     goUpdateCustomer(){
-
+      const _userSeq = this.customerInfo.userSeq
+      this.$router.push({
+        path: '/admin/customer/update/' + _userSeq
+      });
     },
     goDeleteCustomer(){
-
+      if(confirm('고객 정보를 삭제하시겠습니까 ?')){
+        this.customerService.deleteCustomer(this.customerInfo.userSeq);
+        alert('고객정보가 삭제되었습니다.');
+        return this.$router.push({
+          path: '/admin/customer/list'
+        })
+      }
+      return;
     }
+  },
+  mounted() {
+    this.getCustomerDetail();
   }
 }
 </script>

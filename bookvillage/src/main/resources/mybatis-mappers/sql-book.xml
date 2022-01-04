@@ -37,6 +37,7 @@
                           )
     </insert>
 
+
     <insert id="addFile">
         INSERT INTO BOOK_FILE(
                                 BOOK_SEQ,
@@ -52,6 +53,7 @@
                                )
     </insert>
 
+
     <select id="getBookFile" resultType="com.mi.bookvillage.common.util.file.FileVO">
         SELECT FILE_SEQ,
                BOOK_SEQ,
@@ -63,11 +65,39 @@
         WHERE BOOK_SEQ = #{bookSeq}
     </select>
 
+
+    <update id="updateBook" parameterType="BookVO">
+        UPDATE BOOK
+           SET BOOK_TITLE = #{bookTitle},
+               BOOK_PRICE = #{bookPrice},
+               BOOK_RENTAL_FEE = #{bookRentalFee},
+               BOOK_MEMO = #{bookMemo},
+               BOOK_UPDATE_DT = NOW()
+         WHERE BOOK_SEQ = #{bookSeq}
+    </update>
+
+
     <delete id="deleteBook">
         DELETE
           FROM BOOK
          WHERE BOOK_SEQ = #{bookSeq}
     </delete>
+
+
+    <delete id="deleteFilesWithBook">
+        DELETE
+        FROM BOOK_FILE
+        WHERE BOOK_SEQ = #{bookSeq}
+    </delete>
+
+
+    <delete id="deleteFiles">
+        DELETE
+          FROM BOOK_FILE
+         WHERE FILE_SEQ = #{fileSeq}
+    </delete>
+
+
 
 
 

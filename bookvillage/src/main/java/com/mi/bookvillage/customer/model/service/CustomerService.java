@@ -15,8 +15,26 @@ public class CustomerService {
         this.customerDAO = customerDAO;
     }
 
-    public List<CustomerVO> getListCustomer(){
-        return customerDAO.getListCustomer();
+    public List<CustomerVO> getCustomerList(){
+        return customerDAO.getCustomerList();
+    }
+
+    public void addCustomer(CustomerVO customerVO){
+        customerDAO.addCustomer(customerVO);
+    }
+
+
+    public CustomerVO getCustomerDetail(int userSeq){
+        CustomerVO customerVO = customerDAO.getCustomerDetail(userSeq);
+        return customerVO;
+    }
+
+    public void updateCustomer(CustomerVO customerVO){
+        customerDAO.updateCustomer(customerVO);
+    }
+
+    public void deleteCustomer(int userSeq){
+        customerDAO.deleteCustomer(userSeq);
     }
 
 }

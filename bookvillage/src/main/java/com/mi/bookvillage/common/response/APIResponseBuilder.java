@@ -46,9 +46,8 @@ public class APIResponseBuilder {
 
     public APIResponseBuilder putValue(String key, Object value) {
         if( responseBodyObject != null ) {
-            throw new RuntimeException("Already data put.");
+            throw new RuntimeException("Already data put...");
         }
-
         if( responseBodyMap == null) {
             responseBodyMap = new HashMap<>();
         }

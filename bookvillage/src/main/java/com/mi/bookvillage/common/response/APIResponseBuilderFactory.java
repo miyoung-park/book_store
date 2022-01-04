@@ -34,6 +34,12 @@ public class APIResponseBuilderFactory {
     }
 
 
+    public APIResponseBuilder error(){
+        APIResponseBuilder instance = new APIResponseBuilder();
+        return instance;
+    }
+
+
 
 
 }

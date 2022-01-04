@@ -21,7 +21,7 @@
           :items="books"
           :search="search"
           @click:row="goDetail"
-          :items-per-page="5"
+          :items-per-page="10"
           style="height: 85%"
           sort-by="bookSeq"
           :sort-desc= true

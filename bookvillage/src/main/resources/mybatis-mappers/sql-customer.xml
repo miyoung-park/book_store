@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mi.bookvillage.customer.model.dao.CustomerDAO">
 
-    <select id="getListCustomer" resultType="CustomerVO">
+    <select id="getCustomerList" resultType="CustomerVO">
         SELECT USER_SEQ
              , USER_NAME
              , USER_ID
@@ -15,6 +15,53 @@
           FROM CUSTOMER
     </select>
 
+    <insert id="addCustomer">
+        INSERT INTO CUSTOMER (
+                              USER_ID ,
+                              USER_PW ,
+                              USER_NAME,
+                              USER_BIRTH,
+                              USER_TELL
+                             )
+                    VALUES (
+                            #{userId},
+                            #{userPw},
+                            #{userName},
+                            #{userBirth},
+                            #{userTell}
+                           )
+    </insert>
+
+
+    <select id="getCustomerDetail" resultType="CustomerVO">
+        SELECT USER_SEQ,
+               USER_ID ,
+               USER_PW ,
+               USER_NAME,
+               DATE_FORMAT(USER_BIRTH, '%Y-%m-%d') AS USER_BIRTH,
+               USER_TELL,
+               USER_REG_DT
+         FROM CUSTOMER
+        WHERE USER_SEQ = #{userSeq}
+    </select>
+
+
+    <update id="updateCustomer">
+        UPDATE CUSTOMER
+            SET USER_ID = #{userId},
+                USER_PW = #{userPw},
+                USER_NAME = #{userName},
+                USER_BIRTH = #{userBirth},
+                USER_TELL = #{userTell}
+         WHERE USER_SEQ = #{userSeq}
+    </update>
+
+
+    <delete id="deleteCustomer">
+        DELETE
+          FROM CUSTOMER
+         WHERE USER_SEQ = #{userSeq}
+    </delete>
 
 
 

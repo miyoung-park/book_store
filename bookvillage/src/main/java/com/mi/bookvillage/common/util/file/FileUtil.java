@@ -9,6 +9,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * FileUtil
+ * : MultipartFile 객체를 FileVO 로 변환하는 역할
+ */
 public class FileUtil {
 
     private static final String Basic_Path = "/Users/miyoung/Desktop/wdfall_study/study/personal_project/book_village/bookvillage/front/public";

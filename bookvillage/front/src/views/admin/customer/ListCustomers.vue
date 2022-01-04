@@ -26,10 +26,10 @@
 </template>
 
 <script>
-import AxiosInst from "@/axios/AxiosInst";
 
 export default {
   name: "Customers",
+  inject: ['customerService'],
   data () {
     return {
       search: '',
@@ -51,13 +51,8 @@ export default {
       });
     },
     async getList(){
-      return await AxiosInst
-          .get('/customer/list')
-          .then( response => {
-            this.customers = response.data;
-          }).catch( error => {
-            console.log(error);
-          })
+     const response = await this.customerService.getCustomerList();
+     this.customers = response;
     }
   },
   mounted() {

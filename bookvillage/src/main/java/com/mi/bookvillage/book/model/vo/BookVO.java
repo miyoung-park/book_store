@@ -1,16 +1,6 @@
 package com.mi.bookvillage.book.model.vo;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.mi.bookvillage.common.util.file.FileVO;
 import lombok.*;
-import org.springframework.util.MultiValueMap;
-import org.springframework.web.multipart.MultipartFile;
-
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 
 @NoArgsConstructor

@@ -1,9 +1,7 @@
 package com.mi.bookvillage.common.response;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.databind.ser.FilterProvider;
 import org.springframework.http.converter.json.MappingJacksonValue;
 
 import java.util.Map;
@@ -21,5 +19,6 @@ public class APIResponse extends MappingJacksonValue {
     public void setValue(Object value) {
         super.setValue(value);
     }
+
 
 }

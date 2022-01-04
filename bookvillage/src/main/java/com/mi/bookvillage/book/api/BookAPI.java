@@ -18,6 +18,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import javax.validation.Valid;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * BookAPI
@@ -64,6 +65,7 @@ public class BookAPI {
                                         .build();
     }
 
+
     /**
      * 도서 등록
      * @param book
@@ -74,11 +76,13 @@ public class BookAPI {
                                ,@RequestParam(required = false) List<MultipartFile> files ) {
         try {
             List<FileVO> fileList = FileUtil.uploadFiles(files, book.getBookSeq());
-            bookService.addBook(book , fileList);
+            bookService.addBook(book);
+            bookService.addFile(fileList);
             return apiResponseBuilderFactory.success().build();
         } catch (IOException e) {
             e.printStackTrace();
         }
+        // error 로 바꿔야 함
         return apiResponseBuilderFactory.success().build();
     }
 
@@ -87,22 +91,37 @@ public class BookAPI {
      * @param book
      * @return
      */
-    @RequestMapping(value = "/book/update/{bookSeq}" , method = RequestMethod.POST)
-    public APIResponse updateBook(@ModelAttribute BookVO book) {
-        return null;
+    @RequestMapping(value = "/book/update/{bookSeq}" , method = RequestMethod.PUT)
+    public APIResponse updateBook( @PathVariable("bookSeq") int bookSeq
+                                 , @ModelAttribute BookVO book
+                                 , @RequestParam(required = false) List<MultipartFile> files
+                                 , @RequestParam(required = false) List<Integer> deleteFiles) {
+        try {
+            // book 정보 업데이트
+            bookService.updateBook(book);
+            // new image 추가
+            List<FileVO> fileList = FileUtil.uploadFiles(files, bookSeq);
+            bookService.addFile(fileList);
+            // 기존 image 삭제
+            bookService.deleteFiles(deleteFiles);
+            return apiResponseBuilderFactory.success().build();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // error 로 바꿔야 함
+        return apiResponseBuilderFactory.success().build();
+
     }
 
 
-
-
     /**
-     * 도서 삭제
+     * 도서 삭제 + 도서 이미지 삭제
      * @param bookSeq
      * @return
      */
     @RequestMapping(value = "/book/delete/{bookSeq}",method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteBook(@PathVariable int bookSeq){
-        bookService.deleteBook(bookSeq);
+        bookService.deleteBook(bookSeq); // 도서정보 + 도서 이미지 삭제
         return ResponseEntity.ok().build();
     }
 

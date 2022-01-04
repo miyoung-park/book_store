@@ -1,28 +1,28 @@
 <template>
   <div class="content">
     <div class="input_section">
-      <form>
+      <v-form>
         <v-text-field
             v-model="customerInfo.userId"
-            :counter="10"
             label="아이디"
             required
         ></v-text-field>
         <v-text-field
             v-model="customerInfo.userPw"
-            :counter="10"
             label="비밀번호"
+            type="password"
             required
         ></v-text-field>
         <v-text-field
             v-model="checkPw"
-            :counter="10"
             label="비밀번호 확인"
+            type="password"
             required
+            @change="checkPassword"
         ></v-text-field>
+        <p style="font-size: small; color: crimson">{{validPw}}</p>
         <v-text-field
             v-model="customerInfo.userName"
-            :counter="10"
             label="이름"
             required
         ></v-text-field>
@@ -57,14 +57,13 @@
         </v-menu>
         <v-text-field
             v-model="customerInfo.userTell"
-            :counter="10"
             label="전화번호"
             required
         ></v-text-field>
         <div class="btn_section">
-          <v-btn class="mr-4" @click="addCustomer" style="background-color: #FFE082">등록하기</v-btn>
+          <v-btn class="mr-4" @click="updateCustomer" style="background-color: #FFE082">수정하기</v-btn>
         </div>
-      </form>
+      </v-form>
     </div>
   </div>
 </template>
@@ -72,22 +71,56 @@
 <script>
 export default {
   name: "UpdateCustomer",
+  inject: ['customerService'],
   data() {
     return {
-      customerInfo: [
-        {userId: ''},
-        {userPw: ''},
-        {userName: ''},
-        {userBirth: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10)},
-        {userTell: ''}
-      ],
+      customerInfo: {
+        userSeq: '',
+        userId : '' ,
+        userPw : '' ,
+        userName: '' ,
+        userBirth: '',
+        userTell : ''
+      },
       checkPw: '',
+      validPw: null,
       menu: false
     }
+  },
+  created() {
+    this.customerInfo.userSeq = this.$route.params.userSeq;
+  },
+  methods:{
+    async getCustomerDetail(){
+      const response = await this.customerService.getCustomerDetail(this.customerInfo.userSeq);
+      this.customerInfo = response;
+    },
+    checkPassword(){
+
+    },
+    updateCustomer(){
+
+    }
+  },
+  mounted() {
+    this.getCustomerDetail();
   }
 }
 </script>
 
 <style scoped>
-
+.content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: auto;
+}
+.input_section {
+  width: 50%;
+  margin-bottom: 100px;
+}
+.btn_section{
+  display: flex;
+  justify-content: center;
+}
 </style>
