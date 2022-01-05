@@ -4,8 +4,13 @@
       <div>
         <AdminNavBar/>
         <div class="header-section">
-          <a @click="goHomepage">📗 Book Village 📙</a>
-          <p>[ Admin Page ]</p>
+          <div class="button-section">
+            <v-btn class="customer-btn" @click="goCustomer">일반 페이지</v-btn>
+          </div>
+          <div>
+            <a><router-link to='/admin/book/list'>📕 Book Village 📕</router-link></a>
+            <p>[ Admin Page ]</p>
+          </div>
         </div>
       </div>
     </header>
@@ -22,7 +27,14 @@ export default {
   components: {
     AdminNavBar
   },
+  data(){
+    return{
+      isAdmin : null
+    }
+  },
   methods: {
+    /*
+
     goHomepage(){
       const path = window.location.pathname;
       const status = path.split("/")[1];
@@ -33,6 +45,21 @@ export default {
        return;
       }
       return this.$router.push("/")
+    },
+
+    */
+    goCustomer(){
+      this.role = this.$store.getters.getRole;
+      // 현재 유저로 로그인 되어있는지 파악 후 로그아웃 처리 후 리스트 이동
+      if(this.role == 'admin'){
+        if(confirm('일반 페이지는 관리자 계정 로그아웃 후 이용 가능합니다.\n로그아웃 후 일반 페이지로 이동하시겠습니까 ?')){
+          this.$store.dispatch('logout');
+        }
+        return;
+      }
+      this.$router.push({
+        path: '/'
+      })
     }
   }
 }
@@ -50,10 +77,9 @@ export default {
 }
 .header-section {
   height: 150px;
-  background-color: #80CBC4;
+  background-color: beige;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   font-family: 'Merriweather', serif;
 }
@@ -62,11 +88,27 @@ export default {
   font-size: 2.7vw;
   font-weight: bold;
   text-decoration:none;
+
 }
 .header-section p {
   text-decoration: none;
+  text-align: center;
 }
 nav {
   height: 100%;
+}
+.button-section {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 20px;
+  margin-top: 10px;
+}
+.customer-btn{
+  font-family: 'Gowun Dodum', sans-serif;
+  font-size: x-small ;
+  font-weight: bold ;
+  background-color: #CFD8DC !important;
 }
 </style>

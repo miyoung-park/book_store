@@ -1,37 +1,10 @@
 <template>
   <div class="detail_section">
-    <v-card
-        class="mx-auto my-8"
-        width="500"
-        max-height="550"
-        style="margin-bottom: 30px !important; display: flex; flex-direction: column"
-    >
-      <v-card-title
-          style="font-size: small"
-      >번호 : {{bookInfo.bookSeq}}</v-card-title>
-      <div class="image_section">
-        <div v-for="file in files"
-             :key="file.fileSeq">
-          <v-img
-              class="image"
-              :src="concat(file)"
-          >
-          </v-img>
-        </div>
-      </div>
-      <v-card-title >{{bookInfo.bookTitle}}</v-card-title>
-      <v-card-text>
-        <div class="my-2">가격 : {{bookInfo.bookPrice}} 원</div>
-        <div class="my-2">대여료 : {{bookInfo.bookRentalFee}} 포인트</div>
-        <div class="my-2">등록날짜 : {{bookInfo.bookRegDt}}</div>
-        <div class="my-2">개요: {{bookInfo.bookMemo}}</div>
-      </v-card-text>
-      <v-divider></v-divider>
-      <div class="btn_section">
-        <v-btn text class="btn_update" @click="goUpdateBook">도서수정</v-btn>
-        <v-btn text class="btn_delete" @click="goDeleteBook">도서삭제</v-btn>
-      </div>
-    </v-card>
+    <div class="btn_section">
+      <v-btn class="btn_delete" @click="goDeleteBook">도서삭제</v-btn>
+      <v-btn class="btn_update" @click="goUpdateBook">도서수정</v-btn>
+    </div>
+    <BookComponent/>
     <div class="list_section">
       <v-btn text class="btn_list" @click="goListBook">도서목록보기</v-btn>
     </div>
@@ -39,52 +12,31 @@
 </template>
 
 <script>
+import BookComponent from "@/components/book/BookComponent";
 export default {
   name: "AdminDetailBook",
+  components: {
+    BookComponent
+  },
   data(){
     return {
       bookSeq: '',
-      bookInfo: [
-        { bookSeq: '' },
-        { bookTitle: ''},
-        { bookPrice: '' },
-        { bookRentalFee: '' },
-        { bookMemo: '' },
-        { bookRegDt: '' },
-      ],
-      files: [],
     }
   },
   inject:['bookService'],
   created() {
     this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
     },
-  async mounted() {
-    await this.getBookDetail();
-  },
   methods: {
-    async getBookDetail(){
-       const data = await this.bookService.getBookDetail(this.bookSeq);
-       this.bookInfo = data.bookInfo;
-       this.files = data.files;
-    },
-    concat(file){
-      return file.savePath + file.renameFileName
-    },
     goUpdateBook(){
       this.$router.push({
         path: '/admin/book/update/' + this.bookSeq
       })
     },
-     goDeleteBook(){
+     async goDeleteBook(){
       if(confirm('정말 삭제하시겠습니까 ?')){
-        try {
-           this.bookService.deleteBook(this.bookSeq);
-          alert('도서정보 삭제가 완료되었습니다.')
-        }catch(error) {
-          console.log(error);
-          alert('도서정보 삭제가 실패했습니다. 다시 진행해주세요.')
-        }
+        await this.bookService.deleteBook(this.bookSeq);
+        alert('도서정보 삭제가 완료되었습니다.')
         this.$router.push({
           path: '/admin/book/list'
         }).catch((e)=> {console.log(e)})
@@ -102,40 +54,33 @@ export default {
 </script>
 
 <style scoped>
+.detail_section{
+  margin: auto;
+}
 .btn_section {
   display: flex;
   justify-content: space-around;
 }
 .btn_update{
-  color: darkslateblue;
+  width: 50%;
+  background-color: rosybrown !important;
   font-weight: bold;
 }
 .btn_delete{
-  color: maroon;
+  width: 50%;
+  background-color: indianred !important;
   font-weight: bold;
 }
-.detail_section{
- margin: auto;
-}
 .list_section{
+  width: 100%;
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  margin: auto;
 }
 .btn_list {
-  background-color: burlywood;
-}
-.image_section{
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  width: 100%;
-  margin: auto;
-}
-.image {
-  width: 100px;
-  display: flex;
-  margin: auto;
+  background-color: rosybrown;
+  font-weight: bold;
+  margin-top: 20px;
 }
 
 </style>

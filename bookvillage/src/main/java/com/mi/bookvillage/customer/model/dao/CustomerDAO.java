@@ -10,8 +10,9 @@ public interface CustomerDAO {
 
 
     List<CustomerVO> getCustomerList();
+    CustomerVO loginCustomer(CustomerVO customerVO);
     void addCustomer(CustomerVO customerVO);
-    CustomerVO getCustomerDetail(int userSeq);
+    CustomerVO getCustomerBySeq(int userSeq);
     void updateCustomer(CustomerVO customerVO);
     void deleteCustomer(int userSeq);
 }

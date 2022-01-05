@@ -1,5 +1,6 @@
 <template>
   <div class="login_section">
+    <p> - 사용자 로그인 - </p>
     <div class="login_form">
         <v-text-field
             label="아이디"
@@ -20,18 +21,14 @@
              style="background-color: #E6EE9C"
              @click="customerLogin"
       >사용자로그인</v-btn>
-      <v-btn class="ma-2"
-             style="background-color: darkseagreen"
-             @click="adminLogin"
-      >관리자로그인</v-btn>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "Login",
-  inject: ['adminService'],
+  name: "CustomerLogin",
+  inject: ['customerService'],
   data(){
     return {
       userObj : {
@@ -44,22 +41,20 @@ export default {
     }
   },
   methods: {
-    customerLogin() {
-   },
-     async adminLogin(){
+    async customerLogin() {
       try {
-        const payloads = await this.adminService.adminLogin(this.userObj);
+        const payloads = await this.customerService.loginCustomer(this.userObj);
         if( payloads != null){
-          this.$store.dispatch('setToken', payloads);
+          this.$store.commit('setToken', payloads);
           this.$router.push({
-            path: '/admin/book/list'
+            path: '/'
           }).catch((e)=>{console.log(e)})
         }
       } catch (error) {
         alert('로그인에 실패했습니다.')
         console.log(error);
       }
-    }
+     }
   }
 }
 </script>

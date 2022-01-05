@@ -93,12 +93,12 @@ export default {
         this.checkPw = '';
       }
     },
-    addCustomer(){
-     this.customerService.addCustomer(this.customerInfo);
-     alert('고객 정보가 등록되었습니다.');
-     this.$router.push({
-       path : '/admin/customer/list'
-     })
+    async addCustomer(){
+      await this.customerService.addCustomer(this.customerInfo);
+      alert('고객 정보가 등록되었습니다.');
+      this.$router.push({
+        path : '/admin/customer/list'
+      }).catch(e => {console.log(e)})
     }
   }
 }

@@ -2,9 +2,10 @@ import $axiosInst from '@/axios/AxiosInst'
 
 export class customerService {
 
-     getCustomerList(){
+
+    loginCustomer(customerObj){
         return $axiosInst
-            .get('/customer/list')
+            .post('/customer/login' , customerObj)
             .then( response => {
                 return response.data;
             }).catch( error => {
@@ -21,6 +22,18 @@ export class customerService {
                 return error;
             })
     }
+
+
+    getCustomerList(){
+        return $axiosInst
+            .get('/customer/list')
+            .then( response => {
+                return response.data;
+            }).catch( error => {
+                return error;
+            })
+    }
+
 
     getCustomerDetail(userSeq) {
         return $axiosInst

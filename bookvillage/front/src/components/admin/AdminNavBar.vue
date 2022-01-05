@@ -1,7 +1,7 @@
 <template>
   <div class="nav_section">
   <v-navigation-drawer
-      style="background: #E0F2F1"
+      style="background: antiquewhite"
       permanent
       expand-on-hover
   > <!--expand-on-hover-->
@@ -125,7 +125,7 @@ export default {
   width: 55px;
   height: 25px !important;
   font-size: x-small !important;
-  background-color: darkseagreen;
+  background-color: rosybrown;
   border-radius: 10px;
   font-family: 'Gowun Dodum', sans-serif;
 }

@@ -55,7 +55,6 @@ export default {
     },
     async getList(){
      const response = await this.customerService.getCustomerList();
-     console.log(response);
      this.customers = response;
     }
   }

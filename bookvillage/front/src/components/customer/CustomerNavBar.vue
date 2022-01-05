@@ -5,8 +5,9 @@
       permanent
       expand-on-hover
   > <!--expand-on-hover-->
-    <!-- 어떤 계정이 로그인 했느냐에 따라 정보 변경-->
-    <v-list-item v-if="info.user != ''">
+
+    <!-- profile section -->
+    <v-list-item>
       <v-list-item-content>
         <v-list-item-title class="text-h6">
           {{info.userId}}
@@ -15,13 +16,15 @@
           {{info.userName}}
         </v-list-item-subtitle>
       </v-list-item-content>
-      <button class="logout_btn" small> 로그아웃</button>
+      <button class="logout_btn" small v-if="isLogin" >로그아웃</button>
+      <button class="logout_btn" small v-else @click="goLogin">로그인</button>
     </v-list-item>
+
     <v-divider v-if="info.user != ''"></v-divider>
 
 
-    <!-- 어떤 계정이 로그인했느냐에 따라 메뉴 변경-->
-    <v-list shaped v-if="info.user != ''">
+    <!-- menu section -->
+    <v-list shaped>
       <v-list-item-group
           color="primary"
       >
@@ -39,8 +42,6 @@
         </v-list-item>
       </v-list-item-group>
     </v-list>
-
-
   </v-navigation-drawer>
   </div>
 </template>
@@ -50,20 +51,34 @@ export default {
   name: "BasicNavBar",
   data () {
     return {
-      info: {
-              userId : 'id'
-            , userName : 'name'
-      },
+      info: {},
+      isLogin: false,
       items: [
+        { title: '도서목록', icon: 'mdi-book', url:'/'}
+      ],
+      customerItems: [
         { title: '프로필', icon: 'mdi-account-settings' , url:'/customer/detail'},
         { title: '포인트', icon: 'mdi-credit-card-multiple' , url:'/customer/point/list'},
         { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/rental/list'},
         { title: '도서목록', icon: 'mdi-book', url:'/'}
-      ]
+      ],
     }
   },
   methods: {
-
+    isCustomerLogin(){
+      const token = this.$store.getters.getToken;
+      const role = this.$store.getters.getRole;
+      if( token != null && role == 'customer'){
+        this.isLogin = true;
+      }
+    },
+    goLogin(){
+      const path = this.$router.currentRoute.path;
+      path == '/login' ? location.reload() : this.$router.push({ path: '/login' })
+    }
+  },
+  mounted() {
+    this.isCustomerLogin();
   }
 }
 </script>

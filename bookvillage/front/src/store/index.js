@@ -29,10 +29,8 @@ export const store = new Vuex.Store({
             alert('로그인 되었습니다.')
         },
         logout(state){
-            if(state.token != null){
-                state.token = null;
-                state.role = null;
-            }
+            state.token = null;
+            state.role = null;
             alert('로그아웃 되었습니다.');
             $router.push({
                 path: '/login'

@@ -23,6 +23,15 @@ public class CustomerService {
     }
 
 
+    public CustomerVO LoginCustomer(CustomerVO customerVO){
+        CustomerVO authCustomer = customerDAO.loginCustomer(customerVO);
+        if(authCustomer == null || encoder.matches( customerVO.getUserPw(), authCustomer.getUserPw())){
+            throw new RuntimeException("password can not be null or unmatched");
+        }
+        return authCustomer;
+    }
+
+
     public void addCustomer(CustomerVO customerVO){
         String encodedPassword = encoder.encode(customerVO.getUserPw());
         customerVO.setUserPw(encodedPassword);
@@ -31,7 +40,7 @@ public class CustomerService {
 
 
     public CustomerVO getCustomerDetail(int userSeq){
-        CustomerVO customerVO = customerDAO.getCustomerDetail(userSeq);
+        CustomerVO customerVO = customerDAO.getCustomerBySeq(userSeq);
         return customerVO;
     }
 

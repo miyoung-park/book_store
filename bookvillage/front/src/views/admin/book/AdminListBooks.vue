@@ -50,6 +50,9 @@ export default {
       books: [],
     }
   },
+  async mounted() {
+    await this.getList();
+  },
   methods: {
     goDetail(book){
       const _bookSeq = book.bookSeq
@@ -67,9 +70,7 @@ export default {
       })
     }
   },
-  mounted() {
-    this.getList();
-  }
+
 }
 </script>
 

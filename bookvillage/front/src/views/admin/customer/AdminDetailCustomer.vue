@@ -48,8 +48,8 @@ export default {
   },
   methods: {
     async getCustomerDetail(){
-      const response = await this.customerService.getCustomerDetail(this.customerInfo.userSeq);
-      this.customerInfo = response;
+      const data = await this.customerService.getCustomerDetail(this.customerInfo.userSeq);
+      this.customerInfo = data;
     },
     goListCustomer(){
       this.$router.push({
@@ -62,13 +62,13 @@ export default {
         path: '/admin/customer/update/' + _userSeq
       });
     },
-    goDeleteCustomer(){
-      if(confirm('고객 정보를 삭제하시겠습니까 ?')){
-        this.customerService.deleteCustomer(this.customerInfo.userSeq);
+    async goDeleteCustomer(){
+      if(confirm('고객 정보를 정말 삭제하시겠습니까 ?')){
+        await this.customerService.deleteCustomer(this.customerInfo.userSeq);
         alert('고객정보가 삭제되었습니다.');
         return this.$router.push({
           path: '/admin/customer/list'
-        })
+        }).catch((e)=> {console.log(e)})
       }
       return;
     }

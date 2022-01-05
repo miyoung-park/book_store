@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import { store } from '@/store/index'
+import {store} from "@/store";
 /* basic */
 import ListBooks from "@/views/user/book/ListBooks";
 import detailBook from '@/views/user/book/DetailBook'
-import Basic from "@/components/Basic";
-import Login from "@/views/user/customer/login/Login";
+import Customer from "@/components/customer/Customer";
+import Login from "@/views/user/customer/login/CustomerLogin";
 /* admin */
 import AdminListBooks from "@/views/admin/book/AdminListBooks";
 import AdminDetailBook from "@/views/admin/book/AdminDetailBook";
@@ -21,6 +21,7 @@ import AdminListRental from "@/views/admin/rental/AdminListRental";
 import PointList from "@/views/user/customer/point/PointList";
 import DetailRental from "@/views/user/customer/rental/DetailRental";
 import AdminDetailCustomer from "@/views/admin/customer/AdminDetailCustomer";
+import AdminLogin from "@/views/admin/login/AdminLogin";
 
 // 1. Vue - VueRouter 연결
 Vue.use(VueRouter);
@@ -32,12 +33,21 @@ const bookProps = (route) => {
     return props;
 }; */
 
-const role = store.getters.getRole;
 
-function checkAdminRight(to , from, next){
+function checkAdminRight(to, from, next){
+    const role = store.getters.getRole;
     if(role != 'admin'){
         alert('접근할 수 없습니다.')
         next({path: '/'})
+    }
+    next();
+}
+
+function alreadyLoginAdmin(to, from, next){
+    const role = store.getters.getRole;
+    if(role == 'admin'){
+        alert('이미 관리자 계정에 로그인 된 상태입니다.')
+        next({path: '/admin/book/list'})
     }
     next();
 }
@@ -46,11 +56,16 @@ const routes = [
                 {
                     path: '/',
                     redirect: 'book/list',
-                    component: Basic,
+                    component: Customer,
                     children: [
                         {
                             path: 'login',
                             component: Login
+                        },
+                        {
+                            path: 'admin/login',
+                            component: AdminLogin,
+                            beforeEnter: alreadyLoginAdmin
                         },
                         {
                             path: 'book/list',
@@ -80,9 +95,9 @@ const routes = [
                 },
                  {
                     path: '/admin',
-                     redirect: 'admin/book/list',
-                    component: Admin,
+                    redirect: 'admin/book/list',
                     beforeEnter: checkAdminRight,
+                    component: Admin,
                     children :[
                         {
                             path: 'book/list',
