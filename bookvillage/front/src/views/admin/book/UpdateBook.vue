@@ -64,7 +64,7 @@
     <!-- **** preview Image[e] **** -->
 
     <div class="btn_section">
-      <v-btn class="mr-4" @click="updateBook" style="background-color: darksalmon; margin-bottom: 10px">게시글 수정</v-btn>
+      <v-btn class="mr-4" @click="updateBook" style="background-color: darksalmon; margin-bottom: 10px">수정하기</v-btn>
       <v-btn class="mr-4" @click="goDetail" style="background-color: #FFE082">게시글 보기</v-btn>
     </div>
   </div>

@@ -60,6 +60,19 @@
     </select>
 
 
+    <select id="getCustomerById" resultType="CustomerVO">
+        SELECT USER_ID ,
+               USER_PW ,
+               USER_NAME,
+               USER_BIRTH,
+               USER_TELL,
+               USER_REG_DT,
+               USER_ROLE
+        FROM CUSTOMER
+        WHERE USER_ID = #{userId}
+    </select>
+
+
     <update id="updateCustomer">
         UPDATE CUSTOMER
             SET USER_ID = #{userId},

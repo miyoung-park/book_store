@@ -23,9 +23,9 @@ public class CustomerService {
     }
 
 
-    public CustomerVO LoginCustomer(CustomerVO customerVO){
+    public CustomerVO loginCustomer(CustomerVO customerVO){
         CustomerVO authCustomer = customerDAO.loginCustomer(customerVO);
-        if(authCustomer == null || encoder.matches( customerVO.getUserPw(), authCustomer.getUserPw())){
+        if(authCustomer == null || !encoder.matches( customerVO.getUserPw(), authCustomer.getUserPw())){
             throw new RuntimeException("password can not be null or unmatched");
         }
         return authCustomer;
@@ -41,6 +41,17 @@ public class CustomerService {
 
     public CustomerVO getCustomerDetail(int userSeq){
         CustomerVO customerVO = customerDAO.getCustomerBySeq(userSeq);
+        if(customerVO == null){
+            throw new RuntimeException("Invalid userInfo");
+        }
+        return customerVO;
+    }
+
+    public CustomerVO getCustomerDetailById(String userId){
+        CustomerVO customerVO = customerDAO.getCustomerById(userId);
+        if(customerVO == null){
+            throw new RuntimeException("Invalid userInfo");
+        }
         return customerVO;
     }
 

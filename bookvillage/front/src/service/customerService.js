@@ -45,6 +45,16 @@ export class customerService {
             })
     }
 
+    getCustomerDetailById() {
+        return $axiosInst
+            .post('/customer/detail' )
+            .then(response => {
+                return response.data;
+            }).catch(error => {
+                return error;
+            })
+    }
+
 
     updateCustomer(customerObj) {
         return $axiosInst

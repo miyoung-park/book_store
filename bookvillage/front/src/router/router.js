@@ -43,11 +43,14 @@ function checkAdminRight(to, from, next){
     next();
 }
 
-function alreadyLoginAdmin(to, from, next){
+function alreadyLogin(to, from, next){
     const role = store.getters.getRole;
     if(role == 'admin'){
         alert('이미 관리자 계정에 로그인 된 상태입니다.')
         next({path: '/admin/book/list'})
+    } else if(role == 'customer'){
+        alert('이미 유저 계정에 로그인 된 상태입니다.')
+        next({path: '/book/list'})
     }
     next();
 }
@@ -60,12 +63,13 @@ const routes = [
                     children: [
                         {
                             path: 'login',
-                            component: Login
+                            component: Login,
+                            beforeEnter: alreadyLogin
                         },
                         {
                             path: 'admin/login',
                             component: AdminLogin,
-                            beforeEnter: alreadyLoginAdmin
+                            beforeEnter: alreadyLogin
                         },
                         {
                             path: 'book/list',

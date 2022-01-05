@@ -1,7 +1,6 @@
 import createPersistedState from 'vuex-persistedstate';
 import Vuex from "vuex";
 import Vue from 'vue';
-import $router from '@/router/router'
 
 Vue.use(Vuex);
 
@@ -32,9 +31,7 @@ export const store = new Vuex.Store({
             state.token = null;
             state.role = null;
             alert('로그아웃 되었습니다.');
-            $router.push({
-                path: '/login'
-            }).catch((e)=>{console.log(e)})
+            location.href = '/';
         }
     },
     actions: { // dispatch 로 부를 수 있다.

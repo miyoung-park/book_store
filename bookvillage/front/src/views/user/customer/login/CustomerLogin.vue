@@ -46,9 +46,7 @@ export default {
         const payloads = await this.customerService.loginCustomer(this.userObj);
         if( payloads != null){
           this.$store.commit('setToken', payloads);
-          this.$router.push({
-            path: '/'
-          }).catch((e)=>{console.log(e)})
+          location.href = '/'
         }
       } catch (error) {
         alert('로그인에 실패했습니다.')

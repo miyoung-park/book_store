@@ -16,7 +16,7 @@
           {{info.userName}}
         </v-list-item-subtitle>
       </v-list-item-content>
-      <button class="logout_btn" small v-if="isLogin" >로그아웃</button>
+      <button class="logout_btn" small v-if="isLogin" @click="logout">로그아웃</button>
       <button class="logout_btn" small v-else @click="goLogin">로그인</button>
     </v-list-item>
 
@@ -49,6 +49,7 @@
 <script>
 export default {
   name: "BasicNavBar",
+  inject: ['customerService'],
   data () {
     return {
       info: {},
@@ -65,16 +66,25 @@ export default {
     }
   },
   methods: {
-    isCustomerLogin(){
+    async isCustomerLogin(){
       const token = this.$store.getters.getToken;
       const role = this.$store.getters.getRole;
       if( token != null && role == 'customer'){
         this.isLogin = true;
+        const response = await this.customerService.getCustomerDetailById();
+        this.info = response;
+        this.items = this.customerItems;
       }
     },
     goLogin(){
       const path = this.$router.currentRoute.path;
       path == '/login' ? location.reload() : this.$router.push({ path: '/login' })
+    },
+    logout(){
+      if(confirm('로그아웃 하시겠습니까?')){
+        this.$store.dispatch('logout');
+      }
+      return;
     }
   },
   mounted() {

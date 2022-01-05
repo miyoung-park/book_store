@@ -94,11 +94,14 @@ export default {
       }
     },
     async addCustomer(){
-      await this.customerService.addCustomer(this.customerInfo);
-      alert('고객 정보가 등록되었습니다.');
-      this.$router.push({
-        path : '/admin/customer/list'
-      }).catch(e => {console.log(e)})
+      if(confirm('고객정보를 등록하시겠습니까 ?')){
+        await this.customerService.addCustomer(this.customerInfo);
+        alert('고객 정보가 등록되었습니다.');
+        this.$router.push({
+          path : '/admin/customer/list'
+        }).catch(e => {console.log(e)})
+      }
+      return;
     }
   }
 }

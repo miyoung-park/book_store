@@ -13,6 +13,7 @@ public interface CustomerDAO {
     CustomerVO loginCustomer(CustomerVO customerVO);
     void addCustomer(CustomerVO customerVO);
     CustomerVO getCustomerBySeq(int userSeq);
+    CustomerVO getCustomerById(String userId);
     void updateCustomer(CustomerVO customerVO);
     void deleteCustomer(int userSeq);
 }
