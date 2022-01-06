@@ -35,6 +35,9 @@ export default {
       if(this.role == 'customer'){
         if(confirm('관리자 페이지는 일반 계정 로그아웃 후 이용 가능합니다.\n로그아웃 후 관리자 페이지로 이동하시겠습니까 ?')){
           this.$store.dispatch('logout');
+          this.$router.push({
+            path: '/admin/login'
+          })
         }
         return;
       }

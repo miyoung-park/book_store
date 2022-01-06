@@ -80,7 +80,7 @@ public class CustomerAPI {
      */
     @RequestMapping(value ="/customer/detail/{userSeq}" , method = RequestMethod.GET)
     public APIResponse getCustomerDetailBySeq(  @PathVariable("userSeq") int userSeq
-            , HttpServletRequest request){
+                                              , HttpServletRequest request){
         // --- header 토큰 GET
         String token = request.getHeader("Authorization");
 
@@ -88,7 +88,7 @@ public class CustomerAPI {
         if( token == null || ! JWTokenUtil.checkToken(token)){
             return null; // --- Exception 추가
         }
-        // --- admin 정보 GET
+        // --- customer 정보 GET
         CustomerVO customerVO = customerService.getCustomerDetail(userSeq);
         return apiResponseBuilderFactory.success().setData(customerVO).build();
     }

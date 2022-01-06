@@ -44,6 +44,8 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/book/**").permitAll()
                 .antMatchers("/admin/**").permitAll()
                 .antMatchers("/customer/**").permitAll()
+                .antMatchers("/point/**").permitAll()
+                .antMatchers("/rental/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .csrf().disable()

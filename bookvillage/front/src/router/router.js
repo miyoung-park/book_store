@@ -43,6 +43,15 @@ function checkAdminRight(to, from, next){
     next();
 }
 
+function checkCustomerRight(to, from, next){
+    const role = store.getters.getRole;
+    if(role != 'customer'){
+        alert('로그인 후 이용해주세요.')
+        next({path: '/login'})
+    }
+    next();
+}
+
 function alreadyLogin(to, from, next){
     const role = store.getters.getRole;
     if(role == 'admin'){
@@ -81,19 +90,23 @@ const routes = [
                         },
                         {
                             path: 'customer/detail/',
-                            component: DetailCustomer
+                            component: DetailCustomer,
+                            beforeEnter: checkCustomerRight
                         },
                         {
                             path: 'customer/point/list',
-                            component: PointList
+                            component: PointList,
+                            beforeEnter: checkCustomerRight
                         },
                         {
                             path: 'customer/rental/list',
-                            component: ListRentals
+                            component: ListRentals,
+                            beforeEnter: checkCustomerRight
                         },
                         {
                             path: 'customer/rental/detail/:rentalSeq',
-                            component: DetailRental
+                            component: DetailRental,
+                            beforeEnter: checkCustomerRight
                         }
                     ]
                 },

@@ -4,7 +4,7 @@
       style="background: #E0F2F1"
       permanent
       expand-on-hover
-  > <!--expand-on-hover-->
+  ><!-- expand-on-hover-->
 
     <!-- profile section -->
     <v-list-item>
@@ -17,8 +17,8 @@
         </v-list-item-subtitle>
       </v-list-item-content>
       <button class="logout_btn" small v-if="isLogin" @click="logout">로그아웃</button>
-      <button class="logout_btn" small v-else @click="goLogin">로그인</button>
     </v-list-item>
+
 
     <v-divider v-if="info.user != ''"></v-divider>
 
@@ -55,6 +55,7 @@ export default {
       info: {},
       isLogin: false,
       items: [
+        { title: '로그인', icon: 'mdi-account' , url:'/login'},
         { title: '도서목록', icon: 'mdi-book', url:'/'}
       ],
       customerItems: [
@@ -76,13 +77,10 @@ export default {
         this.items = this.customerItems;
       }
     },
-    goLogin(){
-      const path = this.$router.currentRoute.path;
-      path == '/login' ? location.reload() : this.$router.push({ path: '/login' })
-    },
     logout(){
       if(confirm('로그아웃 하시겠습니까?')){
         this.$store.dispatch('logout');
+        location.reload();
       }
       return;
     }
@@ -101,6 +99,13 @@ export default {
   font-family: 'Gowun Dodum', sans-serif;
 }
 .logout_btn{
+  width: 55px;
+  height: 25px !important;
+  font-size: x-small !important;
+  background-color: darkseagreen;
+  border-radius: 10px;
+}
+.login_btn{
   width: 55px;
   height: 25px !important;
   font-size: x-small !important;

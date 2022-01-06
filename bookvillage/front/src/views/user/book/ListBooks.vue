@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import AxiosInst from "@/axios/AxiosInst";
 export default {
   name: "Books",
+  inject: ['bookService'],
   data () {
     return {
       search: '',
@@ -52,15 +52,10 @@ export default {
         path: '/book/detail/'+ _bookSeq
       });
     },
-     async getList(){
-      return await AxiosInst
-                  .get('/book/list')
-                  .then( response => {
-                    this.books = response.data;
-                  }).catch( error => {
-                    console.log(error);
-                })
-    }
+     async getList() {
+       const response = await this.bookService.getBookList();
+       this.books = response;
+     }
   },
   mounted() {
     this.getList();

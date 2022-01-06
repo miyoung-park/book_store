@@ -1,7 +1,7 @@
 <template>
   <div class="detail_section">
     <div class="btn_section">
-      <v-btn class="btn_rental">도서대여</v-btn>
+      <v-btn class="btn_rental" v-if="this.$store.getters.getRole == 'customer'">도서대여</v-btn>
     </div>
     <BookComponent/>
     <div class="list_section">
@@ -28,7 +28,8 @@ export default {
         { bookRentalFee: '' },
         { bookMemo: '' },
         { bookRegDt: '' },
-      ]
+      ],
+      isCustomer: false
     }
   },
   inject:['bookService'],

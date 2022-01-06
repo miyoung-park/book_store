@@ -106,7 +106,10 @@ export default {
     },
     logout(){
       if(confirm('로그아웃 하시겠습니까?')){
-         this.$store.dispatch('logout');
+        this.$store.dispatch('logout');
+        this.$router.push({
+          path: '/'
+        })
       }
       return;
     }

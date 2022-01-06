@@ -31,7 +31,6 @@ export const store = new Vuex.Store({
             state.token = null;
             state.role = null;
             alert('로그아웃 되었습니다.');
-            location.href = '/';
         }
     },
     actions: { // dispatch 로 부를 수 있다.

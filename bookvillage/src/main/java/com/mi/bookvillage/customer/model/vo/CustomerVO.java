@@ -6,34 +6,27 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
+@Getter @Setter
 public class CustomerVO {
 
-    @Getter @Setter
+
     private int userSeq;
 
-    @Getter @Setter
     private String userId;
 
-    @Getter @Setter
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY) // @JsonIgnore 를 동적으로 처리할 수 있는 방법
     private String userPw;
 
-    @Getter @Setter
     private String userName;
 
-    @Getter @Setter
     private String userBirth;
 
-    @Getter @Setter
     private String userTell;
 
-    @Getter @Setter
     private String userRegDt;
 
-    @Getter @Setter
     private String userUpdateDt;
 
-    @Getter @Setter
     private String userRole;
 
 

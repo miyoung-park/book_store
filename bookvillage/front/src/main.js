@@ -8,6 +8,8 @@ import axiosInst from '@/axios/AxiosInst'
 import { adminService } from '@/service/adminService'
 import { customerService } from "@/service/customerService";
 import { bookService } from "@/service/bookService";
+import { pointService} from "@/service/pointService";
+
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
@@ -20,6 +22,7 @@ new Vue({
   provide: {
     'adminService': new adminService,
     'bookService' : new bookService,
-    'customerService' : new customerService
+    'customerService' : new customerService,
+    'pointService' : new pointService
   },
 }).$mount('#app')

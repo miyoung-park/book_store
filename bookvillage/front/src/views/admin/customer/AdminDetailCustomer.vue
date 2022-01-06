@@ -1,13 +1,15 @@
 <template>
   <div class="detail_section">
+    <h3> [ 고객정보 ] </h3>
     <v-card
         class="mx-auto my-8"
         width="350"
         max-height="550"
         style="margin-bottom: 30px !important; display: flex; flex-direction: column"
     >
+
       <v-card-text>
-        <div class="my-4">고객번호 :{{customerInfo.userSeq}}</div>
+        <div class="my-4">고객번호 : {{customerInfo.userSeq}}</div>
         <div class="my-4">고객명 : {{customerInfo.userName}}</div>
         <div class="my-4">아이디 : {{customerInfo.userId}}</div>
         <div class="my-4">생년월일 : {{customerInfo.userBirth}}</div>
@@ -93,7 +95,10 @@ export default {
   font-weight: bold;
 }
 .detail_section{
-  margin: 10% auto 0 auto
+  margin: 10% auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .list_section{
   display: flex;
