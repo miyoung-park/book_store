@@ -29,5 +29,7 @@ public class CustomerVO {
 
     private String userRole;
 
+    private String userPoint;
+
 
 }

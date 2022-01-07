@@ -75,7 +75,7 @@ public class PointAPI {
         // point 객체에 userSeq 세팅
         pointVO.setUserSeq(userSeq);
 
-        // 포인트 적립 - 차감
+        // 포인트 적립
         pointService.transactionPoint(pointVO);
         return apiResponseBuilderFactory.success().build();
     }

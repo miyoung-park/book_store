@@ -1,8 +1,53 @@
 <template>
   <div class="content">
     <div class="table_section">
-      <div class="btn_section">
-        <v-btn class="charge_btn">포인트 충전</v-btn>
+      <div class="charge_section">
+            <v-dialog
+                class="dialog"
+                v-model="dialog"
+                max-width="600px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-btn class="charge_btn"
+                       v-bind="attrs"
+                       v-on="on"
+                >포인트 충전
+                </v-btn>
+              </template>
+              <v-card>
+                <v-card-title>포인트 충전</v-card-title>
+                <v-divider></v-divider>
+                <v-card-text>
+                  <a> dialog section</a>
+                </v-card-text>
+                <v-divider></v-divider>
+                <v-card-actions class="btn_section">
+                  <v-btn
+                      color="red darken-1"
+                      text
+                      @click="dialog = false"
+                  >
+                    닫기
+                  </v-btn>
+                  <v-btn
+                      color="blue darken-1"
+                      text
+                      @click="dialog = false"
+                  >
+                    확인
+                  </v-btn>
+                </v-card-actions>
+              </v-card>
+            </v-dialog>
+
+
+
+
+
+
+
+
+
       </div>
       <v-data-table
           :headers="headers"
@@ -13,6 +58,7 @@
           :sort-desc= true
       >
       </v-data-table>
+
     </div>
   </div>
 </template>
@@ -37,6 +83,7 @@ export default {
         { text: '수정날짜', value: 'transactionUpdateDt' },
       ],
       points: [],
+      dialog: false
     }
   },
   methods: {
@@ -64,12 +111,17 @@ export default {
   height: 100%;
   margin-top: 50px;
 }
-.btn_section {
+.charge_section {
   display: flex;
   justify-content: flex-end;
   margin-bottom: 50px;
 }
 .charge_btn {
   background-color: darkseagreen !important;
+}
+.btn_section {
+  display: flex !important;
+  font-family: 'Gowun Dodum', sans-serif !important;
+  justify-content: space-between;
 }
 </style>

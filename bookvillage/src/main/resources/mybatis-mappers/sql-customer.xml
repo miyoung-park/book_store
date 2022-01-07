@@ -48,30 +48,38 @@
 
 
     <select id="getCustomerBySeq" resultType="CustomerVO">
-        SELECT USER_SEQ,
-               USER_ID ,
-               USER_PW ,
-               USER_NAME,
-               USER_BIRTH,
-               USER_TELL,
-               USER_REG_DT,
-               USER_ROLE
-         FROM CUSTOMER
-        WHERE USER_SEQ = #{userSeq}
+        SELECT C.USER_SEQ AS USER_SEQ,
+               C.USER_ID AS USER_ID,
+               C.USER_PW AS USER_PW,
+               C.USER_NAME AS USER_NAME,
+               C.USER_BIRTH AS USER_BIRTH,
+               C.USER_TELL AS USER_TELL,
+               C.USER_REG_DT AS USER_REG_DT,
+               C.USER_ROLE AS USER_ROLE,
+               P.TOTAL_POINT AS USER_POINT
+         FROM CUSTOMER C
+         JOIN (
+                 SELECT USER_SEQ,
+                        TOTAL_POINT
+                   FROM POINT P
+                  WHERE USER_SEQ = #{userSeq}
+               ) P
+           ON C.USER_SEQ = P.USER_SEQ
+
     </select>
 
 
     <select id="getCustomerById" resultType="CustomerVO">
-        SELECT USER_SEQ,
-               USER_ID ,
-               USER_PW ,
-               USER_NAME,
-               USER_BIRTH,
-               USER_TELL,
-               USER_REG_DT,
-               USER_ROLE
+        SELECT USER_SEQ AS USER_SEQ,
+               USER_ID AS USER_ID,
+               USER_PW AS USER_PW,
+               USER_NAME AS USER_NAME,
+               USER_BIRTH AS USER_BIRTH,
+               USER_TELL AS USER_TELL,
+               USER_REG_DT AS USER_REG_DT,
+               USER_ROLE AS USER_ROLE
         FROM CUSTOMER
-        WHERE USER_ID = #{userId}
+         WHERE USER_ID = #{userId}
     </select>
 
 

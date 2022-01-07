@@ -32,6 +32,7 @@ export default {
         userBirth: '',
         userTell: '',
         userRegDt: '',
+        userPoint: ''
       },
     }
   },
