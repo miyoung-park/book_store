@@ -11,7 +11,8 @@
       <v-card-text>
         <div class="my-4">고객번호 : {{customerInfo.userSeq}}</div>
         <div class="my-4">고객명 : {{customerInfo.userName}}</div>
-        <div class="my-4">아이디 : {{customerInfo.userId}}</div>
+        <div class="my-4">고객 아이디 : {{customerInfo.userId}}</div>
+        <div class="my-4">고객 포인트 : {{customerInfo.userPoint}} 포인트</div>
         <div class="my-4">생년월일 : {{customerInfo.userBirth}}</div>
         <div class="my-4">전화번호 : {{customerInfo.userTell}}</div>
         <div class="my-4">등록일자 : {{customerInfo.userRegDt}}</div>
@@ -41,6 +42,7 @@ export default {
           userBirth: '',
           userTell: '',
           userRegDt: '',
+          userPoint: ''
       },
     }
   },

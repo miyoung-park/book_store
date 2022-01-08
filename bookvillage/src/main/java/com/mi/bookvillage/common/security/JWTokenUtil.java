@@ -24,6 +24,7 @@ public class JWTokenUtil {
                     .setSubject("auth_token")
                     .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_MINUTE))
                     .claim("userId", adminObj.get("userId"))
+                    .claim("userSeq", adminObj.get("userSeq"))
                     .signWith(SignatureAlgorithm.HS256 , SECRET_KEY.getBytes())
                     .compact();
     }

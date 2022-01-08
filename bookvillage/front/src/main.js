@@ -9,7 +9,7 @@ import { adminService } from '@/service/adminService'
 import { customerService } from "@/service/customerService";
 import { bookService } from "@/service/bookService";
 import { pointService} from "@/service/pointService";
-
+import { rentalService} from "@/service/rentalService";
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
@@ -23,6 +23,7 @@ new Vue({
     'adminService': new adminService,
     'bookService' : new bookService,
     'customerService' : new customerService,
-    'pointService' : new pointService
+    'pointService' : new pointService,
+    'rentalService' : new rentalService
   },
 }).$mount('#app')

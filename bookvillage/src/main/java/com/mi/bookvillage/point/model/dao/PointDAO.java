@@ -11,5 +11,6 @@ public interface PointDAO {
 
     List<PointVO> getPointListById(String userId);
     List<PointVO> getPointListBySeq(int userSeq);
+    Integer getPreviousTotalPoint(int userSeq);
     void transactionPoint(PointVO pointVO);
 }

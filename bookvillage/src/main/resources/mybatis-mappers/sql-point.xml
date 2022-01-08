@@ -2,6 +2,16 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mi.bookvillage.point.model.dao.PointDAO">
 
+
+    <select id="getPreviousTotalPoint" resultType="Integer">
+    <!-- 해당 유저의 가장 최근 거래의 TOTAL_POINT -->
+    SELECT TOTAL_POINT
+      FROM POINT
+     WHERE POINT_SEQ = ( SELECT MAX(POINT_SEQ) AS POINT_SEQ
+                           FROM POINT
+                          WHERE USER_SEQ = #{userSeq} )
+    </select>
+
     <insert id="transactionPoint">
         INSERT INTO POINT (
                            USER_SEQ,
@@ -14,46 +24,15 @@
                     VALUE (
                            #{userSeq}
                           ,#{rentalSeq}
-                          ,( <!-- PREVIOUS_POINT : 해당 유저의 가장 최근 거래의 TOTAL_POINT -->
-                             SELECT MAX_SEQ.TOTAL_POINT
-                               FROM ( SELECT *
-                                        FROM POINT
-                                       WHERE POINT_SEQ = ( SELECT MAX(POINT_SEQ) AS POINT_SEQ
-                                                             FROM POINT
-                                                            WHERE USER_SEQ = #{userSeq} )
-                                     ) AS MAX_SEQ
-                           )
+                          ,#{previousPoint}
                           ,#{pointStatus}
                           ,#{pointTransaction}
-                          ,
-                           <choose>
-                               <when test="pointStatus == 00">
-                                    ( SELECT MAX_SEQ.TOTAL_POINT
-                                        FROM (SELECT *
-                                                FROM POINT
-                                               WHERE POINT_SEQ = ( SELECT MAX(POINT_SEQ) AS POINT_SEQ
-                                                                     FROM POINT
-                                                                    WHERE USER_SEQ = #{userSeq})
-                                             ) AS MAX_SEQ
-                                    ) + #{pointTransaction} <!-- 적립 -->
-                                </when>
-                                <when test="pointStatus == 01">
-                                    ( SELECT MAX_SEQ.TOTAL_POINT
-                                        FROM ( SELECT *
-                                                 FROM POINT
-                                                WHERE POINT_SEQ = ( SELECT MAX(POINT_SEQ) AS POINT_SEQ
-                                                                      FROM POINT
-                                                                     WHERE USER_SEQ = #{userSeq})
-                                             ) AS MAX_SEQ
-                                        ) - #{pointTransaction} <!-- 차감 -->
-                                </when>
-                           </choose>
-
+                          ,#{previousPoint} + #{pointTransaction} <!-- 적립 / 차감 -->
                           )
     </insert>
 
 
-    <select id="getPointListById" resultType="PointVO">
+    <select id="getPointListBySeq" resultType="PointVO">
         SELECT  POINT_SEQ
                ,USER_SEQ
                ,RENTAL_SEQ
@@ -67,33 +46,29 @@
                ,POINT_TRANSACTION
                ,TOTAL_POINT
                ,TRANSACTION_REG_DT
-               ,TRANSACTION_UPDATE_DT
           FROM POINT
-         WHERE USER_SEQ = (
-                            SELECT USER_SEQ
-                              FROM CUSTOMER
-                             WHERE USER_ID = #{userId}
-                          )
+         WHERE USER_SEQ = #{userSeq}
     </select>
 
 
-    <select id="getPointListBySeq" resultType="List">
-        SELECT  POINT_SEQ
-               ,USER_SEQ
-               ,RENTAL_SEQ
-               ,PREVIOUS_POINT
-               ,(
-                   CASE POINT_STATUS
-                       WHEN '00' THEN '적립'
-                       WHEN '01' THEN '차감'
-                       END
-                   ) AS POINT_STATUS
-               ,POINT_TRANSACTION
-               ,TOTAL_POINT
-               ,TRANSACTION_REG_DT
-               ,TRANSACTION_UPDATE_DT
-        FROM POINT
-        WHERE USER_SEQ = #{userSeq};
+    <select id="getPointListById" resultType="PointVO">
+        SELECT   POINT_SEQ
+                ,USER_SEQ
+                ,RENTAL_SEQ
+                ,PREVIOUS_POINT
+                ,(
+                   CASE POINT_STATUS <!-- 00은 적립으로,  01은 차감으로 출력 -->
+                   WHEN '00' THEN '적립'
+                   WHEN '01' THEN '차감'
+                    END
+                  ) AS POINT_STATUS
+                ,POINT_TRANSACTION
+                ,TOTAL_POINT
+                ,TRANSACTION_REG_DT
+         FROM POINT
+        WHERE USER_SEQ = ( SELECT USER_SEQ
+                             FROM CUSTOMER
+                            WHERE USER_ID = #{userId})
     </select>
 
 

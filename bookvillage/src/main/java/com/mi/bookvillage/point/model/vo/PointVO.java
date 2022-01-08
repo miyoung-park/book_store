@@ -13,10 +13,9 @@ public class PointVO {
     private int rentalSeq;
     private int previousPoint;
     private String pointStatus;
-    private int pointTransaction;
+    private String pointTransaction;
     private int totalPoint;
     private String transactionRegDt;
-    private String transactionUpdateDt;
 
 
 }

@@ -12,5 +12,15 @@ export class pointService {
             })
     }
 
+    chargePoint(pointVO){
+        return $axiosInst
+            .post('/point/charge' , pointVO)
+            .then( response => {
+                return response;
+            }).catch( error => {
+               return error;
+            })
+    }
+
 
 }

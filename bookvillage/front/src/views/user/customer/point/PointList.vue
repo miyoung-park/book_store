@@ -5,7 +5,7 @@
             <v-dialog
                 class="dialog"
                 v-model="dialog"
-                max-width="600px"
+                max-width="400px"
             >
               <template v-slot:activator="{ on, attrs }">
                 <v-btn class="charge_btn"
@@ -14,51 +14,60 @@
                 >포인트 충전
                 </v-btn>
               </template>
-              <v-card>
+              <v-card class="dialog_card">
                 <v-card-title>포인트 충전</v-card-title>
-                <v-divider></v-divider>
+                <v-divider></v-divider><br>
                 <v-card-text>
-                  <a> dialog section</a>
+                  충전할 금액을 입력해주세요.
                 </v-card-text>
+                <div class="input_section">
+                  <v-text-field
+                      v-model="pointInfo.pointTransaction"
+                      label="충전금액"
+                      required
+                  ></v-text-field>
+                </div>
                 <v-divider></v-divider>
+
                 <v-card-actions class="btn_section">
                   <v-btn
                       color="red darken-1"
                       text
-                      @click="dialog = false"
+                      @click="cancelChargePoint"
                   >
                     닫기
                   </v-btn>
                   <v-btn
                       color="blue darken-1"
                       text
-                      @click="dialog = false"
+                      @click="chargePoint"
                   >
                     확인
                   </v-btn>
                 </v-card-actions>
               </v-card>
             </v-dialog>
-
-
-
-
-
-
-
-
-
       </div>
       <v-data-table
           :headers="headers"
-          :items="points"
-          :search="search"
+          :items="pointList"
           :items-per-page="5"
           sort-by="pointSeq"
           :sort-desc= true
+          primary-key="index"
       >
+        <template v-slot:item="{item}">
+          <tr>
+            <td>{{pointList.indexOf(item) + 1}}</td>
+            <td>{{item.rentalSeq}}</td>
+            <td>{{item.previousPoint}}</td>
+            <td>{{item.pointTransaction}}</td>
+            <td>{{item.totalPoint}}</td>
+            <td>{{item.pointStatus}}</td>
+            <td>{{item.transactionRegDt}}</td>
+          </tr>
+        </template>
       </v-data-table>
-
     </div>
   </div>
 </template>
@@ -72,24 +81,40 @@ export default {
     return {
       search: '',
       headers: [
-        { text: '거래 번호', value: 'pointSeq', align: 'start' },
-        { text: '유저 번호', value: 'userSeq'},
+        { text: '번호', align: 'start' },
         { text: '대여 번호', value: 'rentalSeq'},
-        { text: '이전 포인트', value: 'previousPoint' },
+        { text: '이전 포인트', value: 'previousP oint' },
         { text: '거래 포인트', value: 'pointTransaction' },
-        { text: '거래 상태', value: 'pointStatus' },
         { text: '남은 포인트', value: 'totalPoint' },
-        { text: '등록날짜', value: 'transactionRegDt' },
-        { text: '수정날짜', value: 'transactionUpdateDt' },
+        { text: '거래 상태', value: 'pointStatus' },
+        { text: '등록날짜', value: 'transactionRegDt' }
       ],
-      points: [],
-      dialog: false
+      pointList: [],
+      dialog: false,
+      pointInfo: {
+         pointTransaction : null ,
+         pointStatus : '00'
+      },
     }
   },
   methods: {
     async getList(){
       const response = await this.pointService.getPointList();
-      this.points = response;
+      this.pointList = response;
+    },
+    async chargePoint(){
+      if(confirm(this.pointInfo.pointTransaction + '포인트를 충전하시겠습니까 ?')){
+        await this.pointService.chargePoint(this.pointInfo);
+        alert('포인트 충전이 완료되었습니다.');
+        this.dialog = false
+        location.reload();
+      }
+      this.dialog = false;
+      this.pointInfo.pointTransaction = null; // 초기화
+    },
+    cancelChargePoint(){
+      this.pointInfo.pointTransaction = null; // 초기화
+      this.dialog = false;
     }
   },
   mounted() {
@@ -123,5 +148,12 @@ export default {
   display: flex !important;
   font-family: 'Gowun Dodum', sans-serif !important;
   justify-content: space-between;
+}
+.dialog_card {
+  font-family: 'Gowun Dodum', sans-serif !important;
+}
+.input_section {
+  width: 70%;
+  margin-left: 30px;
 }
 </style>

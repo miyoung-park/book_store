@@ -39,7 +39,7 @@ public class CustomerService {
     }
 
 
-    public CustomerVO getCustomerDetail(int userSeq){
+    public CustomerVO getCustomerBySeq(int userSeq){
         CustomerVO customerVO = customerDAO.getCustomerBySeq(userSeq);
         if(customerVO == null){
             throw new RuntimeException("Invalid userInfo");

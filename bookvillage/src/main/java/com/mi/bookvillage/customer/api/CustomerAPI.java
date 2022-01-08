@@ -7,7 +7,9 @@ import com.mi.bookvillage.common.response.APIResponseBuilderFactory;
 import com.mi.bookvillage.common.security.JWTokenUtil;
 import com.mi.bookvillage.customer.model.service.CustomerService;
 import com.mi.bookvillage.customer.model.vo.CustomerVO;
+import com.mi.bookvillage.point.model.service.PointService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -25,15 +27,23 @@ import java.util.Map;
 @Slf4j
 public class CustomerAPI {
 
+
     private CustomerService customerService;
+    private PointService pointService;
     private APIResponseBuilderFactory apiResponseBuilderFactory;
 
-    public CustomerAPI(CustomerService customerService , APIResponseBuilderFactory apiResponseBuilderFactory ){
+    public CustomerAPI(CustomerService customerService, PointService pointService, APIResponseBuilderFactory apiResponseBuilderFactory ){
         this.customerService = customerService;
+        this.pointService = pointService;
         this.apiResponseBuilderFactory = apiResponseBuilderFactory;
     }
 
 
+    /**
+     * 고객 로그인
+     * @param customerObj
+     * @return
+     */
     @RequestMapping(value="/customer/login" , method = RequestMethod.POST)
     public APIResponse LoginCustomer(@RequestBody CustomerVO customerObj){
         String token;
@@ -57,7 +67,10 @@ public class CustomerAPI {
     }
 
 
-
+    /**
+     * 고객정보 리스트
+     * @return
+     */
     @RequestMapping(value = "/customer/list" , method = RequestMethod.GET)
     public APIResponse getCustomerList(){
         List<CustomerVO> customerList = customerService.getCustomerList();
@@ -65,6 +78,11 @@ public class CustomerAPI {
     }
 
 
+    /**
+     * 고객정보 추가
+     * @param customerVO
+     * @return
+     */
     @RequestMapping(value="/customer/add" , method = RequestMethod.POST)
     public APIResponse addCustomer(@RequestBody CustomerVO customerVO){
         customerService.addCustomer(customerVO);
@@ -88,20 +106,23 @@ public class CustomerAPI {
         if( token == null || ! JWTokenUtil.checkToken(token)){
             return null; // --- Exception 추가
         }
-        // --- customer 정보 GET
-        CustomerVO customerVO = customerService.getCustomerDetail(userSeq);
+        // --- customer information GET
+        CustomerVO customerVO = customerService.getCustomerBySeq(userSeq);
+        // --- customer point GET
+        int totalPoint = pointService.getPreviousTotalPoint(userSeq);
+
+        customerVO.setUserPoint(totalPoint);
+
         return apiResponseBuilderFactory.success().setData(customerVO).build();
     }
 
     /**
      * 해당유저가 정보 조회
-     * @param customerVO
      * @param request
      * @return
      */
     @RequestMapping(value ="/customer/detail" , method = RequestMethod.POST)
-    public APIResponse getCustomerDetailById( @ModelAttribute CustomerVO customerVO
-                                              , HttpServletRequest request){
+    public APIResponse getCustomerDetailById( HttpServletRequest request){
         // --- header 토큰 GET
         String token = request.getHeader("Authorization");
 
@@ -114,8 +135,12 @@ public class CustomerAPI {
         Map<String, Object> adminObj = JWTokenUtil.getTokenInfo(token);
         String customerId = (String)adminObj.get("userId");
 
-        // --- admin 정보 GET
+        // --- customer information GET
         CustomerVO customer = customerService.getCustomerDetailById(customerId);
+
+        // --- customer point GET
+        int totalPoint = pointService.getPreviousTotalPoint(customer.getUserSeq());
+        customer.setUserPoint(totalPoint);
         return apiResponseBuilderFactory.success().setData(customer).build();
     }
 

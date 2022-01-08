@@ -1,5 +1,15 @@
+import $axiosInst from "@/axios/AxiosInst";
 
+export class rentalService {
 
-export class RentalService {
+    getRentalList(){
+        return $axiosInst
+            .get('/rental/list')
+            .then( response => {
+                return response.data;
+            }).catch( error => {
+                return error;
+            })
+    }
 
 }

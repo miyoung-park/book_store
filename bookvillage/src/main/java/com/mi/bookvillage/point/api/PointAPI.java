@@ -7,10 +7,7 @@ import com.mi.bookvillage.customer.model.service.CustomerService;
 import com.mi.bookvillage.customer.model.vo.CustomerVO;
 import com.mi.bookvillage.point.model.service.PointService;
 import com.mi.bookvillage.point.model.vo.PointVO;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -52,14 +49,14 @@ public class PointAPI {
         Map<String, Object> adminObj = JWTokenUtil.getTokenInfo(token);
         String customerId = (String)adminObj.get("userId");
 
-       List<PointVO> pointList = pointService.getPointList(customerId);
+       List<PointVO> pointList = pointService.getPointListById(customerId);
 
        return apiResponseBuilderFactory.success().setData(pointList).build();
     }
 
 
-    @RequestMapping(value = "/point/charge", method = RequestMethod.GET)
-    public APIResponse transactionPoint( @ModelAttribute PointVO pointVO,
+    @RequestMapping(value = "/point/charge", method = RequestMethod.POST)
+    public APIResponse transactionPoint(@RequestBody PointVO pointVO,
                                          HttpServletRequest request ) {
         token = request.getHeader("Authorization");
 
@@ -70,10 +67,13 @@ public class PointAPI {
         // 토큰 해독 후 customer 객체 GET
         Map<String, Object> adminObj = JWTokenUtil.getTokenInfo(token);
         String customerId = (String)adminObj.get("userId");
-        int userSeq = customerService.getCustomerDetailById(customerId).getUserSeq();
+        CustomerVO customer = customerService.getCustomerDetailById(customerId);
 
         // point 객체에 userSeq 세팅
-        pointVO.setUserSeq(userSeq);
+        pointVO.setUserSeq(customer.getUserSeq());
+        // point 객체에 previous 포인트 계산해서 세팅
+        int previousPoint = pointService.getPreviousTotalPoint(customer.getUserSeq());
+        pointVO.setPreviousPoint(previousPoint);
 
         // 포인트 적립
         pointService.transactionPoint(pointVO);

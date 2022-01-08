@@ -1,15 +1,72 @@
 <template>
-  <div>
-
+  <div class="content">
+    <div class="table_section">
+      <v-data-table
+          :headers="headers"
+          :items="pointList"
+          :items-per-page="5"
+          sort-by="pointSeq"
+          :sort-desc= true
+          primary-key="index"
+      >
+        <template v-slot:item="{item}">
+          <tr>
+            <td>{{pointList.indexOf(item) + 1}}</td>
+            <td>{{item.rentalSeq}}</td>
+            <td>{{item.previousPoint}}</td>
+            <td>{{item.pointTransaction}}</td>
+            <td>{{item.totalPoint}}</td>
+            <td>{{item.pointStatus}}</td>
+            <td>{{item.transactionRegDt}}</td>
+          </tr>
+        </template>
+      </v-data-table>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "ListRentals"
+  name: "ListRentals",
+  inject: ['rentalService'],
+  data () {
+    return {
+      search: '',
+      headers: [
+        { text: '번호', align: 'start' },
+        { text: '대여 번호', value: 'rentalSeq'},
+        { text: '이전 포인트', value: 'previousP oint' },
+        { text: '거래 포인트', value: 'pointTransaction' },
+        { text: '남은 포인트', value: 'totalPoint' },
+        { text: '거래 상태', value: 'pointStatus' },
+        { text: '등록날짜', value: 'transactionRegDt' }
+      ],
+      rentalList: [],
+    }
+  },
+  methods: {
+    async getRentalList(){
+      const response = await this.rentalService.getRentalList();
+      this.rentalList = response;
+    },
+  },
+  mounted() {
+    this.getRentalList();
+  }
 }
 </script>
 
 <style scoped>
-
+.content{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.table_section {
+  width: 80%;
+  height: 100%;
+  margin-top: 50px;
+}
 </style>
