@@ -9,4 +9,5 @@ import java.util.List;
 public interface RentalDAO {
 
     List<RentalVO> getRentalList(int userSeq);
+    void rentalBook(RentalVO rentalVO);
 }

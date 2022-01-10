@@ -10,12 +10,31 @@
                RENTAL_DT,
                PREDICT_RETURN_DT,
                RETURN_DT,
-               RENTAL_STATUS,
+                (
+                CASE RENTAL_STATUS
+                WHEN '00' THEN '대여신청'
+                WHEN '01' THEN '대여완료'
+                WHEN '02' THEN '반납완료'
+                END
+                )AS RENTAL_STATUS,
                RENTAL_REG_DT,
                RENTAL_UPDATE_DT
           FROM RENTAL
          WHERE USER_SEQ = #{userSeq}
     </select>
+
+    <insert id="rentalBook">
+        INSERT INTO RENTAL (
+                            BOOK_SEQ,
+                            USER_SEQ,
+                            PREDICT_RETURN_DT
+                            )
+                    VALUES (
+                            #{bookSeq},
+                            #{userSeq},
+                            #{predictReturnDt}
+                           )
+    </insert>
 
 
 

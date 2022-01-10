@@ -12,4 +12,14 @@ export class rentalService {
             })
     }
 
+    rentalBook(bookSeq, rentalInfo){
+       return $axiosInst
+           .post('rental/book/' + bookSeq , rentalInfo)
+           .then( response => {
+               console.log(response);
+           }).catch( error => {
+               console.log(error);
+           })
+    }
+
 }

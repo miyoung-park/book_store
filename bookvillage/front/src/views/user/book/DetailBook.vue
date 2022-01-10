@@ -1,7 +1,10 @@
 <template>
   <div class="detail_section">
     <div class="btn_section">
-      <v-btn class="btn_rental" v-if="this.$store.getters.getRole == 'customer'">도서대여</v-btn>
+      <v-btn class="btn_rental"
+             v-if="this.$store.getters.getRole == 'customer'"
+             @click="rentalBook"
+      > 도서대여 </v-btn>
     </div>
     <BookComponent/>
     <div class="list_section">
@@ -29,10 +32,13 @@ export default {
         { bookMemo: '' },
         { bookRegDt: '' },
       ],
-      isCustomer: false
+      isCustomer: false,
+      rentalInfo: {
+        rentalDayCount : ''
+      }
     }
   },
-  inject:['bookService'],
+  inject:['bookService' , 'rentalService'],
   created() {
     this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
     this.isAdmin = this.$store.getters.getRole == 'admin' ? true : false;
@@ -50,8 +56,18 @@ export default {
         path: '/book/list'
       })
     },
-    goRentalBook(){
-
+    rentalBook(){
+      const numCheck=/^[0-9]*$/;
+      const dayCount = prompt("원하시는 대여기간을 입력해주세요.(숫자만 입력하세요)");
+      if( dayCount != null) {
+        if(!numCheck.test(dayCount)){
+          alert('숫자만 입력하실 수 있습니다. 다시 입력해주세요.');
+          this.rentalBook();
+        }
+        this.rentalInfo.rentalDayCount = dayCount;
+        this.rentalService.rentalBook(this.bookSeq , this.rentalInfo);
+      }
+     return;
     }
   },
 

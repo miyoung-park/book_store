@@ -18,7 +18,10 @@ public class RentalService {
     public List<RentalVO> getRentalList(int userSeq){
         List<RentalVO> rentalList = rentalDAO.getRentalList(userSeq);
         return rentalList;
+    }
 
+    public void rentalBook(RentalVO rentalVO){
+        rentalDAO.rentalBook(rentalVO);
     }
 
 

@@ -3,21 +3,22 @@
     <div class="table_section">
       <v-data-table
           :headers="headers"
-          :items="pointList"
+          :items="rentalList"
           :items-per-page="5"
-          sort-by="pointSeq"
+          sort-by="rentalSeq"
           :sort-desc= true
           primary-key="index"
       >
-        <template v-slot:item="{item}">
+        <template v-slot:item="{item}" >
           <tr>
-            <td>{{pointList.indexOf(item) + 1}}</td>
-            <td>{{item.rentalSeq}}</td>
-            <td>{{item.previousPoint}}</td>
-            <td>{{item.pointTransaction}}</td>
-            <td>{{item.totalPoint}}</td>
-            <td>{{item.pointStatus}}</td>
-            <td>{{item.transactionRegDt}}</td>
+            <td>{{rentalList.indexOf(item) + 1}}</td>
+            <td>{{item.bookSeq}}</td>
+            <td>{{item.rentalDt}}</td>
+            <td>{{item.predictReturnDt}}</td>
+            <td>{{item.returnDt}}</td>
+            <td>{{item.rentalStatus}}</td>
+            <td>{{item.rentalRegDt}}</td>
+            <td>{{item.rentalUpdateDt}}</td>
           </tr>
         </template>
       </v-data-table>
@@ -34,12 +35,13 @@ export default {
       search: '',
       headers: [
         { text: '번호', align: 'start' },
-        { text: '대여 번호', value: 'rentalSeq'},
-        { text: '이전 포인트', value: 'previousP oint' },
-        { text: '거래 포인트', value: 'pointTransaction' },
-        { text: '남은 포인트', value: 'totalPoint' },
-        { text: '거래 상태', value: 'pointStatus' },
-        { text: '등록날짜', value: 'transactionRegDt' }
+        { text: '책번호', value: 'bookSeq'},
+        { text: '대여일', value: 'rentalDt' },
+        { text: '반납예정일', value: 'predictReturnDt' },
+        { text: '반납일', value: 'returnDt' },
+        { text: '대여현황', value: 'rentalStatus' },
+        { text: '등록날짜', value: 'rentalRegDt' },
+        { text: '수정날짜', value: 'rentalUpdateDt' }
       ],
       rentalList: [],
     }

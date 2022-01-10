@@ -15,7 +15,7 @@
                BOOK_PRICE,
                BOOK_RENTAL_FEE,
                BOOK_MEMO,
-               DATE_FORMAT(BOOK_REG_DT, '%Y-%m-%d %H:%i') AS BOOK_REG_DT,
+               BOOK_REG_DT,
                BOOK_UPDATE_DT
          FROM BOOK
         WHERE BOOK_SEQ = #{bookSeq}
