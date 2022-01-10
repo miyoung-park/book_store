@@ -15,16 +15,16 @@ public class JWTokenUtil {
 
     /**
      * ACCESS_TOKEN 토큰 발급 클래스
-     * @param adminObj
+     * @param userObj
      * @return
      */
-    public static String createJwToken(Map<String, Object> adminObj) {
+    public static String createJwToken(Map<String, Object> userObj) {
         return Jwts.builder()
                     .setHeaderParam("type" , "JWT")
                     .setSubject("auth_token")
                     .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_MINUTE))
-                    .claim("userId", adminObj.get("userId"))
-                    .claim("userSeq", adminObj.get("userSeq"))
+                    .claim("role", userObj.get("role"))
+                    .claim("userId", userObj.get("userId"))
                     .signWith(SignatureAlgorithm.HS256 , SECRET_KEY.getBytes())
                     .compact();
     }
@@ -40,7 +40,6 @@ public class JWTokenUtil {
                 .setSigningKey(SECRET_KEY.getBytes())
                 .parseClaimsJws(jwt)
                 .getBody();
-
                 return true;
         } catch(ExpiredJwtException e) { // 토큰 만료
             System.out.println(e);

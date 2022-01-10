@@ -30,6 +30,13 @@ public class RentalUtil {
         return predictReturnDt;
     }
 
+    public static RentalVO setApproveRental(int rentalSeq){
+        RentalVO rentalVO = new RentalVO();
+        rentalVO.setRentalSeq(rentalSeq);
+        rentalVO.setRentalStatus("01");
+        return rentalVO;
+    }
+
 
 
 }

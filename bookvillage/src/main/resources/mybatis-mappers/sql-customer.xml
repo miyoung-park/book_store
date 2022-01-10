@@ -9,8 +9,8 @@
              , USER_PW
              , USER_BIRTH
              , USER_TELL
-             , DATE_FORMAT(USER_REG_DT, '%Y-%m-%d %H:%i') AS USER_REG_DT
-             , DATE_FORMAT(USER_UPDATE_DT, '%Y-%m-%d %H:%i') AS USER_UPDATE_DT
+             , USER_REG_DT
+             , USER_UPDATE_DT
              , USER_ROLE
           FROM CUSTOMER
     </select>

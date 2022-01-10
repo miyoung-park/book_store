@@ -26,6 +26,20 @@
           sort-by="bookSeq"
           :sort-desc= true
       >
+        <template v-slot:item="{item}">
+          <tr style="cursor: pointer" @click="goDetail(item.bookSeq)">
+            <td>{{item.bookSeq}}</td>
+            <td>{{item.bookTitle}}</td>
+            <td>{{item.bookPrice}}</td>
+            <td>{{item.bookRentalFee}}</td>
+            <td>{{item.bookMemo}}</td>
+            <td>{{item.bookRentalStatus}}</td>
+            <td v-if="item.bookRentalStatus == '0'">대여신청중</td>
+            <td v-if="item.bookRentalStatus == '1'" style="background-color: cornflowerblue">대여중</td>
+            <td v-if="item.bookRentalStatus == '2'" style="background-color: crimson">대여중</td>
+            <td v-if="item.bookRentalStatus == null">대여가능</td>
+          </tr>
+        </template>
       </v-data-table>
     </div>
 
@@ -54,10 +68,9 @@ export default {
     await this.getList();
   },
   methods: {
-    goDetail(book){
-      const _bookSeq = book.bookSeq
+    goDetail(bookSeq){
       this.$router.push({
-        path: '/admin/book/detail/'+ _bookSeq
+        path: '/admin/book/detail/'+ bookSeq
       });
     },
      async getList(){

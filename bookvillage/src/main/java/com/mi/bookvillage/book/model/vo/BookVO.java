@@ -14,6 +14,7 @@ public class BookVO {
     private String bookRentalFee;
     private String bookMemo;
     private String bookRegDt;
+    private String bookRentalStatus;
 
 
 }

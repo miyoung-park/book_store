@@ -4,7 +4,7 @@
       <v-btn class="btn_delete" @click="goDeleteBook">도서삭제</v-btn>
       <v-btn class="btn_update" @click="goUpdateBook">도서수정</v-btn>
     </div>
-    <BookComponent/>
+    <BookComponent @rentalStatus="rentalStatus"/>
     <div class="list_section">
       <v-btn text class="btn_list" @click="goListBook">도서목록보기</v-btn>
     </div>
@@ -34,6 +34,9 @@ export default {
       })
     },
      async goDeleteBook(){
+      if(this.bookRentalStatus != ''){
+        alert('현재 대여중이 도서')
+      }
       if(confirm('정말 삭제하시겠습니까 ?')){
         await this.bookService.deleteBook(this.bookSeq);
         alert('도서정보 삭제가 완료되었습니다.')
@@ -42,6 +45,9 @@ export default {
         }).catch((e)=> {console.log(e)})
       }
       return;
+    },
+    rentalStatus(status){
+      this.bookRentalStatus = status;
     },
     goListBook(){
       this.$router.push({

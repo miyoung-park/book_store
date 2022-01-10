@@ -4,21 +4,39 @@
 <mapper namespace="com.mi.bookvillage.book.model.dao.BookDAO">
 
     <select id="getBookList" resultType="BookVO">
-        SELECT *
-          FROM BOOK
+        SELECT B.BOOK_SEQ,
+               B.BOOK_TITLE,
+               B.BOOK_PRICE,
+               B.BOOK_RENTAL_FEE,
+               B.BOOK_MEMO,
+               R.RENTAL_STATUS AS BOOK_RENTAL_STATUS,
+               B.BOOK_REG_DT,
+               B.BOOK_UPDATE_DT
+          FROM BOOK B
+          LEFT JOIN ( SELECT BOOK_SEQ,
+                             RENTAL_STATUS
+                        FROM RENTAL
+                    ) R
+            ON B.BOOK_SEQ = R.BOOK_SEQ
     </select>
 
 
     <select id="getBookDetail" resultType="BookVO">
-        SELECT BOOK_SEQ,
-               BOOK_TITLE,
-               BOOK_PRICE,
-               BOOK_RENTAL_FEE,
-               BOOK_MEMO,
-               BOOK_REG_DT,
-               BOOK_UPDATE_DT
-         FROM BOOK
-        WHERE BOOK_SEQ = #{bookSeq}
+        SELECT B.BOOK_SEQ,
+               B.BOOK_TITLE,
+               B.BOOK_PRICE,
+               B.BOOK_RENTAL_FEE,
+               B.BOOK_MEMO,
+               R.RENTAL_STATUS AS BOOK_RENTAL_STATUS,
+               B.BOOK_REG_DT,
+               B.BOOK_UPDATE_DT
+         FROM BOOK B
+         LEFT JOIN ( SELECT BOOK_SEQ,
+                            RENTAL_STATUS
+                       FROM RENTAL
+                    ) R
+           ON B.BOOK_SEQ = R.BOOK_SEQ
+        WHERE B.BOOK_SEQ = #{bookSeq}
     </select>
 
 

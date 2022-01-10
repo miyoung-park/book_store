@@ -29,7 +29,8 @@ public class AdminAPI {
         }
         // 토큰 발급 기능
         Map<String, Object> tokenMap = new HashMap<>();
-        tokenMap.put("userId", adminVO.getUserId());
+        tokenMap.put("userId", admin.getUserId());
+        tokenMap.put("role", admin.getUserRole());
         String authToken = JWTokenUtil.createJwToken(tokenMap);
 
         Map<String, Object> adminInfoMap = new HashMap<>();

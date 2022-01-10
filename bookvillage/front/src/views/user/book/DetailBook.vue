@@ -1,12 +1,18 @@
 <template>
   <div class="detail_section">
-    <div class="btn_section">
+    <div class="btn_section" v-if="this.$store.getters.getRole == 'customer'">
+      <v-btn class="btn_rental_ing"
+             v-if="bookRentalStatus == '0'"
+      > 대여신청중 </v-btn>
+      <v-btn class="btn_rental_complete"
+             v-if="bookRentalStatus == '1'"
+      > 대여중</v-btn>
       <v-btn class="btn_rental"
-             v-if="this.$store.getters.getRole == 'customer'"
              @click="rentalBook"
-      > 도서대여 </v-btn>
+             v-if= "bookRentalStatus == ''"
+      > 도서대여</v-btn>
     </div>
-    <BookComponent/>
+    <BookComponent @rentalStatus="rentalStatus"/>
     <div class="list_section">
       <v-btn text class="btn_list" @click="goListBook">도서목록보기</v-btn>
     </div>
@@ -24,17 +30,10 @@ export default {
     return {
       isAdmin: false,
       bookSeq: '',
-      bookInfo: [
-        { bookSeq: '' },
-        { bookTitle: ''},
-        { bookPrice: '' },
-        { bookRentalFee: '' },
-        { bookMemo: '' },
-        { bookRegDt: '' },
-      ],
       isCustomer: false,
+      bookRentalStatus: '',
       rentalInfo: {
-        rentalDayCount : ''
+        rentalDayCount : '',
       }
     }
   },
@@ -43,14 +42,7 @@ export default {
     this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
     this.isAdmin = this.$store.getters.getRole == 'admin' ? true : false;
   },
-  mounted() {
-    this.getBookDetail();
-  },
   methods: {
-    async getBookDetail(){
-       const response = await this.bookService.getBookDetail(this.bookSeq);
-        this.bookInfo = response.data;
-    },
     goListBook(){
       this.$router.push({
         path: '/book/list'
@@ -66,8 +58,13 @@ export default {
         }
         this.rentalInfo.rentalDayCount = dayCount;
         this.rentalService.rentalBook(this.bookSeq , this.rentalInfo);
+        alert('대여신청이 완료되었습니다.\n관리자 승인 후 대여 처리됩니다');
+        location.reload();
       }
      return;
+    },
+    rentalStatus(status){
+     this.bookRentalStatus = status;
     }
   },
 
@@ -95,5 +92,15 @@ export default {
   width: 100%;
   font-weight: bold;
   background-color: darkseagreen !important;
+}
+.btn_rental_ing{
+  width: 100%;
+  font-weight: bold;
+  background-color: skyblue!important;
+}
+.btn_rental_complete{
+  width: 100%;
+  font-weight: bold;
+  background-color: cornflowerblue!important;
 }
 </style>

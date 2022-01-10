@@ -7,6 +7,8 @@ import com.mi.bookvillage.common.response.APIResponseBuilder;
 import com.mi.bookvillage.common.response.APIResponseBuilderFactory;
 import com.mi.bookvillage.common.util.file.FileUtil;
 import com.mi.bookvillage.common.util.file.FileVO;
+import com.mi.bookvillage.rental.model.service.RentalService;
+import com.mi.bookvillage.rental.model.vo.RentalVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.NotFoundException;
 import org.springframework.http.ResponseEntity;
@@ -28,10 +30,12 @@ import java.util.Map;
 public class BookAPI {
 
     private BookService bookService;
+    private RentalService rentalService;
     private APIResponseBuilderFactory apiResponseBuilderFactory;
 
-    public BookAPI(BookService bookService, APIResponseBuilderFactory apiResponseBuilderFactory){
+    public BookAPI(BookService bookService, RentalService rentalService, APIResponseBuilderFactory apiResponseBuilderFactory){
         this.bookService = bookService;
+        this.rentalService = rentalService;
         this.apiResponseBuilderFactory = apiResponseBuilderFactory;
     }
 
@@ -58,7 +62,6 @@ public class BookAPI {
             throw new RuntimeException("Cannot find book");
         }
         List<FileVO> files = bookService.getBookFile(bookSeq);
-
         return apiResponseBuilderFactory.success()
                                         .putValue("bookInfo" , book)
                                         .putValue("files", files)

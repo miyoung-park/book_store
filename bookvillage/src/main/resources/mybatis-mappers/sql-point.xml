@@ -3,35 +3,6 @@
 <mapper namespace="com.mi.bookvillage.point.model.dao.PointDAO">
 
 
-    <select id="getPreviousTotalPoint" resultType="Integer">
-    <!-- 해당 유저의 가장 최근 거래의 TOTAL_POINT -->
-    SELECT TOTAL_POINT
-      FROM POINT
-     WHERE POINT_SEQ = ( SELECT MAX(POINT_SEQ) AS POINT_SEQ
-                           FROM POINT
-                          WHERE USER_SEQ = #{userSeq} )
-    </select>
-
-    <insert id="transactionPoint">
-        INSERT INTO POINT (
-                           USER_SEQ,
-                           RENTAL_SEQ,
-                           PREVIOUS_POINT, <!-- 이전 포인트 -->
-                           POINT_STATUS, <!-- 거래 상태 -->
-                           POINT_TRANSACTION, <!-- 거래 금액 -->
-                           TOTAL_POINT
-                          )
-                    VALUE (
-                           #{userSeq}
-                          ,#{rentalSeq}
-                          ,#{previousPoint}
-                          ,#{pointStatus}
-                          ,#{pointTransaction}
-                          ,#{previousPoint} + #{pointTransaction} <!-- 적립 / 차감 -->
-                          )
-    </insert>
-
-
     <select id="getPointListBySeq" resultType="PointVO">
         SELECT  POINT_SEQ
                ,USER_SEQ
@@ -70,8 +41,33 @@
                              FROM CUSTOMER
                             WHERE USER_ID = #{userId})
     </select>
+    <select id="getPreviousTotalPoint" resultType="Integer">
+        <!-- 해당 유저의 가장 최근 거래의 TOTAL_POINT -->
+        SELECT TOTAL_POINT
+          FROM POINT
+         WHERE POINT_SEQ = ( SELECT MAX(POINT_SEQ) AS POINT_SEQ
+                               FROM POINT
+                              WHERE USER_SEQ = #{userSeq})
+    </select>
 
-
+    <insert id="transactionPoint">
+        INSERT INTO POINT (
+                            USER_SEQ,
+                            RENTAL_SEQ,
+                            PREVIOUS_POINT, <!-- 이전 포인트 -->
+                            POINT_STATUS, <!-- 거래 상태 -->
+                            POINT_TRANSACTION, <!-- 거래 금액 -->
+                            TOTAL_POINT
+                            )
+                    VALUE (
+                             #{userSeq}
+                            ,#{rentalSeq}
+                            ,#{previousPoint}
+                            ,#{pointStatus}
+                            ,#{pointTransaction}
+                            ,#{previousPoint} + #{pointTransaction} <!-- 적립 / 차감 -->
+                            )
+    </insert>
 
 
 

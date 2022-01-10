@@ -13,10 +13,13 @@
           <tr>
             <td>{{rentalList.indexOf(item) + 1}}</td>
             <td>{{item.bookSeq}}</td>
+            <td>{{item.bookTitle}}</td>
             <td>{{item.rentalDt}}</td>
             <td>{{item.predictReturnDt}}</td>
             <td>{{item.returnDt}}</td>
-            <td>{{item.rentalStatus}}</td>
+              <td v-if="item.rentalStatus == 0" style="background-color: skyblue">대여신청</td>
+              <td v-if="item.rentalStatus == 1" style="background-color: cornflowerblue">대여中</td>
+              <td v-if="item.rentalStatus == 2" style="background-color: crimson">연체</td>
             <td>{{item.rentalRegDt}}</td>
             <td>{{item.rentalUpdateDt}}</td>
           </tr>
@@ -35,7 +38,8 @@ export default {
       search: '',
       headers: [
         { text: '번호', align: 'start' },
-        { text: '책번호', value: 'bookSeq'},
+        { text: '도서번호', value: 'bookSeq'},
+        { text: '도서명', value: 'bookTitle'},
         { text: '대여일', value: 'rentalDt' },
         { text: '반납예정일', value: 'predictReturnDt' },
         { text: '반납일', value: 'returnDt' },

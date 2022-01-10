@@ -21,6 +21,19 @@
           sort-by="bookSeq"
           :sort-desc= true
       >
+        <template v-slot:item="{item}">
+          <tr style="cursor: pointer" @click="goDetail(item.bookSeq)">
+            <td>{{item.bookSeq}}</td>
+            <td>{{item.bookTitle}}</td>
+            <td>{{item.bookPrice}}</td>
+            <td>{{item.bookRentalFee}}</td>
+            <td>{{item.bookMemo}}</td>
+              <td v-if="item.bookRentalStatus == '0'">대여신청중</td>
+              <td v-if="item.bookRentalStatus == '1'" style="background-color: cornflowerblue">대여중</td>
+              <td v-if="item.bookRentalStatus == '2'" style="background-color: crimson">대여중</td>
+              <td v-if="item.bookRentalStatus == null">대여가능</td>
+          </tr>
+        </template>
       </v-data-table>
 
     </div>
@@ -37,19 +50,18 @@ export default {
       headers: [
         { text: '도서 번호', value: 'bookSeq', align: 'start' },
         { text: '도서 제목', value: 'bookTitle'},
-        { text: '도서 이미지', value: 'bookImage'},
         { text: '도서 가격', value: 'bookPrice' },
         { text: '대여비', value: 'bookRentalFee' },
         { text: '메모', value: 'bookMemo' },
+        { text: '도서현황' , value: 'bookRentalStatus'}
       ],
       books: [],
     }
   },
   methods: {
-    goDetail(book){
-      const _bookSeq = book.bookSeq
+    goDetail(bookSeq){
       this.$router.push({
-        path: '/book/detail/'+ _bookSeq
+        path: '/book/detail/'+ bookSeq
       });
     },
      async getList() {

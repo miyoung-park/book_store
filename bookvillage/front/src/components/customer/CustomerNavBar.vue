@@ -7,7 +7,7 @@
   ><!-- expand-on-hover-->
 
     <!-- profile section -->
-    <v-list-item>
+    <v-list-item  v-if="customerLogin == 'customer'">
       <v-list-item-content>
         <v-list-item-title class="text-h6">
           {{info.userId}}
@@ -16,18 +16,34 @@
           {{info.userName}}
         </v-list-item-subtitle>
       </v-list-item-content>
-      <button class="logout_btn" small v-if="isLogin" @click="logout">로그아웃</button>
+      <button class="logout_btn" small @click="logout">로그아웃</button>
     </v-list-item>
-
 
     <v-divider v-if="info.user != ''"></v-divider>
 
 
-    <!-- menu section -->
+
+
+    <!-- menu section user -->
     <v-list shaped>
-      <v-list-item-group
-          color="primary"
-      >
+      <v-list-item-group color="primary" v-if="customerLogin == 'customer'">
+        <v-list-item
+            v-for="(item, i) in customerItems"
+            :key="i"
+            :to="item.url"
+        >
+          <v-list-item-icon>
+            <v-icon v-text="item.icon"></v-icon>
+          </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.title"></v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list-item-group>
+    </v-list>
+    <!-- menu section none user -->
+    <v-list shaped>
+      <v-list-item-group color="primary" v-if="customerLogin == null">
         <v-list-item
             v-for="(item, i) in items"
             :key="i"
@@ -53,7 +69,8 @@ export default {
   data () {
     return {
       info: {},
-      isLogin: false,
+      token: null,
+      role: null,
       items: [
         { title: '로그인', icon: 'mdi-account' , url:'/login'},
         { title: '도서목록', icon: 'mdi-book', url:'/'}
@@ -68,13 +85,12 @@ export default {
   },
   methods: {
     async isCustomerLogin(){
-      const token = this.$store.getters.getToken;
-      const role = this.$store.getters.getRole;
-      if( token != null && role == 'customer'){
-        this.isLogin = true;
+      this.token = this.$store.getters.getToken;
+      this.role = this.$store.getters.getRole;
+      if( this.role == 'customer'){
         const response = await this.customerService.getCustomerDetailById();
         this.info = response;
-        this.items = this.customerItems;
+        return;
       }
     },
     logout(){
@@ -85,8 +101,13 @@ export default {
       return;
     }
   },
-  mounted() {
-    this.isCustomerLogin();
+  async mounted() {
+    await this.isCustomerLogin();
+  },
+  computed: {
+     customerLogin(){
+      return this.$store.getters.getRole;
+    }
   }
 }
 </script>

@@ -2,26 +2,69 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mi.bookvillage.rental.model.dao.RentalDAO">
 
-
     <select id="getRentalList" resultType="RentalVO">
-        SELECT RENTAL_SEQ,
-               BOOK_SEQ,
-               USER_SEQ,
-               RENTAL_DT,
-               PREDICT_RETURN_DT,
-               RETURN_DT,
-                (
-                CASE RENTAL_STATUS
-                WHEN '00' THEN '대여신청'
-                WHEN '01' THEN '대여완료'
-                WHEN '02' THEN '반납완료'
-                END
-                )AS RENTAL_STATUS,
-               RENTAL_REG_DT,
-               RENTAL_UPDATE_DT
-          FROM RENTAL
-         WHERE USER_SEQ = #{userSeq}
+        SELECT  R.RENTAL_SEQ,
+                R.BOOK_SEQ,
+                B.BOOK_TITLE AS BOOK_TITLE,
+                R.USER_SEQ,
+                R.RENTAL_DT,
+                R.PREDICT_RETURN_DT,
+                R.RETURN_DT,
+                R.RENTAL_STATUS,
+                R.RENTAL_REG_DT,
+                R.RENTAL_UPDATE_DT
+          FROM RENTAL R
+          JOIN ( SELECT BOOK_SEQ,
+                        BOOK_TITLE
+                   FROM BOOK ) B
+            ON R.BOOK_SEQ = B.BOOK_SEQ
+        <where>
+            <if test="userSeq != null">
+             R.USER_SEQ = #{userSeq}
+            </if>
+        </where>
     </select>
+
+
+    <select id="getRentalDetail" resultType="RentalVO">
+        SELECT R.RENTAL_SEQ,
+               R.BOOK_SEQ,
+               B.BOOK_TITLE AS BOOK_TITLE,
+               R.USER_SEQ,
+               R.RENTAL_DT,
+               R.PREDICT_RETURN_DT,
+               R.RETURN_DT,
+               R.RENTAL_STATUS,
+               R.RENTAL_REG_DT,
+               R.RENTAL_UPDATE_DT
+        FROM RENTAL R
+        JOIN ( SELECT BOOK_SEQ,
+                      BOOK_TITLE
+                 FROM BOOK ) B
+          ON R.BOOK_SEQ = B.BOOK_SEQ
+       WHERE R.RENTAL_SEQ = #{rentalSeq}
+    </select>
+
+
+    <select id="getRentalDetailByBookSeq" resultType="RentalVO">
+        SELECT R.RENTAL_SEQ,
+               R.BOOK_SEQ,
+               B.BOOK_TITLE AS BOOK_TITLE,
+               R.USER_SEQ,
+               R.RENTAL_DT,
+               R.PREDICT_RETURN_DT,
+               R.RETURN_DT,
+               R.RENTAL_STATUS,
+               R.RENTAL_REG_DT,
+               R.RENTAL_UPDATE_DT
+        FROM RENTAL R
+        JOIN ( SELECT BOOK_SEQ,
+                      BOOK_TITLE
+                 FROM BOOK ) B
+          ON R.BOOK_SEQ = B.BOOK_SEQ
+       WHERE R.BOOK_SEQ = #{bookSeq}
+    </select>
+
 
     <insert id="rentalBook">
         INSERT INTO RENTAL (
@@ -36,7 +79,11 @@
                            )
     </insert>
 
-
+    <update id="approveRental">
+        UPDATE RENTAL
+           SET RENTAL_STATUS = #{rentalStatus}
+         WHERE RENTAL_SEQ = #{rentalSeq}
+    </update>
 
 
 

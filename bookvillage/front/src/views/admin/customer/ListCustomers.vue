@@ -39,6 +39,8 @@ export default {
         { text: '고객명', value: 'userName'},
         { text: '생년월일', value: 'userBirth'},
         { text: '전화번호', value: 'userTell' },
+        { text: '등록일자', value: 'userRegDt' },
+        { text: '수정일자', value: 'userUpdateDt' },
       ],
       customers: [],
     }

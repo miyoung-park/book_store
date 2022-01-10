@@ -3,6 +3,7 @@ package com.mi.bookvillage.point.api;
 import com.mi.bookvillage.common.response.APIResponse;
 import com.mi.bookvillage.common.response.APIResponseBuilderFactory;
 import com.mi.bookvillage.common.security.JWTokenUtil;
+import com.mi.bookvillage.common.util.point.PointUtil;
 import com.mi.bookvillage.customer.model.service.CustomerService;
 import com.mi.bookvillage.customer.model.vo.CustomerVO;
 import com.mi.bookvillage.point.model.service.PointService;
@@ -23,13 +24,16 @@ public class PointAPI {
     private CustomerService customerService;
     private APIResponseBuilderFactory apiResponseBuilderFactory;
     private String token;
+    private PointUtil pointUtil;
 
     public PointAPI(PointService pointService
                   , CustomerService customerService
-                  , APIResponseBuilderFactory apiResponseBuilderFactory){
+                  , APIResponseBuilderFactory apiResponseBuilderFactory
+                  , PointUtil pointUtil){
         this.pointService = pointService;
         this.customerService = customerService;
         this.apiResponseBuilderFactory = apiResponseBuilderFactory;
+        this.pointUtil = pointUtil;
     }
 
     /**
@@ -56,7 +60,7 @@ public class PointAPI {
 
 
     @RequestMapping(value = "/point/charge", method = RequestMethod.POST)
-    public APIResponse transactionPoint(@RequestBody PointVO pointVO,
+    public APIResponse transactionPoint(@RequestBody PointVO pointObj,
                                          HttpServletRequest request ) {
         token = request.getHeader("Authorization");
 
@@ -68,13 +72,8 @@ public class PointAPI {
         Map<String, Object> adminObj = JWTokenUtil.getTokenInfo(token);
         String customerId = (String)adminObj.get("userId");
         CustomerVO customer = customerService.getCustomerDetailById(customerId);
-
-        // point 객체에 userSeq 세팅
-        pointVO.setUserSeq(customer.getUserSeq());
-        // point 객체에 previous 포인트 계산해서 세팅
-        int previousPoint = pointService.getPreviousTotalPoint(customer.getUserSeq());
-        pointVO.setPreviousPoint(previousPoint);
-
+        // 포인트 충전 객체로 전환
+        PointVO pointVO = pointUtil.chargePoint(pointObj , customer);
         // 포인트 적립
         pointService.transactionPoint(pointVO);
         return apiResponseBuilderFactory.success().build();

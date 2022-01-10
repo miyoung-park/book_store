@@ -1,5 +1,5 @@
 <template>
-  <div class="detail_section">
+  <div class="detail_section" ref="bookComponent">
     <v-card
         class="mx-auto my-8"
         width="500"
@@ -43,7 +43,7 @@ export default {
         { bookMemo: '' },
         { bookRegDt: '' },
       ],
-      files: [],
+      files: []
     }
   },
   inject:['bookService'],
@@ -58,6 +58,10 @@ export default {
       const data = await this.bookService.getBookDetail(this.bookSeq);
       this.bookInfo = data.bookInfo;
       this.files = data.files;
+
+      if(this.bookInfo.bookRentalStatus != null){
+        this.$emit("rentalStatus" , this.bookInfo.bookRentalStatus);
+      }
     },
     concat(file) {
       return file.savePath + file.renameFileName

@@ -28,21 +28,21 @@ export default {
     CustomerNavBar
   },
   methods: {
-    goAdmin(){
+    async goAdmin(){
       const path = this.$router.currentRoute.path;
       this.role =  this.$store.getters.getRole;
       // 유저 로그인 O --- 로그아웃 처리 후 관리자 페이지 이동
       if(this.role == 'customer'){
         if(confirm('관리자 페이지는 일반 계정 로그아웃 후 이용 가능합니다.\n로그아웃 후 관리자 페이지로 이동하시겠습니까 ?')){
-          this.$store.dispatch('logout');
-          this.$router.push({
+          await this.$store.dispatch('logout');
+          await this.$router.push({
             path: '/admin/login'
           })
         }
         return;
       }
       // 유저 로그인 X --- 현재 페이지가 /admin/login 이라면 새로고침
-      path == '/admin/login' ? location.reload() : this.$router.push({ path: '/admin/login' })
+      path == '/admin/login' ? location.reload() : await this.$router.push({ path: '/admin/login' })
     },
   }
 }

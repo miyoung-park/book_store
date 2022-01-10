@@ -8,6 +8,9 @@ import java.util.List;
 @Mapper
 public interface RentalDAO {
 
-    List<RentalVO> getRentalList(int userSeq);
+    List<RentalVO> getRentalList(Integer userSeq);
+    RentalVO getRentalDetail(int rentalSeq);
+    RentalVO getRentalDetailByBookSeq(int bookSeq);
     void rentalBook(RentalVO rentalVO);
+    void approveRental(RentalVO rentalVO);
 }

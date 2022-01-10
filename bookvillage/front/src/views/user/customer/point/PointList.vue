@@ -107,7 +107,7 @@ export default {
         await this.pointService.chargePoint(this.pointInfo);
         alert('포인트 충전이 완료되었습니다.');
         this.dialog = false
-        location.reload();
+        await this.getList();
       }
       this.dialog = false;
       this.pointInfo.pointTransaction = null; // 초기화
