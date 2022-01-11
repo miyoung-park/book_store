@@ -56,9 +56,12 @@ public class CustomerService {
     }
 
     public void updateCustomer(CustomerVO customerVO){
+        if( customerVO.getUserPw() != null ){
+            String encodedPassword = encoder.encode(customerVO.getUserPw());
+            customerVO.setUserPw(encodedPassword);
+        }
         customerDAO.updateCustomer(customerVO);
     }
-
     public void deleteCustomer(int userSeq){
         customerDAO.deleteCustomer(userSeq);
     }

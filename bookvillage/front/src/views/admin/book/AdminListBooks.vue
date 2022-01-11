@@ -33,7 +33,6 @@
             <td>{{item.bookPrice}}</td>
             <td>{{item.bookRentalFee}}</td>
             <td>{{item.bookMemo}}</td>
-            <td>{{item.bookRentalStatus}}</td>
             <td v-if="item.bookRentalStatus == '0'">대여신청중</td>
             <td v-if="item.bookRentalStatus == '1'" style="background-color: cornflowerblue">대여중</td>
             <td v-if="item.bookRentalStatus == '2'" style="background-color: crimson">대여중</td>

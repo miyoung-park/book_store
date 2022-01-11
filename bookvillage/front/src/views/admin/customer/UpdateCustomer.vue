@@ -6,11 +6,19 @@
             v-model="customerInfo.userId"
             label="아이디"
             required
+            readonly
         ></v-text-field>
         <v-text-field
             v-model="customerInfo.userPw"
-            label="비밀번호"
+            label= "새 비밀번호"
             type="password"
+            required
+        ></v-text-field>
+        <v-text-field
+            v-model="checkPw"
+            label= "비밀번호 확인"
+            type="password"
+            @change="validationPassword"
             required
         ></v-text-field>
         <p style="font-size: small; color: crimson">{{validPw}}</p>
@@ -52,9 +60,12 @@
             v-model="customerInfo.userTell"
             label="전화번호"
             required
+            @change="validationTell"
         ></v-text-field>
+        <p style="font-size: small; color: crimson">{{validTell}}</p>
         <div class="btn_section">
           <v-btn class="mr-4" @click="updateCustomer" style="background-color: #FFE082">수정하기</v-btn>
+          <v-btn class="mr-4" @click="goCustomerDetail" style="background-color: #FFE082">취소</v-btn>
         </div>
       </v-form>
     </div>
@@ -70,13 +81,14 @@ export default {
       customerInfo: {
         userSeq: '',
         userId : '' ,
-        userPw : '' ,
+        userPw : null ,
         userName: '' ,
         userBirth: '',
         userTell : ''
       },
       checkPw: '',
       validPw: null,
+      validTell: null,
       menu: false
     }
   },
@@ -88,13 +100,38 @@ export default {
       const response = await this.customerService.getCustomerDetail(this.customerInfo.userSeq);
       this.customerInfo = response;
     },
-    updateCustomer(){
-      this.customerService.updateCustomer(this.customerInfo);
+    validationPassword(){
+      if(this.customerInfo.userPw != this.checkPw){
+        this.validPw = '비밀번호가 다릅니다. 다시 입력해주세요.';
+        this.checkPw = ''; //초기화
+        return;
+      }
+      this.validPw = ''; //초기화
+    },
+    validationTell(){
+      const numCheck=/^[0-9]*$/;
+      if (!numCheck.test(this.customerInfo.userTell)) {
+        this.validTell = '숫자만 입력하실 수 있습니다.';
+        this.customerInfo.userTell = ''; //초기화
+        return;
+      }
+      this.validTell = ''; //초기화
+    },
+    async updateCustomer(){
+      await this.customerService.updateCustomer(this.customerInfo);
       alert('고객정보가 수정되었습니다.');
+      await this.$router.push({
+        path: '/admin/customer/detail/' + this.customerInfo.userSeq
+      })
+    },
+    goCustomerDetail(){
+      this.$router.push({
+        path: '/admin/customer/detail/'+ this.customerInfo.userSeq
+      })
     }
   },
-  mounted() {
-    this.getCustomerDetail();
+  async mounted() {
+    await this.getCustomerDetail();
   }
 }
 </script>

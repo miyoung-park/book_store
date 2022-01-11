@@ -146,8 +146,16 @@ public class CustomerAPI {
 
 
     @RequestMapping(value="/customer/update/{userSeq}" , method = RequestMethod.PUT)
-    public APIResponse updateCustomer(@PathVariable("userSeq") int userSeq,
-                                      @ModelAttribute CustomerVO customerVO){
+    public APIResponse updateCustomer(@RequestBody CustomerVO customerVO,
+                                      HttpServletRequest request){
+        // --- header 토큰 GET
+        String token = request.getHeader("Authorization");
+
+        // --- 토큰 유효성 검사
+        if( token == null || ! JWTokenUtil.checkToken(token)){
+            return null; // --- Exception 추가
+        }
+
         customerService.updateCustomer(customerVO);
         return apiResponseBuilderFactory.success().build();
     }

@@ -77,11 +77,13 @@
 
     <update id="updateCustomer">
         UPDATE CUSTOMER
-            SET USER_ID = #{userId},
-                USER_PW = #{userPw},
-                USER_NAME = #{userName},
-                USER_BIRTH = #{userBirth},
-                USER_TELL = #{userTell}
+            <set>
+                <if test="userPw != null">USER_PW = #{userPw},</if>
+                <if test="userName != null">USER_NAME = #{userName},</if>
+                <if test="userBirth != null">USER_BIRTH = #{userBirth},</if>
+                <if test="userTell != null">USER_TELL = #{userTell},</if>
+               USER_UPDATE_DT = NOW()
+            </set>
          WHERE USER_SEQ = #{userSeq}
     </update>
 

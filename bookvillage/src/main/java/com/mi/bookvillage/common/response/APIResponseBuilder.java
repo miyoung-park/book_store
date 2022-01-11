@@ -6,7 +6,19 @@ import lombok.Setter;
 
 import java.util.HashMap;
 import java.util.Map;
-
+/***
+ * Usage :
+ *
+ * APIResponseBuilder responseBuilder = APIResponseBuilder.success().setData( resultVo );
+ * ResponseEntity<Map<String, Object>> responseEntity = responseBuilder.build();
+ *
+ * APIResponseBuilder responseBuilder = APIResponseBuilder.success().putValue( "seq", 1 ).putValue( "name", "SangYoo" );
+ * ResponseEntity<Map<String, Object>> responseEntity = responseBuilder.build();
+ *
+ * APIResponseBuilder.fail(APIResponseBuilder.ErrorCode.INVALID_INPUT_PARAM, "Seq must be not null.");
+ * ResponseEntity<Map<String, Object>> responseEntity = responseBuilder.build();
+ *
+ */
 public class APIResponseBuilder {
 
     Map<String, Object> responseBodyMap = null;

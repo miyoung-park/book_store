@@ -57,8 +57,9 @@ export class customerService {
 
 
     updateCustomer(customerObj) {
+        const userSeq = customerObj.userSeq
         return $axiosInst
-            .put('/customer/update/' , customerObj)
+            .put('/customer/update/' + userSeq , customerObj)
             .then( response => {
                 return response.data;
             }).catch( error => {

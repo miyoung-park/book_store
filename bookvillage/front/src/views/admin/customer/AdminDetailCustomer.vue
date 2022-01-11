@@ -77,8 +77,8 @@ export default {
       return;
     }
   },
-  mounted() {
-    this.getCustomerDetail();
+  async mounted() {
+    await this.getCustomerDetail();
   }
 }
 </script>

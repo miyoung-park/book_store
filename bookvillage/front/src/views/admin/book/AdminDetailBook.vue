@@ -34,9 +34,14 @@ export default {
       })
     },
      async goDeleteBook(){
-      if(this.bookRentalStatus != ''){
-        alert('현재 대여중이 도서')
+      if(this.bookRentalStatus == '0'){
+        alert('현재 대여 신청 중인 도서입니다. ');
+        return;
       }
+       if(this.bookRentalStatus == '1'){
+         alert('현재 대여중인 도서입니다.');
+         return;
+       }
       if(confirm('정말 삭제하시겠습니까 ?')){
         await this.bookService.deleteBook(this.bookSeq);
         alert('도서정보 삭제가 완료되었습니다.')

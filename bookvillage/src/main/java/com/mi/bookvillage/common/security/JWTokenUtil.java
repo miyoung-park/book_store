@@ -1,6 +1,7 @@
 package com.mi.bookvillage.common.security;
 
 import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
@@ -8,10 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component // Bean 등록
+@Slf4j
 public class JWTokenUtil {
 
     private static String SECRET_KEY = "access_token";
-    private static int EXPIRE_MINUTE = 1000 * 60 * 60; // 1분
+    private static long EXPIRE_MINUTE = 30 * 60 * 1000; // 30min
 
     /**
      * ACCESS_TOKEN 토큰 발급 클래스
@@ -42,9 +44,9 @@ public class JWTokenUtil {
                 .getBody();
                 return true;
         } catch(ExpiredJwtException e) { // 토큰 만료
-            System.out.println(e);
+            log.error("expired token error ::: " + e.getMessage());
         } catch(Exception e) {  // 그외의 오류
-            System.out.println(e);
+            log.error("exception of token ::: " + e.getMessage());
         }
         return false;
      }
@@ -64,9 +66,9 @@ public class JWTokenUtil {
                     .getBody();
             claimMap = claims;
         } catch(ExpiredJwtException e) { // 토큰 만료
-            System.out.println(e);
+            log.error("expired token error ::: " + e.getMessage());
         } catch(Exception e) {  // 그외의 오류
-            System.out.println(e);
+            log.error("exception of token ::: " + e.getMessage());
         }
         return claimMap;
     }

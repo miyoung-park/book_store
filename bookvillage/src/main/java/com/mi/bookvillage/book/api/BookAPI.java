@@ -124,6 +124,8 @@ public class BookAPI {
      */
     @RequestMapping(value = "/book/delete/{bookSeq}",method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteBook(@PathVariable int bookSeq){
+
+        // 만약 해당도서가 대여중이라면 대여 후
         bookService.deleteBook(bookSeq); // 도서정보 + 도서 이미지 삭제
         return ResponseEntity.ok().build();
     }
