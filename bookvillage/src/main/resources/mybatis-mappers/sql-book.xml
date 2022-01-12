@@ -61,13 +61,15 @@
                                 BOOK_SEQ,
                                 ORIGIN_FILE_NAME,
                                 RENAME_FILE_NAME,
-                                SAVE_PATH
+                                SAVE_PATH,
+                                IMAGE_WEB_PATH
                                 )
                         VALUES (
                                    #{bookSeq},
                                    #{originFileName},
                                    #{renameFileName},
-                                   #{savePath}
+                                   #{savePath},
+                                   #{imageWebPath}
                                )
     </insert>
 
@@ -78,6 +80,7 @@
                ORIGIN_FILE_NAME,
                RENAME_FILE_NAME,
                SAVE_PATH,
+               IMAGE_WEB_PATH,
                REG_DATE
          FROM BOOK_FILE
         WHERE BOOK_SEQ = #{bookSeq}

@@ -53,6 +53,7 @@ public class CustomerAPI {
         try{
             Map<String, Object> authCustomerObj = new HashMap<>();
             authCustomerObj.put("userId" , authCustomer.getUserId());
+            authCustomerObj.put("role" , authCustomer.getUserRole());
             // 토큰 발급 및 return
             token = JWTokenUtil.createJwToken(authCustomerObj);
             // token / roles put
@@ -68,7 +69,7 @@ public class CustomerAPI {
 
 
     /**
-     * 고객정보 리스트
+     * 고객정보 리스트 : admin
      * @return
      */
     @RequestMapping(value = "/customer/list" , method = RequestMethod.GET)
@@ -79,7 +80,7 @@ public class CustomerAPI {
 
 
     /**
-     * 고객정보 추가
+     * 고객정보 추가 : admin
      * @param customerVO
      * @return
      */
@@ -91,7 +92,7 @@ public class CustomerAPI {
 
 
     /**
-     * 관리자가 고객정보 조회
+     * 관리자가 고객정보 조회 : admin
      * @param userSeq
      * @param request
      * @return
@@ -117,7 +118,7 @@ public class CustomerAPI {
     }
 
     /**
-     * 해당유저가 정보 조회
+     * 해당유저가 정보 조회 : user
      * @param request
      * @return
      */
@@ -134,7 +135,6 @@ public class CustomerAPI {
         // --- 토큰 해독
         Map<String, Object> adminObj = JWTokenUtil.getTokenInfo(token);
         String customerId = (String)adminObj.get("userId");
-
         // --- customer information GET
         CustomerVO customer = customerService.getCustomerDetailById(customerId);
 
@@ -145,6 +145,12 @@ public class CustomerAPI {
     }
 
 
+    /**
+     * 고객정보 업데이트 : admin
+     * @param customerVO
+     * @param request
+     * @return
+     */
     @RequestMapping(value="/customer/update/{userSeq}" , method = RequestMethod.PUT)
     public APIResponse updateCustomer(@RequestBody CustomerVO customerVO,
                                       HttpServletRequest request){
@@ -161,6 +167,11 @@ public class CustomerAPI {
     }
 
 
+    /**
+     * 고객정보 삭제 : admin
+     * @param userSeq
+     * @return
+     */
     @RequestMapping(value="/customer/delete/{userSeq}" , method = RequestMethod.DELETE)
     public APIResponse deleteCustomer(@PathVariable("userSeq") int userSeq){
         customerService.deleteCustomer(userSeq);

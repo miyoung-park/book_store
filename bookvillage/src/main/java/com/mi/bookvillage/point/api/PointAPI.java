@@ -37,7 +37,7 @@ public class PointAPI {
     }
 
     /**
-     * 포인트 목록 조회
+     * 포인트 목록 조회 : user
      * @return
      */
     @RequestMapping(value = "/point/list", method = RequestMethod.GET)
@@ -59,6 +59,12 @@ public class PointAPI {
     }
 
 
+    /**
+     * 포인트 충전 : user
+     * @param pointObj
+     * @param request
+     * @return
+     */
     @RequestMapping(value = "/point/charge", method = RequestMethod.POST)
     public APIResponse transactionPoint(@RequestBody PointVO pointObj,
                                          HttpServletRequest request ) {

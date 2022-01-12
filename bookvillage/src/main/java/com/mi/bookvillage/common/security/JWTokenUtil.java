@@ -44,9 +44,9 @@ public class JWTokenUtil {
                 .getBody();
                 return true;
         } catch(ExpiredJwtException e) { // 토큰 만료
-            log.error("expired token error ::: " + e.getMessage());
+            log.error("Expired token error ::: " + e.getMessage());
         } catch(Exception e) {  // 그외의 오류
-            log.error("exception of token ::: " + e.getMessage());
+            log.error("Exception of token ::: " + e.getMessage());
         }
         return false;
      }
@@ -66,9 +66,9 @@ public class JWTokenUtil {
                     .getBody();
             claimMap = claims;
         } catch(ExpiredJwtException e) { // 토큰 만료
-            log.error("expired token error ::: " + e.getMessage());
+            log.error("Expired token error ::: " + e.getMessage());
         } catch(Exception e) {  // 그외의 오류
-            log.error("exception of token ::: " + e.getMessage());
+            log.error("Exception of token ::: " + e.getMessage());
         }
         return claimMap;
     }

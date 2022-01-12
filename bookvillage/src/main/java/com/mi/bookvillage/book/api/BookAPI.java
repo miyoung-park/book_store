@@ -77,7 +77,7 @@ public class BookAPI {
 
 
     /**
-     * 도서 등록
+     * 도서 등록 : admin
      * @param book
      * @return
      */
@@ -97,7 +97,7 @@ public class BookAPI {
     }
 
     /**
-     * 도서 정보 업데이트
+     * 도서 정보 업데이트 : admin
      * @param book
      * @return
      */
@@ -125,7 +125,7 @@ public class BookAPI {
 
 
     /**
-     * 도서 삭제 + 도서 이미지 삭제
+     * 도서 삭제 + 도서 이미지 삭제 : admin
      * @param bookSeq
      * @return
      */

@@ -19,6 +19,14 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${resources.path_patterns}")
     String path_patterns;
 
+    private JwtTokenAuthInterceptor jwtTokenAuthInterceptor;
+
+    public WebMvcConfig(JwtTokenAuthInterceptor jwtTokenAuthInterceptor) {
+        this.jwtTokenAuthInterceptor = jwtTokenAuthInterceptor;
+    }
+
+
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         log.info("Loading Images");
@@ -29,10 +37,15 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResolver(new PathResourceResolver());
     }
 
+    /**
+     * Interceptor 등록 / 제외 URL 추가
+     * @param registry
+     */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new JwtTokenAuthInterceptor())
-                .addPathPatterns("/*");
+        registry.addInterceptor(jwtTokenAuthInterceptor)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/*/login", "/book/list", "/book/detail/*");
 
     }
 }
