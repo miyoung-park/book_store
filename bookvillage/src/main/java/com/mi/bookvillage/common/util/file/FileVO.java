@@ -23,5 +23,8 @@ public class FileVO {
     @Getter @Setter
     private String savePath;
 
+    @Getter @Setter
+    private String imageWebPath;
+
 
 }

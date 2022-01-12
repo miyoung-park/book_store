@@ -1,8 +1,10 @@
 package com.mi.bookvillage.common.security;
 
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,20 +29,22 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
      *      : AuthenticationManager()를 획득하기 위해 사용
      */
 
-    @Bean
-    public BCryptPasswordEncoder getPasswordEncoder()
-    {
-        return new BCryptPasswordEncoder();
-    }
+
+    /* 정적 리소스 시큐리티 제외 */
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
+
+
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
         http
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and()
-                .httpBasic()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS) // Jwt token 사용 -- 인증 정보 서버에 저장 X
                 .and()
                 .authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/**").permitAll()
+                .antMatchers("/upload/**").permitAll()
                 .antMatchers("/book/**").permitAll()
                 .antMatchers("/admin/**").permitAll()
                 .antMatchers("/customer/**").permitAll()
@@ -48,7 +52,8 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rental/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .csrf().disable()
+                .httpBasic().disable()  // http basic 기반으로 로그인화면 뜸 -> disable 설정
+                .csrf().disable()   // csrf disable
                 .cors();  // cors 활성화
     }
 
@@ -66,6 +71,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
 
         return source;
     }
+
 
 
 

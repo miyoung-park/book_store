@@ -11,6 +11,9 @@ import com.mi.bookvillage.rental.model.service.RentalService;
 import com.mi.bookvillage.rental.model.vo.RentalVO;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.javassist.NotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -31,11 +34,13 @@ public class BookAPI {
 
     private BookService bookService;
     private RentalService rentalService;
+    private FileUtil fileUtil;
     private APIResponseBuilderFactory apiResponseBuilderFactory;
 
-    public BookAPI(BookService bookService, RentalService rentalService, APIResponseBuilderFactory apiResponseBuilderFactory){
+    public BookAPI(BookService bookService, RentalService rentalService, FileUtil fileUtil, APIResponseBuilderFactory apiResponseBuilderFactory){
         this.bookService = bookService;
         this.rentalService = rentalService;
+        this.fileUtil = fileUtil;
         this.apiResponseBuilderFactory = apiResponseBuilderFactory;
     }
 
@@ -46,6 +51,7 @@ public class BookAPI {
     @RequestMapping(value = "/book/list" , method = RequestMethod.GET)
     public APIResponse getBookList(){
         List<BookVO> bookList = bookService.getBookList();
+        log.info("complete ::: we can get bookList");
                 // APIResponseBuilder 인스턴스 생성    // 데이터 세팅       // build
         return apiResponseBuilderFactory.success().setData(bookList).build();
     }
@@ -59,6 +65,7 @@ public class BookAPI {
     public APIResponse getBookDetail(@PathVariable int bookSeq) {
         BookVO book = bookService.getBookDetail(bookSeq);
         if( book == null) {
+            log.error("exception ::: Cannot find book");
             throw new RuntimeException("Cannot find book");
         }
         List<FileVO> files = bookService.getBookFile(bookSeq);
@@ -78,8 +85,8 @@ public class BookAPI {
     public APIResponse addBook( @ModelAttribute BookVO book
                                ,@RequestParam(required = false) List<MultipartFile> files ) {
         try {
-            List<FileVO> fileList = FileUtil.uploadFiles(files, book.getBookSeq());
             bookService.addBook(book);
+            List<FileVO> fileList = fileUtil.uploadFiles(files, book.getBookSeq());
             bookService.addFile(fileList);
             return apiResponseBuilderFactory.success().build();
         } catch (IOException e) {
@@ -103,7 +110,7 @@ public class BookAPI {
             // book 정보 업데이트
             bookService.updateBook(book);
             // new image 추가
-            List<FileVO> fileList = FileUtil.uploadFiles(files, bookSeq);
+            List<FileVO> fileList = fileUtil.uploadFiles(files, bookSeq);
             bookService.addFile(fileList);
             // 기존 image 삭제
             bookService.deleteFiles(deleteFiles);
