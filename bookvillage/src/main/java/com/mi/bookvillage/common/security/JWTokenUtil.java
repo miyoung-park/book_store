@@ -1,5 +1,6 @@
 package com.mi.bookvillage.common.security;
 
+import com.mi.bookvillage.common.response.APIResponse;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -21,10 +22,11 @@ public class JWTokenUtil {
      * @return
      */
     public static String createJwToken(Map<String, Object> userObj) {
+        Date now = new Date();
         return Jwts.builder()
                     .setHeaderParam("type" , "JWT")
                     .setSubject("auth_token")
-                    .setExpiration(new Date(System.currentTimeMillis() + EXPIRE_MINUTE))
+                    .setExpiration(new Date(now.getTime() + Long.valueOf( EXPIRE_MINUTE )))
                     .claim("role", userObj.get("role"))
                     .claim("userId", userObj.get("userId"))
                     .signWith(SignatureAlgorithm.HS256 , SECRET_KEY.getBytes())
@@ -36,7 +38,6 @@ public class JWTokenUtil {
      * 전달 받은 토큰의 유효값 화인
      */
     public static boolean checkToken(final String jwt) throws IllegalAccessError {
-
         try {
                 Jwts.parser()
                 .setSigningKey(SECRET_KEY.getBytes())
@@ -44,9 +45,10 @@ public class JWTokenUtil {
                 .getBody();
                 return true;
         } catch(ExpiredJwtException e) { // 토큰 만료
-            log.error("Expired token error ::: " + e.getMessage());
+            // 여기서 Exception을 던져준다?
+            log.error("JwtToken Exception ::: " + e.getMessage());
         } catch(Exception e) {  // 그외의 오류
-            log.error("Exception of token ::: " + e.getMessage());
+            log.error("JwtToken Exception ::: " + e.getMessage());
         }
         return false;
      }
@@ -66,9 +68,9 @@ public class JWTokenUtil {
                     .getBody();
             claimMap = claims;
         } catch(ExpiredJwtException e) { // 토큰 만료
-            log.error("Expired token error ::: " + e.getMessage());
+            log.error("JwtToken Exception ::: " + e.getMessage());
         } catch(Exception e) {  // 그외의 오류
-            log.error("Exception of token ::: " + e.getMessage());
+            log.error("JwtToken Exception ::: " + e.getMessage());
         }
         return claimMap;
     }

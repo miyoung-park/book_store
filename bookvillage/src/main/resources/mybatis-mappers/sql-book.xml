@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mi.bookvillage.book.model.dao.BookDAO">
+<mapper namespace="com.mi.bookvillage.model.dao.BookDAO">
 
     <select id="getBookList" resultType="BookVO">
         SELECT B.BOOK_SEQ,
@@ -16,7 +16,12 @@
           LEFT JOIN ( SELECT BOOK_SEQ,
                              RENTAL_STATUS
                         FROM RENTAL
-                    ) R
+                       WHERE RENTAL_SEQ IN (
+                                            SELECT MAX(RENTAL_SEQ) AS RENTAL_SEQ
+                                              FROM RENTAL
+                                             GROUP BY BOOK_SEQ
+                                            )
+                     ) R
             ON B.BOOK_SEQ = R.BOOK_SEQ
     </select>
 
@@ -32,8 +37,13 @@
                B.BOOK_UPDATE_DT
          FROM BOOK B
          LEFT JOIN ( SELECT BOOK_SEQ,
-                            RENTAL_STATUS
+                        RENTAL_STATUS
                        FROM RENTAL
+                      WHERE RENTAL_SEQ IN (
+                                            SELECT MAX(RENTAL_SEQ) AS RENTAL_SEQ
+                                              FROM RENTAL
+                                             WHERE BOOK_SEQ = #{bookSeq}
+                                             )
                     ) R
            ON B.BOOK_SEQ = R.BOOK_SEQ
         WHERE B.BOOK_SEQ = #{bookSeq}
@@ -61,15 +71,13 @@
                                 BOOK_SEQ,
                                 ORIGIN_FILE_NAME,
                                 RENAME_FILE_NAME,
-                                SAVE_PATH,
-                                IMAGE_WEB_PATH
+                                SAVE_PATH
                                 )
                         VALUES (
                                    #{bookSeq},
                                    #{originFileName},
                                    #{renameFileName},
-                                   #{savePath},
-                                   #{imageWebPath}
+                                   #{savePath}
                                )
     </insert>
 
@@ -80,7 +88,6 @@
                ORIGIN_FILE_NAME,
                RENAME_FILE_NAME,
                SAVE_PATH,
-               IMAGE_WEB_PATH,
                REG_DATE
          FROM BOOK_FILE
         WHERE BOOK_SEQ = #{bookSeq}

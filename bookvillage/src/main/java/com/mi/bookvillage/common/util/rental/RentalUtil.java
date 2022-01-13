@@ -1,14 +1,19 @@
 package com.mi.bookvillage.common.util.rental;
 
-import com.mi.bookvillage.rental.model.vo.RentalVO;
+
+import com.mi.bookvillage.model.vo.RentalVO;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class RentalUtil {
 
+    private static String Approve_Code = "01";
+    private static String Return_Code = "02";
+    private static String Reject_Code = "04";
 
-    public static RentalVO getRentalInfo(int bookSeq , int userSeq, String rentalDayCount){
+
+    public static RentalVO getRentalInfo(int bookSeq, int userSeq, String rentalDayCount){
         RentalVO rentalVO = new RentalVO();
         rentalVO.setBookSeq(bookSeq); // --- bookSeq 세팅
         rentalVO.setUserSeq(userSeq); // --- userSeq 세팅
@@ -33,10 +38,23 @@ public class RentalUtil {
     public static RentalVO setApproveRental(int rentalSeq){
         RentalVO rentalVO = new RentalVO();
         rentalVO.setRentalSeq(rentalSeq);
-        rentalVO.setRentalStatus("01");
+        rentalVO.setRentalStatus(Approve_Code);
         return rentalVO;
     }
 
+    public static RentalVO setRejectRental(int rentalSeq){
+        RentalVO rentalVO = new RentalVO();
+        rentalVO.setRentalSeq(rentalSeq);
+        rentalVO.setRentalStatus(Reject_Code);
+        return rentalVO;
+    }
+
+    public static RentalVO setReturnRental(int rentalSeq){
+        RentalVO rentalVO = new RentalVO();
+        rentalVO.setRentalSeq(rentalSeq);
+        rentalVO.setRentalStatus(Return_Code);
+        return rentalVO;
+    }
 
 
 }

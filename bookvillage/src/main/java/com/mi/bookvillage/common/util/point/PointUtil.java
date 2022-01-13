@@ -1,13 +1,17 @@
 package com.mi.bookvillage.common.util.point;
 
-import com.mi.bookvillage.book.model.service.BookService;
-import com.mi.bookvillage.book.model.vo.BookVO;
-import com.mi.bookvillage.customer.model.vo.CustomerVO;
-import com.mi.bookvillage.point.model.service.PointService;
-import com.mi.bookvillage.point.model.vo.PointVO;
-import com.mi.bookvillage.rental.model.vo.RentalVO;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.mi.bookvillage.common.response.APIResponse;
+import com.mi.bookvillage.common.response.APIResponseBuilder;
+import com.mi.bookvillage.model.service.BookService;
+import com.mi.bookvillage.model.service.PointService;
+import com.mi.bookvillage.model.vo.BookVO;
+import com.mi.bookvillage.model.vo.CustomerVO;
+import com.mi.bookvillage.model.vo.PointVO;
+import com.mi.bookvillage.model.vo.RentalVO;
 import org.springframework.stereotype.Component;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @Component
 public class PointUtil {
@@ -27,7 +31,7 @@ public class PointUtil {
         return pointVO;
     }
 
-    public PointVO minusPoint(RentalVO rentalVO){
+    public PointVO minusPoint(RentalVO rentalVO , String status){
         PointVO pointVO = new PointVO();
         BookVO bookVO = bookService.getBookDetail(rentalVO.getBookSeq());
         // -- 고객번호 정의
@@ -38,10 +42,14 @@ public class PointUtil {
         int previousPoint = pointService.getPreviousTotalPoint(rentalVO.getUserSeq());
         pointVO.setPreviousPoint(previousPoint);
         // -- 거래 상태 정의
-        pointVO.setPointStatus("01");
+        pointVO.setPointStatus(status);
         // -- 사용 포인트 정의
-        pointVO.setPointTransaction("-" + bookVO.getBookRentalFee());
-
+        if(status == "01") { // -- 차감
+            pointVO.setPointTransaction("-" + bookVO.getBookRentalFee());
+        } else if ( status == "04" ) { // -- 재적립
+            pointVO.setPointTransaction(bookVO.getBookRentalFee());
+        }
         return pointVO;
     }
+
 }

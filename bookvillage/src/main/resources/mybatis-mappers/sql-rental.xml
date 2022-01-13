@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mi.bookvillage.rental.model.dao.RentalDAO">
+<mapper namespace="com.mi.bookvillage.model.dao.RentalDAO">
 
     <select id="getRentalList" resultType="RentalVO">
         SELECT  R.RENTAL_SEQ,
@@ -18,11 +18,12 @@
                         BOOK_TITLE
                    FROM BOOK ) B
             ON R.BOOK_SEQ = B.BOOK_SEQ
-        <where>
-            <if test="userSeq != null">
-             R.USER_SEQ = #{userSeq}
+            <if test="userSeq != null ">
+                WHERE R.USER_SEQ = #{userSeq}
             </if>
-        </where>
+            <if test="userSeq == null ">
+                WHERE R.RENTAL_STATUS = 0
+            </if>
     </select>
 
 
@@ -43,6 +44,7 @@
                  FROM BOOK ) B
           ON R.BOOK_SEQ = B.BOOK_SEQ
        WHERE R.RENTAL_SEQ = #{rentalSeq}
+         AND R.RENTAL_STATUS != '04'
     </select>
 
 
@@ -63,10 +65,11 @@
                  FROM BOOK ) B
           ON R.BOOK_SEQ = B.BOOK_SEQ
        WHERE R.BOOK_SEQ = #{bookSeq}
+         AND R.RENTAL_STATUS != '04'
     </select>
 
 
-    <insert id="rentalBook">
+    <insert id="rentalBook" useGeneratedKeys="true" keyProperty="rentalSeq">
         INSERT INTO RENTAL (
                             BOOK_SEQ,
                             USER_SEQ,
@@ -79,9 +82,12 @@
                            )
     </insert>
 
-    <update id="approveRental">
+
+
+    <update id="updateRentalStatus">
         UPDATE RENTAL
-           SET RENTAL_STATUS = #{rentalStatus}
+           SET RENTAL_STATUS = #{rentalStatus},
+               RENTAL_UPDATE_DT = NOW()
          WHERE RENTAL_SEQ = #{rentalSeq}
     </update>
 
