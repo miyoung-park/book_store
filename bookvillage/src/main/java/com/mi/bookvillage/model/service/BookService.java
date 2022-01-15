@@ -16,23 +16,28 @@ public class BookService {
         this.bookDao = bookDao;
     }
 
+
     public List<BookVO> getBookList() {
         return bookDao.getBookList();
     }
+
 
     public BookVO getBookDetail(int bookSeq){
         return bookDao.getBookDetail(bookSeq);
     }
 
+
     public void addBook(BookVO bookVO){
         bookDao.addBook(bookVO);
     }
 
-    public void addFile(List<FileVO> files){
+
+    public void addFiles(List<FileVO> files){
         for(int i = 0; i < files.size(); i ++) {
-            bookDao.addFile(files.get(i));
+            bookDao.addFiles(files.get(i));
         }
     }
+
 
     public List<FileVO> getBookFile( int bookSeq ){
         List<FileVO> fileList = bookDao.getBookFile(bookSeq);
@@ -43,12 +48,14 @@ public class BookService {
         bookDao.updateBook(bookVO);
     }
 
+
     public void deleteBook(int bookSeq) {
         // 해당 도서정보 삭제
         bookDao.deleteBook(bookSeq);
         // 해당 도서이미지 삭제
         bookDao.deleteFilesWithBook(bookSeq);
     }
+
 
     public void deleteFiles(List<Integer> deleteFiles){
         if( deleteFiles != null && deleteFiles.size() > 0 ){

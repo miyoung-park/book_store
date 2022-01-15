@@ -1,6 +1,6 @@
 package com.mi.bookvillage.common.web;
 
-import com.mi.bookvillage.common.interceptor.JwtTokenAuthInterceptor;
+import com.mi.bookvillage.common.interceptor.JwtTokenInterceptor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -19,14 +19,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Value("${resources.path_patterns}")
     String path_patterns;
 
-    private JwtTokenAuthInterceptor jwtTokenAuthInterceptor;
+    private JwtTokenInterceptor jwtTokenInterceptor;
 
-    public WebMvcConfig(JwtTokenAuthInterceptor jwtTokenAuthInterceptor) {
-        this.jwtTokenAuthInterceptor = jwtTokenAuthInterceptor;
+    public WebMvcConfig(JwtTokenInterceptor jwtTokenInterceptor) {
+        this.jwtTokenInterceptor = jwtTokenInterceptor;
     }
 
 
-
+    /**
+     * 정적리소스 연결을 위한... -- 더 알아봐야 함
+     * @param registry
+     */
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         log.info("Loading Images");
@@ -43,7 +46,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtTokenAuthInterceptor)
+        registry.addInterceptor(jwtTokenInterceptor)
                 .addPathPatterns("/**")
                 .excludePathPatterns("/*/login", "/book/list", "/book/detail/*");
 

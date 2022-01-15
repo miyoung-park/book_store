@@ -19,8 +19,9 @@ import java.util.UUID;
 @Slf4j
 @Component
 public class FileUtil {
-        /*
-    @Value("${resources.location}")
+
+
+    /* @Value("${resources.location}")
     private String location;
 
     @Value("${resources.server_port}")

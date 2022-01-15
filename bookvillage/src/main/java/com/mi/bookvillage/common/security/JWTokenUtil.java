@@ -1,19 +1,22 @@
 package com.mi.bookvillage.common.security;
 
-import com.mi.bookvillage.common.response.APIResponse;
+import com.mi.bookvillage.common.exceptions.customException.JwtAuthException;
+import com.mi.bookvillage.common.eum.ErrorCode;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
+// TODO: Util 안에서 Token 의 객체를 확인하는 로직 넣기
+// TODO: token 체크 하는 부분을 어노테이션으로 만들어보기 ( Interceptor 제외하고 필요한 경우에만 사용할 수 있도록 )
 @Component // Bean 등록
 @Slf4j
-public class JWTokenUtil {
+public class JWTokenUtil { // Jwt 버전 올리기
 
-    private static String SECRET_KEY = "access_token";
+    private static String SECRET_KEY = "access_token"; // 너무 짧음 -->  Secret Key 가 똑같이 겹칠 확률이 있다. 길게 바꾸기
+
     private static long EXPIRE_MINUTE = 30 * 60 * 1000; // 30min
 
     /**
@@ -27,7 +30,6 @@ public class JWTokenUtil {
                     .setHeaderParam("type" , "JWT")
                     .setSubject("auth_token")
                     .setExpiration(new Date(now.getTime() + Long.valueOf( EXPIRE_MINUTE )))
-                    .claim("role", userObj.get("role"))
                     .claim("userId", userObj.get("userId"))
                     .signWith(SignatureAlgorithm.HS256 , SECRET_KEY.getBytes())
                     .compact();
@@ -38,6 +40,9 @@ public class JWTokenUtil {
      * 전달 받은 토큰의 유효값 화인
      */
     public static boolean checkToken(final String jwt) throws IllegalAccessError {
+        if( jwt == null ){
+            throw new JwtAuthException(ErrorCode.TOKEN_NOT_EXIST);
+        }
         try {
                 Jwts.parser()
                 .setSigningKey(SECRET_KEY.getBytes())
@@ -45,8 +50,7 @@ public class JWTokenUtil {
                 .getBody();
                 return true;
         } catch(ExpiredJwtException e) { // 토큰 만료
-            // 여기서 Exception을 던져준다?
-            log.error("JwtToken Exception ::: " + e.getMessage());
+            throw new JwtAuthException(ErrorCode.TOKEN_EXPIRED);
         } catch(Exception e) {  // 그외의 오류
             log.error("JwtToken Exception ::: " + e.getMessage());
         }
@@ -60,6 +64,11 @@ public class JWTokenUtil {
      * @return
      */
     public static Map<String, Object> getTokenInfo(String jwt){
+
+        if( jwt == null ){
+            throw new JwtAuthException(ErrorCode.TOKEN_NOT_EXIST);
+        }
+
         Map<String,Object> claimMap = null;
         try {
             Claims claims = Jwts.parser()
@@ -69,6 +78,7 @@ public class JWTokenUtil {
             claimMap = claims;
         } catch(ExpiredJwtException e) { // 토큰 만료
             log.error("JwtToken Exception ::: " + e.getMessage());
+            throw new JwtAuthException(ErrorCode.TOKEN_EXPIRED);
         } catch(Exception e) {  // 그외의 오류
             log.error("JwtToken Exception ::: " + e.getMessage());
         }

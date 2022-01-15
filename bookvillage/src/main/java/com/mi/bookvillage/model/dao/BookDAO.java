@@ -13,7 +13,7 @@ public interface BookDAO {
     List<BookVO> getBookList();
     BookVO getBookDetail(int bookSeq);
     int addBook(BookVO bookVO);
-    void addFile(FileVO fileVO);
+    void addFiles(FileVO fileVO);
     List<FileVO> getBookFile(int bookSeq);
     void updateBook(BookVO book);
     void deleteBook(int bookSeq);

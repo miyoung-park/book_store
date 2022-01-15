@@ -1,7 +1,6 @@
 package com.mi.bookvillage.common.util.point;
 
 import com.mi.bookvillage.common.response.APIResponse;
-import com.mi.bookvillage.common.response.APIResponseBuilder;
 import com.mi.bookvillage.model.service.BookService;
 import com.mi.bookvillage.model.service.PointService;
 import com.mi.bookvillage.model.vo.BookVO;
@@ -14,16 +13,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component
-public class PointUtil {
+public class PointFactory {
     static PointService pointService;
     static BookService bookService;
 
-    public PointUtil(PointService pointService , BookService bookService){
+    public PointFactory(PointService pointService , BookService bookService){
         this.pointService = pointService;
         this.bookService = bookService;
     }
 
     public PointVO chargePoint(PointVO pointVO, CustomerVO customerVO){
+        /* validation 추가 */
         pointVO.setUserSeq(customerVO.getUserSeq());
         int previousPoint = pointService.getPreviousTotalPoint(customerVO.getUserSeq());
         pointVO.setPreviousPoint(previousPoint);
@@ -31,7 +31,10 @@ public class PointUtil {
         return pointVO;
     }
 
+
     public PointVO minusPoint(RentalVO rentalVO , String status){
+        /* validation 추가 */
+
         PointVO pointVO = new PointVO();
         BookVO bookVO = bookService.getBookDetail(rentalVO.getBookSeq());
         // -- 고객번호 정의

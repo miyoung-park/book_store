@@ -31,7 +31,6 @@ public class PointService {
     }
 
 
-
     public int getPreviousTotalPoint(int userSeq){
         Integer totalPoint = pointDAO.getPreviousTotalPoint(userSeq);
         return (totalPoint == null || totalPoint == 0 ? 0 : totalPoint);

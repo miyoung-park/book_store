@@ -17,7 +17,7 @@ import java.util.Map;
  */
 @Component
 @Slf4j
-public class JwtTokenAuthInterceptor implements HandlerInterceptor {
+public class JwtTokenInterceptor implements HandlerInterceptor {
 
 
     /**
@@ -30,13 +30,11 @@ public class JwtTokenAuthInterceptor implements HandlerInterceptor {
      */
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        // Controller 에 없는 URI 가 인식되는 경우 ㄷ
-        log.info("Request URI ::: " + request.getRequestURI());
+        // Controller 에 없는 URI 가 인식되는 경우
         String token = request.getHeader("Authorization");
 
         // WebMvcConfig 에서 Exclude 된 URL 제외하고는 token 없거나 만료된 경우 Controller 접근 불가
          if( !JWTokenUtil.checkToken(token) ) {
-            // JWTokenUtil.checkToken(token) 에서 Exception + log 처리 !
             return false;
         }
         return true;

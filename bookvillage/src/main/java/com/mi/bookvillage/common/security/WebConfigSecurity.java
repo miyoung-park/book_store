@@ -30,7 +30,7 @@ public class WebConfigSecurity extends WebSecurityConfigurerAdapter {
      */
 
 
-    /* 정적 리소스 시큐리티 제외 */
+    /* 정적 리소스 시큐리티 제외  ??? */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
