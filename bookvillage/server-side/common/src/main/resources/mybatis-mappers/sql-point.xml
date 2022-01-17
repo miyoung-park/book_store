@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.mi.bookvillage.common.mapper.PointDAO">
+
+
+    <select id="getPointListBySeq" resultType="PointVO">
+        SELECT  POINT_SEQ
+               ,USER_SEQ
+               ,RENTAL_SEQ
+               ,PREVIOUS_POINT
+               ,(
+                 CASE POINT_STATUS <!-- 00은 적립으로,  01은 차감으로 출력 -->
+                 WHEN '00' THEN '적립'
+                 WHEN '01' THEN '차감'
+                 WHEN '04' THEN '취소'
+                  END
+                ) AS POINT_STATUS
+               ,POINT_TRANSACTION
+               ,TOTAL_POINT
+               ,TRANSACTION_REG_DT
+          FROM POINT
+         WHERE  USER_SEQ = #{userSeq}
+    </select>
+
+
+    <select id="getPointListById" resultType="PointVO">
+        SELECT   POINT_SEQ
+                ,USER_SEQ
+                ,RENTAL_SEQ
+                ,PREVIOUS_POINT
+                ,(
+                   CASE POINT_STATUS <!-- 00은 적립으로,  01은 차감으로 출력 -->
+                   WHEN '00' THEN '적립'
+                   WHEN '01' THEN '차감'
+                   WHEN '04' THEN '취소'
+                    END
+                  ) AS POINT_STATUS
+                ,POINT_TRANSACTION
+                ,TOTAL_POINT
+                ,TRANSACTION_REG_DT
+         FROM POINT
+        WHERE USER_SEQ = ( SELECT USER_SEQ
+                             FROM CUSTOMER
+                            WHERE USER_ID = #{userId})
+    </select>
+
+
+
+
+    <select id="getPreviousTotalPoint" resultType="Integer">
+        <!-- 해당 유저의 가장 최근 거래의 TOTAL_POINT -->
+        SELECT TOTAL_POINT
+          FROM POINT
+         WHERE POINT_SEQ = ( SELECT MAX(POINT_SEQ) AS POINT_SEQ
+                               FROM POINT
+                              WHERE USER_SEQ = #{userSeq})
+    </select>
+
+    <insert id="transactionPoint">
+        INSERT INTO POINT (
+                            USER_SEQ,
+                            RENTAL_SEQ,
+                            PREVIOUS_POINT, <!-- 이전 포인트 -->
+                            POINT_STATUS, <!-- 거래 상태 -->
+                            POINT_TRANSACTION, <!-- 거래 금액 -->
+                            TOTAL_POINT
+                            )
+                    VALUE (
+                             #{userSeq}
+                            ,#{rentalSeq}
+                            ,#{previousPoint}
+                            ,#{pointStatus}
+                            ,#{pointTransaction}
+                            ,#{previousPoint} + #{pointTransaction} <!-- 적립 / 차감 -->
+                            )
+    </insert>
+
+
+    <select id="getPointListByRentalSeq" parameterType="PointVO">
+        SELECT POINT_SEQ,
+               USER_SEQ,
+               RENTAL_SEQ,
+               PREVIOUS_POINT,
+               POINT_TRANSACTION,
+               TOTAL_POINT,
+               POINT_STATUS,
+               TRANSACTION_REG_DT
+          FROM POINT
+         WHERE RENTAL_SEQ = #{rentalSeq}
+    </select>
+
+
+
+    
+</mapper>

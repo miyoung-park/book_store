@@ -1,0 +1,8 @@
+bootJar {
+    enabled = true
+    launchScript()
+}
+
+jar {
+    enabled = false
+}

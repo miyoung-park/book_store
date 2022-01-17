@@ -1,53 +1,81 @@
-plugins {
-    id 'org.springframework.boot' version '2.6.1'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'org.asciidoctor.convert' version '1.5.8'
-    id 'java'
-}
-
-group = 'com.mi'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-configurations {
-    compileOnly {
-        extendsFrom annotationProcessor
+// 빌드 시
+buildscript {
+    ext {
+        springBootVersion = '2.6.1'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE'"
     }
 }
 
-repositories {
-    mavenCentral()
+
+// 하위 모든 프로젝트를 공통으로 세팅
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'groovy'
+    apply plugin: 'jar'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    group = 'com.mi'
+    version = '0.0.1-SNAPSHOT'
+
+    sourceCompatibility = 11
+
+    repositories {
+        mavenCentral()
+    }
+
+    // 하위 모듈에서 공통으로 사용할 dependencies
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
+        implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'org.springframework.boot:spring-boot-starter-web'
+        implementation 'org.springframework.boot:spring-boot-starter-validation'
+        implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
+        implementation 'org.springframework.boot:spring-boot-starter-security'
+        implementation 'io.jsonwebtoken:jjwt:0.9.1'
+        implementation 'javax.xml.bind:jaxb-api:2.3.1'
+        compileOnly 'org.projectlombok:lombok'
+        developmentOnly 'org.springframework.boot:spring-boot-devtools'
+        runtimeOnly 'mysql:mysql-connector-java'
+        annotationProcessor 'org.projectlombok:lombok'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
+        testImplementation 'org.springframework.security:spring-security-test'
+    }
+
+    test {
+        useJUnitPlatform()
+    }
+
+
 }
 
-ext {
-    set('snippetsDir', file("build/generated-snippets"))
+// Q: common 에서 service를 공통모듈로 사용하는게 나은지 아니면 각 프로젝트마다 세팅을 하는게 나은지..
+project(':server-side:common') {
+    dependencies {
+        // compileOnly project(':server-side:admin')
+        // compileOnly project(':server-side:user')
+    }
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.0'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'io.jsonwebtoken:jjwt:0.9.1'
-    implementation 'javax.xml.bind:jaxb-api:2.3.1'
-    compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'mysql:mysql-connector-java'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
-    testImplementation 'org.springframework.security:spring-security-test'
+project(':server-side:admin') {
+    dependencies {
+        // compile 시 common 모듈 가져오기 설정
+        compileOnly project(':server-side:common')
+    }
 }
 
-test {
-    outputs.dir snippetsDir
-    useJUnitPlatform()
+project(':server-side:user') {
+    dependencies {
+        compileOnly project(':server-side:common')
+    }
 }
 
-asciidoctor {
-    inputs.dir snippetsDir
-    dependsOn test
-}
+

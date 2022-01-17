@@ -1,1 +1,5 @@
 rootProject.name = 'bookvillage'
+
+include 'server-side:admin'
+include 'server-side:user'
+include 'server-side:common'
