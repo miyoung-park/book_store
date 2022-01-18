@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mi.bookvillage.common.mapper.RentalDAO">
+<mapper namespace="com.mi.bookvillage.common.mapper.RentalMapper">
 
     <select id="getRentalList" resultType="RentalVO">
         SELECT  R.RENTAL_SEQ,
