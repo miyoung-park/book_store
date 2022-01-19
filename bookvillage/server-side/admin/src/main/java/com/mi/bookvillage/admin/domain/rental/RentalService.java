@@ -1,10 +1,10 @@
 package com.mi.bookvillage.admin.domain.rental;
 
 import com.mi.bookvillage.admin.common.factory.PointFactory;
-import com.mi.bookvillage.common.mapper.PointMapper;
-import com.mi.bookvillage.common.mapper.RentalMapper;
-import com.mi.bookvillage.common.vo.PointVO;
-import com.mi.bookvillage.common.vo.RentalVO;
+import com.mi.bookvillage.common.domain.Point.PointMapper;
+import com.mi.bookvillage.common.domain.Rental.RentalMapper;
+import com.mi.bookvillage.common.domain.Point.PointVO;
+import com.mi.bookvillage.common.domain.Rental.RentalVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,9 +15,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class RentalService {
 
-    private RentalMapper rentalMapper;
-    private PointMapper pointMapper;
-    private PointFactory pointFactory;
+    private final RentalMapper rentalMapper;
+    private final PointMapper pointMapper;
+    private final PointFactory pointFactory;
     private static String Code_Rental = "01";
     private static String Code_Reject = "04";
 

@@ -1,7 +1,7 @@
 package com.mi.bookvillage.user.domain.point;
 
-import com.mi.bookvillage.common.mapper.PointMapper;
-import com.mi.bookvillage.common.vo.PointVO;
+import com.mi.bookvillage.common.domain.Point.PointMapper;
+import com.mi.bookvillage.common.domain.Point.PointVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,17 +17,6 @@ public class PointService {
         List<PointVO> pointList = pointMapper.getPointListById(userId);
         return pointList;
     }
-
-    public List<PointVO> getPointListBySeq(int userSeq){
-        List<PointVO> pointList = pointMapper.getPointListBySeq(userSeq);
-        return pointList;
-    }
-
-    public PointVO getPointListByRentalSeq(int rentalSeq){
-        PointVO pointVO = pointMapper.getPointListByRentalSeq(rentalSeq);
-        return pointVO;
-    }
-
 
     public int getPreviousTotalPoint(int userSeq){
         Integer totalPoint = pointMapper.getPreviousTotalPoint(userSeq);

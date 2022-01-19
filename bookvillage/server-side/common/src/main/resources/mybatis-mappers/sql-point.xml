@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mi.bookvillage.common.mapper.PointMapper">
+<mapper namespace="com.mi.bookvillage.common.domain.Point.PointMapper">
 
 
     <select id="getPointListBySeq" resultType="PointVO">
@@ -15,6 +15,7 @@
                  WHEN '04' THEN '취소'
                   END
                 ) AS POINT_STATUS
+               ,POINT_STATUS_MEMO
                ,POINT_TRANSACTION
                ,TOTAL_POINT
                ,TRANSACTION_REG_DT
@@ -35,6 +36,7 @@
                    WHEN '04' THEN '취소'
                     END
                   ) AS POINT_STATUS
+                ,POINT_STATUS_MEMO
                 ,POINT_TRANSACTION
                 ,TOTAL_POINT
                 ,TRANSACTION_REG_DT
@@ -62,6 +64,7 @@
                             RENTAL_SEQ,
                             PREVIOUS_POINT, <!-- 이전 포인트 -->
                             POINT_STATUS, <!-- 거래 상태 -->
+                            POINT_STATUS_MEMO,
                             POINT_TRANSACTION, <!-- 거래 금액 -->
                             TOTAL_POINT
                             )
@@ -70,6 +73,7 @@
                             ,#{rentalSeq}
                             ,#{previousPoint}
                             ,#{pointStatus}
+                            ,#{pointStatusMemo}
                             ,#{pointTransaction}
                             ,#{previousPoint} + #{pointTransaction} <!-- 적립 / 차감 -->
                             )
@@ -84,6 +88,7 @@
                POINT_TRANSACTION,
                TOTAL_POINT,
                POINT_STATUS,
+               POINT_STATUS_MEMO,
                TRANSACTION_REG_DT
           FROM POINT
          WHERE RENTAL_SEQ = #{rentalSeq}

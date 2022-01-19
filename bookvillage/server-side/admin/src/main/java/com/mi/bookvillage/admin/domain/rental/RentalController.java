@@ -4,8 +4,8 @@ import com.mi.bookvillage.admin.common.factory.RentalFactory;
 import com.mi.bookvillage.admin.domain.user.UserService;
 import com.mi.bookvillage.common.common.response.APIResponse;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
-import com.mi.bookvillage.common.vo.CustomerVO;
-import com.mi.bookvillage.common.vo.RentalVO;
+import com.mi.bookvillage.common.domain.User.UserVO;
+import com.mi.bookvillage.common.domain.Rental.RentalVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -40,7 +40,7 @@ public class RentalController {
         Map<String, Object> adminObj = JWTokenUtil.getTokenInfo(token);
         String customerId = (String)adminObj.get("userId");
 
-        CustomerVO customer = userService.getCustomerDetailById(customerId);
+        UserVO customer = userService.getCustomerDetailById(customerId);
 
         List<RentalVO> rentalList = rentalService.getRentalList(customer.getUserSeq());
 
@@ -77,7 +77,7 @@ public class RentalController {
         Map<String, Object> adminObj = JWTokenUtil.getTokenInfo(token);
         String customerId = (String)adminObj.get("userId");
         // 남은 포인트 확인
-        CustomerVO customer = userService.getCustomerDetailById(customerId);
+        UserVO customer = userService.getCustomerDetailById(customerId);
 
         String rentalDayCount = (String)rentalInfo.get("rentalDayCount");
         RentalVO rentalVO = RentalFactory.getRentalInfo(bookSeq, customer.getUserSeq(), rentalDayCount);

@@ -1,7 +1,7 @@
 package com.mi.bookvillage.admin.domain.point;
 
-import com.mi.bookvillage.common.mapper.PointMapper;
-import com.mi.bookvillage.common.vo.PointVO;
+import com.mi.bookvillage.common.domain.Point.PointMapper;
+import com.mi.bookvillage.common.domain.Point.PointVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -4,10 +4,11 @@ package com.mi.bookvillage.admin.domain.book;
 import com.mi.bookvillage.common.common.response.APIResponse;
 import com.mi.bookvillage.common.common.util.file.FileUtil;
 import com.mi.bookvillage.common.common.util.file.FileVO;
-import com.mi.bookvillage.common.vo.BookVO;
+import com.mi.bookvillage.common.domain.Book.BookVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +27,7 @@ public class BookController {
     private final FileUtil fileUtil;
 
     /**
-     * 도서 목록 조회 : common
+     * 도서 목록 조회
      */
     @RequestMapping(value = "/book/list" , method = RequestMethod.GET)
     public ResponseEntity<?> getBookList(){
@@ -36,7 +37,7 @@ public class BookController {
 
 
     /**
-     * 도서 조회 : common
+     * 도서정보 조회
      */
     @RequestMapping(value = "/book/detail/{bookSeq}" , method = RequestMethod.GET)
     public ResponseEntity<?> getBookDetail(@PathVariable int bookSeq) {
@@ -55,12 +56,16 @@ public class BookController {
     }
 
 
-    /* admin */
+    // TODO: @Transactional 에 대해서 알아보기 (완)
+    // Transaction 의 속성을 지키게 된다.
+    // 하지만 @Transactional 은 기본적으로 UncheckedException( 예상하지 못한 에러 ), Error 만을 Rollback 한다고 한다.
+    // 모든 예외( CheckedException 예상되는 예외 포함 )에 대해서 Rollback 을 적용하고 싶을 때
+    // (rollbackFor = Exception.class) 를 붙여주면 된다.
 
     /**
-     * 도서 등록 : admin
+     * 도서 등록
      */
-    // TODO: @Transactional 에 대해서 알아보기
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/book/add" , method = RequestMethod.POST)
     public ResponseEntity<?> addBook( @ModelAttribute BookVO book, // TODO : 프론트에서 어떻게 보내느냐에 따라 @ModelAttribute / @RequestPart("bookObj") 다르게 적용 가능
                                       @RequestParam(required = false) List<MultipartFile> files ) {
@@ -68,7 +73,6 @@ public class BookController {
             bookService.addBook(book);
             List<FileVO> fileList = fileUtil.uploadFiles(files, book.getBookSeq());
             bookService.addFiles(fileList);
-            log.info("Success ::: success insert book add files");
             return APIResponse.builder().success().build();
         } catch (IOException e) {
             e.printStackTrace();
@@ -77,13 +81,14 @@ public class BookController {
     }
 
     /**
-     * 도서 정보 업데이트 : admin
+     * 도서 정보 업데이트
      */
     @RequestMapping(value = "/book/update/{bookSeq}" , method = RequestMethod.PUT)
     public ResponseEntity<?> updateBook( @PathVariable("bookSeq") int bookSeq
                                  , @ModelAttribute BookVO book
                                  , @RequestParam(required = false) List<MultipartFile> files
                                  , @RequestParam(required = false) List<Integer> deleteFiles) {
+        log.debug(files.toString());
         try {
             // book 정보 업데이트
             bookService.updateBook(book);
@@ -103,7 +108,7 @@ public class BookController {
 
 
     /**
-     * 도서 삭제 + 도서 이미지 삭제 : admin
+     * 도서 삭제 + 도서 이미지 삭제
      */
     @RequestMapping(value = "/book/delete/{bookSeq}",method = RequestMethod.DELETE)
     public ResponseEntity<?> deleteBook(@PathVariable int bookSeq){

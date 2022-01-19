@@ -1,10 +1,10 @@
 package com.mi.bookvillage.user.common.factory;
 
 
-import com.mi.bookvillage.common.vo.BookVO;
-import com.mi.bookvillage.common.vo.CustomerVO;
-import com.mi.bookvillage.common.vo.PointVO;
-import com.mi.bookvillage.common.vo.RentalVO;
+import com.mi.bookvillage.common.domain.Book.BookVO;
+import com.mi.bookvillage.common.domain.User.UserVO;
+import com.mi.bookvillage.common.domain.Point.PointVO;
+import com.mi.bookvillage.common.domain.Rental.RentalVO;
 import com.mi.bookvillage.user.domain.book.BookService;
 import com.mi.bookvillage.user.domain.point.PointService;
 import org.springframework.stereotype.Component;
@@ -15,10 +15,10 @@ public class PointFactory {
     static BookService bookService;
 
 
-    public PointVO chargePoint(PointVO pointVO, CustomerVO customerVO){
+    public PointVO chargePoint(PointVO pointVO, UserVO userVO){
         /* validation 추가 */
-        pointVO.setUserSeq(customerVO.getUserSeq());
-        int previousPoint = pointService.getPreviousTotalPoint(customerVO.getUserSeq());
+        pointVO.setUserSeq(userVO.getUserSeq());
+        int previousPoint = pointService.getPreviousTotalPoint(userVO.getUserSeq());
         pointVO.setPreviousPoint(previousPoint);
 
         return pointVO;

@@ -3,7 +3,7 @@ package com.mi.bookvillage.admin.domain.user;
 import com.mi.bookvillage.admin.domain.point.PointService;
 import com.mi.bookvillage.common.common.response.APIResponse;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
-import com.mi.bookvillage.common.vo.CustomerVO;
+import com.mi.bookvillage.common.domain.User.UserVO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -38,11 +38,11 @@ public class UserController {
      * @return
      */
     @RequestMapping(value="/customer/login" , method = RequestMethod.POST)
-    public ResponseEntity<?> LoginCustomer(@RequestBody CustomerVO customerObj) throws Exception {
+    public ResponseEntity<?> LoginCustomer(@RequestBody UserVO customerObj) throws Exception {
         String token;
 
         // 해당 아이디로 userId가 있는지 확인하고 비밀번호 matched
-        CustomerVO authCustomer = userService.loginCustomer(customerObj);
+        UserVO authCustomer = userService.loginCustomer(customerObj);
 
         Map<String, Object> authCustomerMap = new HashMap<>();
         Map<String, Object> adminInfoMap = new HashMap<>();
@@ -74,7 +74,7 @@ public class UserController {
         String customerId = (String)adminObj.get("userId");
 
         // --- customer information GET
-        CustomerVO customer = userService.getCustomerDetailById(customerId);
+        UserVO customer = userService.getCustomerDetailById(customerId);
 
         // --- customer point GET
         int totalPoint = pointService.getPreviousTotalPoint(customer.getUserSeq());
@@ -94,7 +94,7 @@ public class UserController {
      */
     @RequestMapping(value = "/customer/list" , method = RequestMethod.GET)
     public ResponseEntity<?> getCustomerList(){
-        List<CustomerVO> customerList = userService.getCustomerList();
+        List<UserVO> customerList = userService.getCustomerList();
         log.info("Success ::: success get customer all list");
         return APIResponse.builder().success(customerList).build();
     }
@@ -102,12 +102,12 @@ public class UserController {
 
     /**
      * 고객정보 추가 : admin
-     * @param customerVO
+     * @param userVO
      * @return
      */
     @RequestMapping(value="/customer/add" , method = RequestMethod.POST)
-    public ResponseEntity<?> addCustomer(@RequestBody CustomerVO customerVO){
-        userService.addCustomer(customerVO);
+    public ResponseEntity<?> addCustomer(@RequestBody UserVO userVO){
+        userService.addCustomer(userVO);
         log.info("Success ::: success insert customer information");
         return APIResponse.builder().success().build();
     }
@@ -121,31 +121,31 @@ public class UserController {
      */
     @RequestMapping(value ="/customer/detail/{userSeq}" , method = RequestMethod.GET)
     public ResponseEntity<?> getCustomerDetailBySeq(  @PathVariable("userSeq") int userSeq
-                                              , CustomerVO customerVo
+                                              , UserVO userVo
                                               , HttpServletRequest request){
 
         // --- customer information GET
-        CustomerVO customerVO = userService.getCustomerDetailBySeq(userSeq); // TODO: customer point 도 service 안에 추가
+        UserVO userVO = userService.getCustomerDetailBySeq(userSeq); // TODO: customer point 도 service 안에 추가
         // --- customer point GET
         int totalPoint = pointService.getPreviousTotalPoint(userSeq);
-        customerVO.setUserPoint(totalPoint);
+        userVO.setUserPoint(totalPoint);
 
         log.info("Success ::: success get customer detail");
-        return APIResponse.builder().success(customerVO).build();
+        return APIResponse.builder().success(userVO).build();
     }
 
 
     /**
      * 고객정보 업데이트 : admin
-     * @param customerVO
+     * @param userVO
      * @param request
      * @return
      */
     @RequestMapping(value="/customer/update/{userSeq}" , method = RequestMethod.PUT)
-    public ResponseEntity<?> updateCustomer(@RequestBody CustomerVO customerVO,
+    public ResponseEntity<?> updateCustomer(@RequestBody UserVO userVO,
                                       HttpServletRequest request){
 
-        userService.updateCustomer(customerVO);
+        userService.updateCustomer(userVO);
         log.info("Success ::: success update customer");
         return APIResponse.builder().success().build();
 

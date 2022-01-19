@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.mi.bookvillage.common.mapper.RentalMapper">
+<mapper namespace="com.mi.bookvillage.common.domain.Rental.RentalMapper">
 
     <select id="getRentalList" resultType="RentalVO">
         SELECT  R.RENTAL_SEQ,
@@ -10,7 +10,14 @@
                 R.RENTAL_DT,
                 R.PREDICT_RETURN_DT,
                 R.RETURN_DT,
-                R.RENTAL_STATUS,
+                (
+                CASE R.RENTAL_STATUS
+                WHEN NOW() > R.PREDICT_RETURN_DT THEN '02'
+                WHEN '00' THEN '00'
+                WHEN '01' THEN '01'
+                WHEN '04' THEN '04'
+                END
+                ) AS RENTAL_STATUS,
                 R.RENTAL_REG_DT,
                 R.RENTAL_UPDATE_DT
           FROM RENTAL R
@@ -35,7 +42,13 @@
                R.RENTAL_DT,
                R.PREDICT_RETURN_DT,
                R.RETURN_DT,
-               R.RENTAL_STATUS,
+               (
+                 CASE R.RENTAL_STATUS
+                 WHEN NOW() > R.PREDICT_RETURN_DT THEN '02'
+                 WHEN '00' THEN '00'
+                 WHEN '01' THEN '01'
+                 END
+               ) AS RENTAL_STATUS,
                R.RENTAL_REG_DT,
                R.RENTAL_UPDATE_DT
         FROM RENTAL R

@@ -2,7 +2,7 @@ package com.mi.bookvillage.admin.common.factory;
 
 
 
-import com.mi.bookvillage.common.vo.RentalVO;
+import com.mi.bookvillage.common.domain.Rental.RentalVO;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;

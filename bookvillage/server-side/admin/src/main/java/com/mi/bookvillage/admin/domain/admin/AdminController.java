@@ -3,7 +3,7 @@ package com.mi.bookvillage.admin.domain.admin;
 import com.mi.bookvillage.common.common.exceptions.customException.InvalidPasswordException;
 import com.mi.bookvillage.common.common.response.APIResponse;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
-import com.mi.bookvillage.common.vo.AdminVO;
+import com.mi.bookvillage.common.domain.Admin.AdminVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
