@@ -35,21 +35,7 @@ public class RentalFactory {
 
         return predictReturnDt;
     }
-    // TODO: 들어오는 응답코드에 따라 어떻게 할지 형태로 바꾸기 ?
-    public static RentalVO setApproveRental(int rentalSeq){
-        RentalVO rentalVO = new RentalVO();
-        rentalVO.setRentalSeq(rentalSeq);
-        rentalVO.setRentalStatus(Approve_Code);
-        return rentalVO;
-    }
-
-    public static RentalVO setRejectRental(int rentalSeq){
-        RentalVO rentalVO = new RentalVO();
-        rentalVO.setRentalSeq(rentalSeq);
-        rentalVO.setRentalStatus(Reject_Code);
-        return rentalVO;
-    }
-
+    
     public static RentalVO setReturnRental(int rentalSeq){
         RentalVO rentalVO = new RentalVO();
         rentalVO.setRentalSeq(rentalSeq);

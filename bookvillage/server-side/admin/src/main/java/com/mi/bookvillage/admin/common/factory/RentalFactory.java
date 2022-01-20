@@ -50,12 +50,5 @@ public class RentalFactory {
         return rentalVO;
     }
 
-    public static RentalVO setReturnRental(int rentalSeq){
-        RentalVO rentalVO = new RentalVO();
-        rentalVO.setRentalSeq(rentalSeq);
-        rentalVO.setRentalStatus(Return_Code);
-        return rentalVO;
-    }
-
 
 }

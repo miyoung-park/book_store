@@ -5,7 +5,7 @@ import com.mi.bookvillage.common.common.response.APIResponse;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
 import com.mi.bookvillage.common.domain.User.UserVO;
 import com.mi.bookvillage.common.domain.Point.PointVO;
-import com.mi.bookvillage.user.common.factory.PointFactory;
+import com.mi.bookvillage.user.common.factory.PointUtil;
 import com.mi.bookvillage.user.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +26,7 @@ public class PointController {
 
     private final PointService pointService;
     private final UserService userService;
-    private final PointFactory pointFactory;
+    private final PointUtil pointUtil;
 
     private String token;
 
@@ -63,7 +63,7 @@ public class PointController {
 
         UserVO customer = userService.getCustomerDetailById(customerId);
         // 포인트 충전 객체로 전환
-        PointVO pointVO = pointFactory.chargePoint(pointObj , customer);
+        PointVO pointVO = pointUtil.chargePoint(pointObj , customer);
         // 포인트 적립
         pointService.transactionPoint(pointVO);
 

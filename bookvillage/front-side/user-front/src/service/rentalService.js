@@ -37,13 +37,9 @@ export class rentalService {
             })
     }
 
-    returnBook( rentalSeq , lateDays ) {
+    returnBook( rentalInfo ) {
         return $axiosInst
-            .put(`${this.host}/rental/book/return/` + rentalSeq , null, {
-               params: {
-                   lateDays
-               }
-            })
+            .put(`${this.host}/rental/book/return`, rentalInfo )
             .then( response => {
                 return response.data.data;
             }).catch( error => {

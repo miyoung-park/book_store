@@ -3,17 +3,21 @@ package com.mi.bookvillage.user.domain.rental;
 
 import com.mi.bookvillage.common.common.response.APIResponse;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
+import com.mi.bookvillage.common.domain.Point.PointVO;
 import com.mi.bookvillage.common.domain.User.UserVO;
 import com.mi.bookvillage.common.domain.Rental.RentalVO;
+import com.mi.bookvillage.user.common.factory.PointUtil;
 import com.mi.bookvillage.user.common.factory.RentalFactory;
 import com.mi.bookvillage.user.domain.point.PointService;
 import com.mi.bookvillage.user.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +32,7 @@ public class RentalController {
     private final RentalService rentalService;
     private final UserService userService;
     private final PointService pointService;
+    private final PointUtil pointUtil;
     private static int LATE_FEE = 100;
 
 
@@ -83,7 +88,7 @@ public class RentalController {
     @RequestMapping(value = "/rental/book/{bookSeq}" , method = RequestMethod.POST)
     public ResponseEntity<?> rentalBook(  @PathVariable int bookSeq
                                          ,@RequestBody Map<String, Object> rentalInfo
-                                         ,HttpServletRequest request) {
+                                         ,HttpServletRequest request) throws ParseException {
 
         // TODO :  프론트에서 Map<String, Object> rentalInfo 으로 쓰지 않게끔 데이터를 조작해서 넘겨주는 형태로 전환!
         // TODO : Ex) 대여일 - 반납예정일 세팅해서 보내주기( 프론트에서 rentalDayCount 를 받아서 Date 계산한 후에 보내주기 RentalVO 로 )
@@ -109,34 +114,17 @@ public class RentalController {
      */
 
     // TODO: 새로 만들어야 하는 로직
+    @Transactional(rollbackFor = Exception.class)
+    @RequestMapping(value = "/rental/book/return" , method = RequestMethod.PUT)
+    public ResponseEntity<?> returnBook ( @RequestBody RentalVO rental,
+                                          HttpServletRequest request) throws ParseException {
 
-    @RequestMapping(value = "/rental/book/return/{rentalSeq}" , method = RequestMethod.PUT)
-    public ResponseEntity<?> returnBook ( @PathVariable int rentalSeq,
-                                          @RequestParam("lateDays") int lateDays,
-                                          HttpServletRequest request) {
-
-       int lateFee = lateDays * LATE_FEE;
-
-        // --- header 토큰 GET
-        String token = request.getHeader("Authorization");
-        // --- 토큰 해독
-        Map<String, Object> userObj = JWTokenUtil.getTokenInfo(token);
-        String customerId = (String)userObj.get("userId");
-        // 남은 포인트 확인
-        UserVO user = userService.getCustomerDetailById(customerId);
-        int totalPoint = pointService.getPreviousTotalPoint(user.getUserSeq());
-
-
-        // 포인트 부족시
-        if( lateFee > totalPoint ) {
-            return APIResponse.builder().error("포인트가 부족합니다. 포인트 충전 후 이용해주세요.").build();
-        }
-        // 포인트 있을 경우 포인트 차감 후( 대여비 만큼 연체료 증가 )
-
+        // 아에 모든 렌탈에 대한 로직이 RentalFactory 에 있게끔 !!!! 연체료 계산도 애초에 백에서 !!!
+        // 프론트에서 먼저 연체료 공지를 해준다음에 rental 이 아니라 Map 으로 받덩가...
         // 렌탈 반납처리
+       rentalService.returnBook(rental);
 
-       //  return APIResponse.builder().success().build();
-        return null;
+       return APIResponse.builder().success().build();
     }
 
 

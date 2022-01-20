@@ -74,8 +74,8 @@ export default {
       // 연체 아닌 경우
       this.returnBook();
     },
-    returnBook( lateDays ){
-      const response = this.rentalService.returnBook( this.rentalInfo.rentalSeq , lateDays );
+    returnBook( ){
+      const response = this.rentalService.returnBook( this.rentalInfo);
       console.log(response);
 
     }

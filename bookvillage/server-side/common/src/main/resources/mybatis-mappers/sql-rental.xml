@@ -12,9 +12,10 @@
                 R.RETURN_DT,
                 (
                 CASE R.RENTAL_STATUS
-                WHEN NOW() > R.PREDICT_RETURN_DT THEN '02'
+                WHEN NOW() > R.PREDICT_RETURN_DT THEN '03'
                 WHEN '00' THEN '00'
                 WHEN '01' THEN '01'
+                WHEN '02' THEN '02'
                 WHEN '04' THEN '04'
                 END
                 ) AS RENTAL_STATUS,
@@ -44,9 +45,10 @@
                R.RETURN_DT,
                (
                  CASE R.RENTAL_STATUS
-                 WHEN NOW() > R.PREDICT_RETURN_DT THEN '02'
+                 WHEN NOW() > R.PREDICT_RETURN_DT THEN '03'
                  WHEN '00' THEN '00'
                  WHEN '01' THEN '01'
+                 WHEN '02' THEN '02'
                  END
                ) AS RENTAL_STATUS,
                R.RENTAL_REG_DT,

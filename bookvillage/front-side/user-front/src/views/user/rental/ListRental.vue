@@ -55,7 +55,7 @@ export default {
       this.rentalList = response;
     },
     goDetailRental(_rentalSeq , _rentalStatus){
-      if( _rentalStatus === '01' || _rentalStatus === '02') {
+      if( _rentalStatus === '01' || _rentalStatus === '03') {
         this.$router.push('/customer/rental/detail/' + _rentalSeq , );
       }
       return;
@@ -68,6 +68,9 @@ export default {
         return '대여중'
       }
       if(item.rentalStatus === '02') {
+        return '반납완료'
+      }
+      if(item.rentalStatus === '03') {
         return '연체'
       }
       if(item.rentalStatus === '04') {
