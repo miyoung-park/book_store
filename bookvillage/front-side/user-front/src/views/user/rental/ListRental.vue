@@ -62,7 +62,7 @@ export default {
     },
     getStatus(item){
       if(item.rentalStatus === '00') {
-        return '대여신청'
+        return '대여신청중'
       }
       if(item.rentalStatus === '01') {
         return '대여중'
@@ -76,7 +76,6 @@ export default {
       if(item.rentalStatus === '04') {
         return '대여취소'
       }
-
     }
   },
   mounted() {

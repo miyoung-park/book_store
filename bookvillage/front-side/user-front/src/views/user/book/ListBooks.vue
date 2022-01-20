@@ -28,10 +28,7 @@
             <td>{{item.bookPrice}}</td>
             <td>{{item.bookRentalFee}}</td>
             <td>{{item.bookMemo}}</td>
-              <td v-if="item.bookRentalStatus == '00'" style="background-color: lightblue">대여신청중</td>
-              <td v-if="item.bookRentalStatus == '01'" style="background-color: cornflowerblue">대여중</td>
-              <td v-if="item.bookRentalStatus == '03'" style="background-color: crimson">연체중</td>
-              <td v-if="item.bookRentalStatus == null || item.bookRentalStatus == '04'" style="font-weight: bold">대여가능</td>
+            <td>{{ getStatus(item) }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -68,7 +65,21 @@ export default {
      async getList() {
        const response = await this.bookService.getBookList();
        this.books = response;
-     }
+     },
+    getStatus(item){
+      if( item.bookRentalStatus === '00' ) {
+        return '대여신청중'
+      }
+      if( item.bookRentalStatus === '01' ||
+          item.bookRentalStatus === '03' ) {
+        return '대여중'
+      }
+      if( item.bookRentalStatus === '02' ||
+          item.bookRentalStatus === '04' ||
+          item.bookRentalStatus === null ) {
+        return '대여가능'
+      }
+    }
   },
   mounted() {
     this.getList();

@@ -35,11 +35,6 @@ public class RentalService {
 
 
 
-    public RentalVO getRentalDetailByBookSeq(int bookSeq){
-        RentalVO rentalVO =  rentalMapper.getRentalDetailByBookSeq(bookSeq);
-        return rentalVO != null ? rentalVO : null;
-    }
-
 
     public void rentalBook(RentalVO rentalVO){
         // 대여하기

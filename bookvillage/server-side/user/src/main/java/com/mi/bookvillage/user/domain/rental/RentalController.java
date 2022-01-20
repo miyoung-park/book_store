@@ -118,10 +118,6 @@ public class RentalController {
     @RequestMapping(value = "/rental/book/return" , method = RequestMethod.PUT)
     public ResponseEntity<?> returnBook ( @RequestBody RentalVO rental,
                                           HttpServletRequest request) throws ParseException {
-
-        // 아에 모든 렌탈에 대한 로직이 RentalFactory 에 있게끔 !!!! 연체료 계산도 애초에 백에서 !!!
-        // 프론트에서 먼저 연체료 공지를 해준다음에 rental 이 아니라 Map 으로 받덩가...
-        // 렌탈 반납처리
        rentalService.returnBook(rental);
 
        return APIResponse.builder().success().build();

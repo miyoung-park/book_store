@@ -10,7 +10,7 @@ public interface RentalMapper {
 
     List<RentalVO> getRentalList(Integer userSeq);
     RentalVO getRentalDetail(int rentalSeq);
-    RentalVO getRentalDetailByBookSeq(int bookSeq);
     void rentalBook(RentalVO rentalVO);
     void updateRentalStatus(RentalVO rentalVO);
+    void returnBook(RentalVO rentalVO);
 }

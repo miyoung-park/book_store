@@ -47,16 +47,17 @@ export default {
       }
     },
     getStatus(){
+
       if(this.rentalInfo.rentalStatus === '01') {
         return '반납하기'
       }
-      if(this.rentalInfo.rentalStatus === '02') {
+      if(this.rentalInfo.rentalStatus === '03') {
         return '연체'
       }
     },
     async checkLateFee(){
       // 연체된 경우
-      if( this.rentalInfo.rentalStatus === '02') {
+      if( this.rentalInfo.rentalStatus === '03') {
 
         let today = new Date(); // 오늘 날짜
         let predictDate = new Date(this.rentalInfo.predictReturnDt); // 빌린 날짜
@@ -74,9 +75,11 @@ export default {
       // 연체 아닌 경우
       this.returnBook();
     },
-    returnBook( ){
-      const response = this.rentalService.returnBook( this.rentalInfo);
-      console.log(response);
+    async returnBook( ){
+        await this.rentalService.returnBook( this.rentalInfo);
+        alert('도서가 반납되었습니다.');
+        this.$router.push('/customer/rental/list').catch(e => { console.log(e);});
+
 
     }
   },

@@ -1,6 +1,7 @@
 package com.mi.bookvillage.user.common.factory;
 
 
+import com.mi.bookvillage.common.common.exceptions.customException.NotEnoughPointException;
 import com.mi.bookvillage.common.domain.Book.BookVO;
 import com.mi.bookvillage.common.domain.User.UserVO;
 import com.mi.bookvillage.common.domain.Point.PointVO;
@@ -60,7 +61,7 @@ public class PointUtil {
             int totalLateFee = diff * LATE_FEE;
             // 포인트가 부족한 경우
             if( previousPoint < totalLateFee ) {
-                throw new RuntimeException("포인트 충전 후 다시 반납을 진행해주세요.");
+                throw new NotEnoughPointException("포인트가 부족합니다. 충전 후 반납을 진행해주세요.");
             }
             // 포인트가 있는 경우
             // -- 사용 포인트 정의

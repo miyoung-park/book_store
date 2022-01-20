@@ -41,6 +41,7 @@ export class rentalService {
         return $axiosInst
             .put(`${this.host}/rental/book/return`, rentalInfo )
             .then( response => {
+                console.log(response);
                 return response.data.data;
             }).catch( error => {
                 throw responseApi(error);

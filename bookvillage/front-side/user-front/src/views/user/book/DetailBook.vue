@@ -9,7 +9,7 @@
       > 대여중</v-btn>
       <v-btn class="btn_rental"
              @click="rentalBook"
-             v-if= "bookRentalStatus == '' || bookRentalStatus == '04'"
+             v-if= "bookRentalStatus == '' || bookRentalStatus == '02' || bookRentalStatus == '04'"
       > 도서대여</v-btn>
     </div>
     <BookComponent @rentalStatus="rentalStatus" @getBookRentalPoint="getBookRentalPoint"/>

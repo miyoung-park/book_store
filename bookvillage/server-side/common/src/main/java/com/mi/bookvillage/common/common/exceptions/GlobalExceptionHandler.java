@@ -1,5 +1,6 @@
 package com.mi.bookvillage.common.common.exceptions;
 
+import com.mi.bookvillage.common.common.exceptions.customException.NotEnoughPointException;
 import com.mi.bookvillage.common.common.response.APIResponse;
 import com.mi.bookvillage.common.common.exceptions.customException.InvalidPasswordException;
 import com.mi.bookvillage.common.common.exceptions.customException.JwtAuthException;
@@ -22,26 +23,29 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     /**
      * Password Error
-     * @param e
-     * @return
      */
     @ExceptionHandler(InvalidPasswordException.class)
     protected ResponseEntity<Map<String, Object>> InvalidPasswordException(InvalidPasswordException e) {
-        // 에러 로그 출력
         log.error("Invalid_User Exception ::: " + e.getMessage());
         return APIResponse.builder().error(e.getMessage()).build(); // TODO: APIResponse 에 Status 로 HttpStatus 값 세팅하는 방법을 찾아보기 + ErrorCode 와는 별도임을 기억  !
     }
 
     /**
      * Authentication Error
-     * @param e
-     * @return
      */
     @ExceptionHandler(JwtAuthException.class)
     protected ResponseEntity<Map<String, Object>> JwtAuthException(JwtAuthException e) {
-        // 에러 로그 출력
         log.error("Authentication Exception ::: " + e.getMessage());
         return APIResponse.builder().error(e.getError()).build();
+    }
+
+    /**
+     * Not Enough Point Error
+     */
+    @ExceptionHandler(NotEnoughPointException.class)
+    protected ResponseEntity<Map<String, Object>> NotEnoughPointException(NotEnoughPointException e) {
+        log.error("Not Enough Exception ::: " + e.getMessage());
+        return APIResponse.builder().error(e.getMessage()).build();
     }
 
 

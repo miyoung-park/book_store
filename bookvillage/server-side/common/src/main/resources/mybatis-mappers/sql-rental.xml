@@ -10,15 +10,15 @@
                 R.RENTAL_DT,
                 R.PREDICT_RETURN_DT,
                 R.RETURN_DT,
-                (
+               (
                 CASE R.RENTAL_STATUS
-                WHEN NOW() > R.PREDICT_RETURN_DT THEN '03'
-                WHEN '00' THEN '00'
-                WHEN '01' THEN '01'
-                WHEN '02' THEN '02'
-                WHEN '04' THEN '04'
-                END
-                ) AS RENTAL_STATUS,
+                    WHEN '00' THEN '00'
+                    WHEN '02' THEN '02'
+                    WHEN '04' THEN '04'
+                    WHEN '01' AND NOW() > R.PREDICT_RETURN_DT THEN '03'
+                    ELSE '01'
+                    END
+               ) AS RENTAL_STATUS,
                 R.RENTAL_REG_DT,
                 R.RENTAL_UPDATE_DT
           FROM RENTAL R
@@ -45,10 +45,11 @@
                R.RETURN_DT,
                (
                  CASE R.RENTAL_STATUS
-                 WHEN NOW() > R.PREDICT_RETURN_DT THEN '03'
-                 WHEN '00' THEN '00'
-                 WHEN '01' THEN '01'
-                 WHEN '02' THEN '02'
+                     WHEN '00' THEN '00'
+                     WHEN '02' THEN '02'
+                     WHEN '04' THEN '04'
+                     WHEN '01' AND NOW() > R.PREDICT_RETURN_DT THEN '03'
+                     ELSE '01'
                  END
                ) AS RENTAL_STATUS,
                R.RENTAL_REG_DT,
@@ -102,6 +103,16 @@
     <update id="updateRentalStatus">
         UPDATE RENTAL
            SET RENTAL_STATUS = #{rentalStatus},
+               RENTAL_UPDATE_DT = NOW()
+         WHERE RENTAL_SEQ = #{rentalSeq}
+    </update>
+
+
+
+    <update id="returnBook">
+        UPDATE RENTAL
+           SET RENTAL_STATUS = #{rentalStatus},
+               RETURN_DT = NOW(),
                RENTAL_UPDATE_DT = NOW()
          WHERE RENTAL_SEQ = #{rentalSeq}
     </update>

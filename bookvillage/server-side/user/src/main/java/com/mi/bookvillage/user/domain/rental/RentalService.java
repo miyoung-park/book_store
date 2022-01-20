@@ -23,9 +23,8 @@ public class RentalService {
     private final RentalMapper rentalMapper;
     private final PointMapper pointMapper;
     private final PointUtil pointUtil;
-    private static String Code_Rental = "01";
-    private static String Code_Return = "02";
-    private static String Code_Reject = "04";
+    private static String CODE_RENTAL = "01";
+    private static String CODE_LATE ="03";
 
 
 
@@ -47,15 +46,12 @@ public class RentalService {
         // 대여정보 GET
         RentalVO rental = getRentalDetail(rentalVO.getRentalSeq());
         // 대여정보 기준으로 포인트 차감 객체생성
-        PointVO pointVO = pointUtil.minusPoint(rental , Code_Rental);
+        PointVO pointVO = pointUtil.minusPoint(rental , CODE_RENTAL);
         // 포인트 차감
         pointMapper.transactionPoint(pointVO);
     }
 
     public void returnBook(RentalVO rentalVO) throws ParseException {
-        // 정보 확인 했을 때 연체료가 있는 경우 연체료 청구 -> PointFactory
-        // Code_Late = '03';
-
         Date now = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
         Date predictReturnDate = format.parse(rentalVO.getPredictReturnDt());
@@ -63,12 +59,12 @@ public class RentalService {
 
         // 연체 된 경우
         if( diff > 0 ) {
-            PointVO point = pointUtil.minusPoint(rentalVO, "03");
+            PointVO point = pointUtil.minusPoint(rentalVO, CODE_LATE);
             pointMapper.transactionPoint(point);
         }
         // 연체 안된 경우
         RentalVO rental = RentalFactory.setReturnRental(rentalVO.getRentalSeq());
-        rentalMapper.updateRentalStatus(rental);
+        rentalMapper.returnBook(rental);
     }
 
 }
