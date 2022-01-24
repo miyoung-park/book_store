@@ -122,6 +122,12 @@ export default {
         this.$router.push("/");
       }
       return;
+    },
+    $apiErrorHandler(apiServiceError){
+      console.log( apiServiceError );
+      // 404
+      // 405
+      console.log(`adminDetailView handler ${apiServiceError.toString()}`);
     }
   },
   async mounted() {
@@ -132,6 +138,12 @@ export default {
       this.isAdminLogin();
       return this.$store.getters.getToken;
     }
+  },
+  created() {
+    // TODO: 공통되는 에러로직은 전역에서 처리 //  alert는 띄우는게 기본 정책이라면 공통에 가있어야 한다.
+    this.$addApiErrorHandler('610', this.$apiErrorHandler, false );
+    this.$addApiErrorHandler('620', this.$apiErrorHandler, false );
+    this.$addApiErrorHandler('630', this.$apiErrorHandler, false );
   }
 }
 </script>

@@ -8,7 +8,8 @@ import java.util.List;
 @Mapper
 public interface RentalMapper {
 
-    List<RentalVO> getRentalList(Integer userSeq);
+    List<RentalVO> getAllRentalList();
+    List<RentalVO> getRentalList(int userSeq);
     RentalVO getRentalDetail(int rentalSeq);
     void rentalBook(RentalVO rentalVO);
     void updateRentalStatus(RentalVO rentalVO);

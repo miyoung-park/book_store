@@ -10,17 +10,8 @@ import java.time.format.DateTimeFormatter;
 public class RentalFactory {
 
     private static String Approve_Code = "01";
-    private static String Return_Code = "02";
     private static String Reject_Code = "04";
 
-
-    public static RentalVO getRentalInfo(int bookSeq, int userSeq, String rentalDayCount){
-        RentalVO rentalVO = new RentalVO();
-        rentalVO.setBookSeq(bookSeq); // --- bookSeq 세팅
-        rentalVO.setUserSeq(userSeq); // --- userSeq 세팅
-        rentalVO.setPredictReturnDt(getPredictReturnDt(rentalDayCount));  // --- predictReturnDt 세팅
-        return rentalVO;
-    }
 
     private static String getPredictReturnDt( String rentalDayCount ){
         // 대여일자 정의
@@ -35,7 +26,7 @@ public class RentalFactory {
 
         return predictReturnDt;
     }
-    // TODO: 들어오는 응답코드에 따라 어떻게 할지 형태로 바꾸기 ?
+    // TODO: 들어오는 응답코드에 따라 어떻게 할 지 형태로 바꾸기 ?
     public static RentalVO setApproveRental(int rentalSeq){
         RentalVO rentalVO = new RentalVO();
         rentalVO.setRentalSeq(rentalSeq);

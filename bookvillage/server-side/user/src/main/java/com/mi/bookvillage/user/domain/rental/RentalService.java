@@ -1,12 +1,14 @@
 package com.mi.bookvillage.user.domain.rental;
 
 
+import com.mi.bookvillage.common.common.exceptions.ApiException;
+import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
 import com.mi.bookvillage.common.domain.Point.PointMapper;
 import com.mi.bookvillage.common.domain.Rental.RentalMapper;
 import com.mi.bookvillage.common.domain.Point.PointVO;
 import com.mi.bookvillage.common.domain.Rental.RentalVO;
-import com.mi.bookvillage.user.common.factory.PointUtil;
-import com.mi.bookvillage.user.common.factory.RentalFactory;
+import com.mi.bookvillage.user.common.PointUtil;
+import com.mi.bookvillage.user.common.RentalFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,15 +30,18 @@ public class RentalService {
 
 
 
-    public List<RentalVO> getRentalList(Integer userSeq){
+    public List<RentalVO> getRentalList(int userSeq){
         List<RentalVO> rentalList = rentalMapper.getRentalList(userSeq);
         return rentalList;
     }
 
 
     public RentalVO getRentalDetail(int rentalSeq){
-        RentalVO rentalVO =  rentalMapper.getRentalDetail(rentalSeq);
-        return rentalVO != null ? rentalVO : null;
+        RentalVO rental =  rentalMapper.getRentalDetail(rentalSeq);
+        if( rental == null ) {
+            throw new ApiException(ApiServiceErrorCode.DATA_NOT_FOUND, "해당 대여 내역이 존재하지 않습니다.");
+        }
+        return rental;
     }
 
 

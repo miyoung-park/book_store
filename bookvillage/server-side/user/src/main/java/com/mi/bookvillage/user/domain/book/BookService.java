@@ -1,6 +1,8 @@
 package com.mi.bookvillage.user.domain.book;
 
 
+import com.mi.bookvillage.common.common.exceptions.ApiException;
+import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
 import com.mi.bookvillage.common.common.util.file.FileVO;
 import com.mi.bookvillage.common.domain.Book.BookMapper;
 import com.mi.bookvillage.common.domain.Book.BookVO;
@@ -21,7 +23,11 @@ public class BookService {
 
 
     public BookVO getBookDetail(int bookSeq){
-        return bookMapper.getBookDetail(bookSeq);
+        BookVO book = bookMapper.getBookDetail(bookSeq);
+        if( book == null ) {
+            throw new ApiException(ApiServiceErrorCode.DATA_NOT_FOUND, "도서정보를 확인할 수 없습니다.");
+        }
+        return book;
     }
 
 

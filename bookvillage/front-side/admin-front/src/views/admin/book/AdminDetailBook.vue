@@ -24,9 +24,6 @@ export default {
     }
   },
   inject:['bookService'],
-  created() {
-    this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
-    },
   methods: {
     goUpdateBook(){
       this.$router.push({
@@ -58,8 +55,16 @@ export default {
       this.$router.push({
         path: '/admin/book/list'
       })
+    },
+    $apiErrorHandler(apiServiceError){
+      console.log(`detailBookView handler ${apiServiceError.toString()}`);
     }
   },
+  created() {
+    this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
+
+    this.$addApiErrorHandler('630', this.$apiErrorHandler, false )
+  }
 
 }
 </script>

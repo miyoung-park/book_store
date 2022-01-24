@@ -5,17 +5,27 @@ import router from '@/router/router'
 import { store } from '@/store/index'
 import axios from 'axios'
 import axiosInst from '@/axios/AxiosInst'
-import { adminService } from '@/service/adminService'
-import { customerService } from "@/service/customerService";
-import { bookService } from "@/service/bookService"
-import { pointService} from "@/service/pointService";
-import { rentalService} from "@/service/rentalService";
+import { AdminService } from '@/service/AdminService'
+import { CustomerService } from "@/service/CustomerService";
+import { BookService } from "@/service/BookService"
+import { PointService} from "@/service/PointService";
+import { RentalService} from "@/service/RentalService";
+import ApiServices from "@/plugins/api-service-plugin";
+
+const API_URL_HOST = process.env.VUE_APP_API_HOST;
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.$axiosInst = axiosInst // TODO: prototype 의 역할에 대해서 공부하기
+Vue.use(ApiServices , { host:API_URL_HOST})
 
-const API_URL_HOST = process.env.VUE_APP_API_HOST;
+Vue.mixin({
+  beforeDestroy() {
+    if( this.$apiErrorHandler ){
+      this.$removeApiErrorHandler( this.$apiErrorHandler );
+    }
+  }
+})
 
 new Vue({
   vuetify,
@@ -23,10 +33,10 @@ new Vue({
   router,
   store,
   provide: {
-    'adminService': new adminService(API_URL_HOST), // TODO: Java Class 처럼 JavaScript Class 도 파스칼 케이스로 바꾸기
-    'bookService' : new bookService(API_URL_HOST),
-    'customerService' : new customerService(API_URL_HOST),
-    'pointService' : new pointService(API_URL_HOST),
-    'rentalService' : new rentalService(API_URL_HOST)
+    'adminService': new AdminService(API_URL_HOST), // TODO: Java Class 처럼 JavaScript Class 도 파스칼 케이스로 (완)
+    'bookService' : new BookService(API_URL_HOST),
+    'customerService' : new CustomerService(API_URL_HOST),
+    'pointService' : new PointService(API_URL_HOST),
+    'rentalService' : new RentalService(API_URL_HOST)
   },
 }).$mount('#app')

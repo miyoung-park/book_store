@@ -54,7 +54,6 @@ export default {
       const dayCount = prompt("원하시는 대여기간을 입력해주세요.(숫자만 입력하세요)");
 
      // TODO: 대여시간 입력받아서 대여일 - 반납예정일 계산해서 request 보내기 / 1일 * 대여료 ( in rentalInfo ) 계산해서 보내기
-
       const customerInfo = await this.customerService.getCustomerDetailById();
       this.totalPoint = customerInfo.userPoint;
 
@@ -66,7 +65,7 @@ export default {
         }
 
         // 대여가능한 포인트인지 확인
-        if( this.bookRentalPoint > this.totalPoint ){
+        if( this.bookRentalPoint * dayCount > this.totalPoint ){
           alert(this.bookRentalPoint - this.totalPoint + '포인트가 부족합니다. 포인트 충전 후 이용해주세요.');
           return;
         }

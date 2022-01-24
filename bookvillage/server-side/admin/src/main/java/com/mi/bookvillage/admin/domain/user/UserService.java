@@ -1,6 +1,8 @@
 package com.mi.bookvillage.admin.domain.user;
 
-import com.mi.bookvillage.common.common.exceptions.customException.InvalidPasswordException;
+import com.mi.bookvillage.admin.domain.point.PointService;
+import com.mi.bookvillage.common.common.exceptions.ApiException;
+import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
 import com.mi.bookvillage.common.domain.User.UserMapper;
 import com.mi.bookvillage.common.domain.User.UserVO;
 import lombok.RequiredArgsConstructor;
@@ -15,34 +17,37 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final PointService pointService;
     private final UserMapper userMapper;
     private final BCryptPasswordEncoder encoder;
 
 
-    public List<UserVO> getCustomerList(){
-        return userMapper.getCustomerList();
+    public List<UserVO> getUserList(){
+        return userMapper.getUserList();
     }
 
 
-    public UserVO loginCustomer(UserVO userVO) {
-        UserVO authCustomer = userMapper.loginCustomer(userVO);
-        if(authCustomer == null || !encoder.matches( userVO.getUserPw(), authCustomer.getUserPw()) ){
-            // TODO: Exception 추가 null에 대해서도 ! 뭐 VAuthException이라던지... 혹은 Invalid와 user관련해서 ... 회사 Convention 참고 // Invalid -- 좀 더 자세하게 이유를 설명해주기
-            throw new InvalidPasswordException();
+    public UserVO loginUser(UserVO userVO) {
+        UserVO authUser = userMapper.loginUser(userVO);
+        if(authUser == null){
+            throw new ApiException(ApiServiceErrorCode.INVALID_USER, "아이디 정보가 존재하지 않습니다.");
         }
-        return authCustomer;
+        if( !encoder.matches( userVO.getUserPw(), authUser.getUserPw()) ){
+            throw new ApiException(ApiServiceErrorCode.INVALID_PASSWORD, "비밀번호를 다시 확인해주세요.");
+        }
+        return authUser;
     }
 
 
-    public void addCustomer(UserVO userVO){
+    public void addUser(UserVO userVO){
         String encodedPassword = encoder.encode(userVO.getUserPw());
         userVO.setUserPw(encodedPassword);
-        userMapper.addCustomer(userVO);
+        userMapper.addUser(userVO);
     }
 
 
-    public UserVO getCustomerDetailById(String userId){
-        UserVO customer = userMapper.getCustomerDetailById(userId);
+    public UserVO getUserDetailById(String userId){
+        UserVO customer = userMapper.getUserDetailById(userId);
         if(customer == null){
             throw new NullPointerException("null");
         }
@@ -50,25 +55,27 @@ public class UserService {
     }
 
 
-    public UserVO getCustomerDetailBySeq(int userSeq){
-        UserVO customer = userMapper.getCustomerDetailBySeq(userSeq);
-        if(customer == null){
-            throw new NullPointerException();
+    public UserVO getUserDetailBySeq(int userSeq){
+        UserVO user = userMapper.getUserDetailBySeq(userSeq);
+        if(user == null){
+            throw new ApiException(ApiServiceErrorCode.DATA_NOT_FOUND, "해당 회원이 존재하지 않습니다.");
         }
-        return customer;
+        int totalPoint = pointService.getPreviousTotalPoint(userSeq);
+        user.setUserPoint(totalPoint);
+        return user;
     }
 
 
-    public void updateCustomer(UserVO userVO){
+    public void updateUser(UserVO userVO){
         if( userVO.getUserPw() != null ){
             String encodedPassword = encoder.encode(userVO.getUserPw());
             userVO.setUserPw(encodedPassword);
         }
         // 고객이 비밀번호 변경한 경우
-        userMapper.updateCustomer(userVO);
+        userMapper.updateUser(userVO);
     }
-    public void deleteCustomer(int userSeq){
-        userMapper.deleteCustomer(userSeq);
+    public void deleteUser(int userSeq){
+        userMapper.deleteUser(userSeq);
     }
 
 }

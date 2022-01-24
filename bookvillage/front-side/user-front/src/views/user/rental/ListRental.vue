@@ -78,6 +78,11 @@ export default {
       }
     }
   },
+  created() {
+    this.$addApiErrorHandler('610', this.$apiErrorHandler, false )
+    this.$addApiErrorHandler('620', this.$apiErrorHandler, false )
+    this.$addApiErrorHandler('630', this.$apiErrorHandler, false )
+  },
   mounted() {
     this.getRentalList();
   }

@@ -1,18 +1,15 @@
 package com.mi.bookvillage.user.domain.rental;
 
-
-import com.mi.bookvillage.common.common.response.APIResponse;
+import com.mi.bookvillage.common.common.response.ApiResponse;
+import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
-import com.mi.bookvillage.common.domain.Point.PointVO;
 import com.mi.bookvillage.common.domain.User.UserVO;
 import com.mi.bookvillage.common.domain.Rental.RentalVO;
-import com.mi.bookvillage.user.common.factory.PointUtil;
-import com.mi.bookvillage.user.common.factory.RentalFactory;
+import com.mi.bookvillage.user.common.RentalFactory;
 import com.mi.bookvillage.user.domain.point.PointService;
 import com.mi.bookvillage.user.domain.user.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,95 +29,77 @@ public class RentalController {
     private final RentalService rentalService;
     private final UserService userService;
     private final PointService pointService;
-    private final PointUtil pointUtil;
-    private static int LATE_FEE = 100;
-
+    private final ApiResponseBuilderFactory apiResponseBuilderFactory;
 
     /**
      * 대여 목록 조회
      */
     @RequestMapping(value = "/rental/list", method = RequestMethod.GET)
-    public ResponseEntity<?> getRentalList(HttpServletRequest request){
-        // --- header 토큰 GET
-        String token = request.getHeader("Authorization");
+    public ApiResponse getRentalListBySeq( HttpServletRequest request ){
 
-        // --- 토큰 해독
-        Map<String, Object> adminObj = JWTokenUtil.getTokenInfo(token);
-        String customerId = (String)adminObj.get("userId");
+        String userId = JWTokenUtil.getUserIdFromToken(request);
+        UserVO user = userService.getUserDetailById(userId);
 
-        UserVO customer = userService.getCustomerDetailById(customerId);
+        List<RentalVO> rentalList = rentalService.getRentalList(user.getUserSeq());
 
-        List<RentalVO> rentalList = rentalService.getRentalList(customer.getUserSeq());
-
-        return APIResponse.builder().success(rentalList).build();
+        return apiResponseBuilderFactory.success(rentalList).build();
     }
 
     /**
-     * 대여 내역 조회 : user
+     * 대여 내역 조회
      */
     @RequestMapping(value="/rental/detail/{rentalSeq}", method = RequestMethod.GET)
-    public ResponseEntity<?> getRentalDetail( @PathVariable int rentalSeq,
-                                              HttpServletRequest request){
-        // --- header 토큰 GET
-        String token = request.getHeader("Authorization");
-        // --- 토큰 해독
-        Map<String, Object> userObj = JWTokenUtil.getTokenInfo(token);
-        String customerId = (String)userObj.get("userId");
+    public ApiResponse getRentalDetail(@PathVariable int rentalSeq,
+                                       HttpServletRequest request){
+        // 고객정보 확인
+        String customerId = JWTokenUtil.getUserIdFromToken(request);
         // 남은 포인트 확인
-        UserVO user = userService.getCustomerDetailById(customerId);
-        // --- customer point GET
+        UserVO user = userService.getUserDetailById(customerId);
         int totalPoint = pointService.getPreviousTotalPoint(user.getUserSeq());
         user.setUserPoint(totalPoint);
+
         RentalVO rental = rentalService.getRentalDetail(rentalSeq);
 
-        if( rental == null ) {
-            return APIResponse.builder().error("해당 대여 내역이 존재하지 않습니다.").build();
-        }
-        return APIResponse.builder().success("rentalInfo" , rental)
-                                    .success("userInfo" , user)
-                                    .build();
+        return apiResponseBuilderFactory.success()
+                                        .putValue("rentalInfo" , rental)
+                                        .putValue("userInfo" , user)
+                                        .build();
     }
 
 
     /**
      * 대여하기
      */
+    @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/rental/book/{bookSeq}" , method = RequestMethod.POST)
-    public ResponseEntity<?> rentalBook(  @PathVariable int bookSeq
-                                         ,@RequestBody Map<String, Object> rentalInfo
-                                         ,HttpServletRequest request) throws ParseException {
+    public ApiResponse rentalBook( @PathVariable int bookSeq,
+                                   @RequestBody Map<String, Object> rentalInfo,
+                                   HttpServletRequest request) throws ParseException {
 
-        // TODO :  프론트에서 Map<String, Object> rentalInfo 으로 쓰지 않게끔 데이터를 조작해서 넘겨주는 형태로 전환!
-        // TODO : Ex) 대여일 - 반납예정일 세팅해서 보내주기( 프론트에서 rentalDayCount 를 받아서 Date 계산한 후에 보내주기 RentalVO 로 )
 
-        // --- header 토큰 GET
-        String token = request.getHeader("Authorization");
-        // --- 토큰 해독
-        Map<String, Object> userObj = JWTokenUtil.getTokenInfo(token);
-        String customerId = (String)userObj.get("userId");
+        String customerId = JWTokenUtil.getUserIdFromToken( request );
         // 고객 정보 확인
-        UserVO customer = userService.getCustomerDetailById(customerId);
+        UserVO customer = userService.getUserDetailById(customerId);
 
+        // TODO : 프론트에서 Map<String, Object> rentalInfo 으로 쓰지 않게끔 데이터를 조작해서 넘겨주는 형태로 전환!
+        // TODO : Ex) 대여일 - 반납예정일 세팅해서 보내주기( 프론트에서 rentalDayCount 를 받아서 Date 계산한 후에 보내주기 RentalVO 로 )
+        // TODO : 차감 포인트도 계산해서 세팅
         String rentalDayCount = (String)rentalInfo.get("rentalDayCount");
         RentalVO rentalVO = RentalFactory.getRentalInfo(bookSeq, customer.getUserSeq(), rentalDayCount);
         rentalService.rentalBook(rentalVO);
 
-        return APIResponse.builder().success().build();
+        return apiResponseBuilderFactory.success().build();
     }
 
 
     /**
      * 대여도서 반납
      */
-
-    // TODO: 새로 만들어야 하는 로직
     @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/rental/book/return" , method = RequestMethod.PUT)
-    public ResponseEntity<?> returnBook ( @RequestBody RentalVO rental,
-                                          HttpServletRequest request) throws ParseException {
+    public ApiResponse returnBook ( @RequestBody RentalVO rental ) throws ParseException {
        rentalService.returnBook(rental);
-
-       return APIResponse.builder().success().build();
+       return apiResponseBuilderFactory.success().build();
     }
 
 

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mi.bookvillage.common.domain.User.UserMapper">
 
-    <select id="getCustomerList" resultType="UserVO">
+    <select id="getUserList" resultType="UserVO">
         SELECT USER_SEQ
              , USER_NAME
              , USER_ID
@@ -16,7 +16,7 @@
     </select>
 
 
-    <select id="loginCustomer" resultType="UserVO">
+    <select id="loginUser" resultType="UserVO">
         SELECT USER_ID ,
                USER_PW ,
                USER_NAME,
@@ -29,7 +29,7 @@
     </select>
 
 
-    <insert id="addCustomer">
+    <insert id="addUser">
         INSERT INTO CUSTOMER (
                               USER_ID ,
                               USER_PW ,
@@ -47,7 +47,7 @@
     </insert>
 
 
-    <select id="getCustomerDetailBySeq" resultType="UserVO">
+    <select id="getUserDetailBySeq" resultType="UserVO">
         SELECT USER_SEQ,
                USER_ID,
                USER_PW,
@@ -61,7 +61,7 @@
     </select>
 
 
-    <select id="getCustomerDetailById" resultType="UserVO">
+    <select id="getUserDetailById" resultType="UserVO">
         SELECT USER_SEQ,
         USER_ID,
         USER_PW,
@@ -75,7 +75,7 @@
     </select>
 
 
-    <update id="updateCustomer">
+    <update id="updateUser">
         UPDATE CUSTOMER
             <set>
                 <if test="userPw != null">USER_PW = #{userPw},</if>
@@ -88,7 +88,7 @@
     </update>
 
 
-    <delete id="deleteCustomer">
+    <delete id="deleteUser">
         DELETE
           FROM CUSTOMER
          WHERE USER_SEQ = #{userSeq}

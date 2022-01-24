@@ -12,5 +12,12 @@ public class StringUtil {
         return true;
     }
 
+    public static boolean checkNegativeNumber(String number){
+        if( 0 > Integer.parseInt( number )){
+            return false;
+        }
+        return true;
+    }
+
 
 }

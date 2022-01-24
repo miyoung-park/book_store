@@ -2,6 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.mi.bookvillage.common.domain.Rental.RentalMapper">
 
+
+    <select id="getAllRentalList" resultType="RentalVO">
+        SELECT  R.RENTAL_SEQ,
+                R.BOOK_SEQ,
+                B.BOOK_TITLE AS BOOK_TITLE,
+                R.USER_SEQ,
+                R.RENTAL_DT,
+                R.PREDICT_RETURN_DT,
+                R.RETURN_DT,
+                (
+                    CASE R.RENTAL_STATUS
+                        WHEN '00' THEN '00'
+                        WHEN '02' THEN '02'
+                        WHEN '04' THEN '04'
+                        WHEN '01' AND NOW() > R.PREDICT_RETURN_DT THEN '03'
+                        ELSE '01'
+                    END
+                ) AS RENTAL_STATUS,
+                R.RENTAL_REG_DT,
+                R.RENTAL_UPDATE_DT
+        FROM RENTAL R
+        JOIN ( SELECT BOOK_SEQ,
+                      BOOK_TITLE
+                 FROM BOOK ) B
+          ON R.BOOK_SEQ = B.BOOK_SEQ
+    </select>
+
+
     <select id="getRentalList" resultType="RentalVO">
         SELECT  R.RENTAL_SEQ,
                 R.BOOK_SEQ,

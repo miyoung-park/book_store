@@ -33,11 +33,8 @@
             <td>{{item.bookPrice}}</td>
             <td>{{item.bookRentalFee}}</td>
             <td>{{item.bookMemo}}</td>
-<!--             TODO: 이 부분을 더 깔끔하게 수정! key 값으로 한번 더 매핑해서 v-model: {{ rentalStatusValue }} 로 뿌려주던지 ... -->
-            <td v-if="item.bookRentalStatus == '00'" style="background-color: lightgrey">대여신청중</td>
-            <td v-else-if="item.bookRentalStatus == '01'" style="background-color: cornflowerblue">대여중</td>
-            <td v-else-if="item.bookRentalStatus == '02'" style="background-color: crimson">대여중</td>
-            <td v-else >대여가능</td>
+<!--             TODO: 이 부분을 더 깔끔하게 수정! (완) -->
+            <td>{{ getStatus(item) }}</td>
           </tr>
         </template>
       </v-data-table>
@@ -82,6 +79,20 @@ export default {
       this.$router.push({
         path: "/admin/book/add"
       })
+    },
+    getStatus(item){
+      if( item.bookRentalStatus === '00' ) {   // 대여신청중
+        return '대여신청중'
+      }
+      if( item.bookRentalStatus === '01' ||    // 대여중
+          item.bookRentalStatus === '03' ) {   // 연체
+        return '대여중'
+      }
+      if( item.bookRentalStatus === '02' ||    // 반납완료
+          item.bookRentalStatus === '04' ||    // 대여취소
+          item.bookRentalStatus === null ) {
+        return '대여가능'
+      }
     }
   },
   computed: {

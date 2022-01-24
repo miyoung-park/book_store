@@ -53,7 +53,13 @@ export default {
       } catch ( error ) {
         console.log(error);
       }
+    },
+    $apiErrorHandler(apiServiceError) {
+       console.log(`LoginView handler ${apiServiceError.toString()}`);
     }
+  },
+  created() {
+    this.$addApiErrorHandler('630')
   }
 }
 </script>

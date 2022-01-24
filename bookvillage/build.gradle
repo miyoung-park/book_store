@@ -13,7 +13,7 @@ buildscript {
 }
 
 
-// 하위 모든 프로젝트를 공통으로 세팅
+// 하위 모든 프로젝트를 공통으로 세팅 // TODO: Gradle 학습
 subprojects {
     apply plugin: 'java'
     apply plugin: 'groovy'

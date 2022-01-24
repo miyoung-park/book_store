@@ -9,11 +9,11 @@ import java.util.List;
 public interface UserMapper {
 
 
-    List<UserVO> getCustomerList();
-    UserVO loginCustomer(UserVO userVO);
-    void addCustomer(UserVO userVO);
-    UserVO getCustomerDetailBySeq(int userSeq);
-    UserVO getCustomerDetailById(String userId);
-    void updateCustomer(UserVO userVO);
-    void deleteCustomer(int userSeq);
+    List<UserVO> getUserList();
+    UserVO loginUser(UserVO user);
+    void addUser(UserVO user);
+    UserVO getUserDetailBySeq(int userSeq);
+    UserVO getUserDetailById(String userId);
+    void updateUser(UserVO user);
+    void deleteUser(int userSeq);
 }

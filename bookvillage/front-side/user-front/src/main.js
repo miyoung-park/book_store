@@ -5,16 +5,27 @@ import router from '@/router/router'
 import { store } from '@/store/index'
 import axios from 'axios'
 import axiosInst from '@/axios/AxiosInst'
-import { customerService } from "@/service/customerService";
-import { bookService } from "@/service/bookService";
-import { pointService} from "@/service/pointService";
-import { rentalService} from "@/service/rentalService";
+import { CustomerService } from "@/service/CustomerService";
+import { BookService } from "@/service/BookService";
+import { PointService} from "@/service/PointService";
+import { RentalService} from "@/service/RentalService";
+import ApiServices from "@/plugins/api-service-plugin";
+
+const API_URL_HOST = process.env.VUE_APP_API_HOST;
 
 Vue.config.productionTip = false
 Vue.prototype.$axios = axios
 Vue.prototype.$axiosInst = axiosInst
 
-const API_URL_HOST = process.env.VUE_APP_API_HOST;
+Vue.use(ApiServices , { host:API_URL_HOST})
+
+Vue.mixin({
+  beforeDestroy() {
+    if( this.$apiErrorHandler ){
+      this.$removeApiErrorHandler( this.$apiErrorHandler );
+    }
+  }
+})
 
 new Vue({
   vuetify,
@@ -22,9 +33,9 @@ new Vue({
   router,
   store,
   provide: {
-    'bookService' : new bookService(API_URL_HOST),
-    'customerService' : new customerService(API_URL_HOST),
-    'pointService' : new pointService(API_URL_HOST),
-    'rentalService' : new rentalService(API_URL_HOST)
+    'bookService' : new BookService(API_URL_HOST),
+    'customerService' : new CustomerService(API_URL_HOST),
+    'pointService' : new PointService(API_URL_HOST),
+    'rentalService' : new RentalService(API_URL_HOST)
   },
 }).$mount('#app')

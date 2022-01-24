@@ -95,6 +95,10 @@ export default {
         location.reload();
       }
       return;
+    },
+    $apiErrorHandler(apiServiceError){
+      console.log(apiServiceError);
+      console.log(`adminDetailView handler ${apiServiceError.toString()}`);
     }
   },
   async mounted() {
@@ -105,6 +109,12 @@ export default {
        this.isCustomerLogin();
       return this.$store.getters.getToken;
     }
+  },
+  created() {
+    // TODO: 공통되는 에러로직은 전역에서 처리 //  alert는 띄우는게 기본 정책이라면 공통에 가있어야 한다.
+    this.$addApiErrorHandler('610', this.$apiErrorHandler, false );
+    this.$addApiErrorHandler('620', this.$apiErrorHandler, false );
+    this.$addApiErrorHandler('630', this.$apiErrorHandler, false );
   }
 }
 </script>
@@ -123,11 +133,5 @@ export default {
   background-color: darkseagreen;
   border-radius: 10px;
 }
-.login_btn{
-  width: 55px;
-  height: 25px !important;
-  font-size: x-small !important;
-  background-color: darkseagreen;
-  border-radius: 10px;
-}
+
 </style>

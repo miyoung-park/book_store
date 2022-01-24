@@ -1,11 +1,14 @@
 package com.mi.bookvillage.admin.domain.book;
 
 
+import com.mi.bookvillage.common.common.exceptions.ApiException;
+import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
 import com.mi.bookvillage.common.common.util.file.FileVO;
 import com.mi.bookvillage.common.domain.Book.BookMapper;
 import com.mi.bookvillage.common.domain.Book.BookVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -27,6 +30,10 @@ public class BookService {
      * 도서정보 조회
      */
     public BookVO getBookDetail(int bookSeq){
+        BookVO book = bookMapper.getBookDetail(bookSeq);
+        if( book == null ){
+            throw new ApiException(ApiServiceErrorCode.DATA_NOT_FOUND, "도서정보를 찾을 수 없습니다.");
+        }
         return bookMapper.getBookDetail(bookSeq);
     }
 
@@ -46,6 +53,7 @@ public class BookService {
     public void addBook(BookVO bookVO){
         bookMapper.addBook(bookVO);
     }
+
 
 
     /**
@@ -70,6 +78,7 @@ public class BookService {
     /**
      * 도서 정보 삭제
      */
+    @Transactional(rollbackFor = Exception.class)
     public void deleteBook(int bookSeq) {
         // 해당 도서정보 삭제
         bookMapper.deleteBook(bookSeq);

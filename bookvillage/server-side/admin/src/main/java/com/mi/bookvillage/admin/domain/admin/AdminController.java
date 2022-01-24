@@ -1,7 +1,8 @@
 package com.mi.bookvillage.admin.domain.admin;
 
-import com.mi.bookvillage.common.common.exceptions.customException.InvalidPasswordException;
-import com.mi.bookvillage.common.common.response.APIResponse;
+
+import com.mi.bookvillage.common.common.response.ApiResponse;
+import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
 import com.mi.bookvillage.common.domain.Admin.AdminVO;
 import lombok.RequiredArgsConstructor;
@@ -22,15 +23,13 @@ import java.util.Map;
 public class AdminController {
 
     private final AdminService adminService;
+    private final ApiResponseBuilderFactory apiResponseBuilderFactory;
 
 
     @RequestMapping(value = "/admin/login" , method = RequestMethod.POST)
-    public ResponseEntity<?> loginAdmin(@RequestBody AdminVO adminVO) {
+    public ApiResponse loginAdmin(@RequestBody AdminVO adminVO) {
         AdminVO admin = adminService.loginAdmin(adminVO);
-        if( admin == null ){
-            throw new InvalidPasswordException();
-        }
-        // 토큰 발급 기능
+        // 토큰 발급
         Map<String, Object> tokenMap = new HashMap<>();
         tokenMap.put("userId", admin.getUserId());
         String authToken = JWTokenUtil.createJwToken(tokenMap);
@@ -38,26 +37,16 @@ public class AdminController {
         Map<String, Object> adminInfoMap = new HashMap<>();
         adminInfoMap.put("token" , authToken);
 
-        log.info("Login Success  ::: " + adminVO.getUserId() + " Login Access");
-        return APIResponse.builder().success(adminInfoMap).build();
+        log.info("LOGIN_USER_ID  >>>>>  " + adminVO.getUserId() );
+        return apiResponseBuilderFactory.success().setData(adminInfoMap).build();
     }
 
     @RequestMapping(value= "/admin/detail" , method = RequestMethod.POST)
-    public ResponseEntity<?> detailAdmin(HttpServletRequest request){
-        // --- header 토큰 GET
-        String token = request.getHeader("Authorization");
-
-        // --- 토큰 해독
-        Map<String, Object> adminObj = JWTokenUtil.getTokenInfo(token);
-        String adminId = (String)adminObj.get("userId");
-
-        // --- admin 정보 GET
+    public ApiResponse detailAdmin(HttpServletRequest request){
+        // adminId GET
+        String adminId = JWTokenUtil.getUserIdFromToken( request );
         AdminVO admin = adminService.getAdminInfo(adminId);
-        if( admin == null ){
-            throw new InvalidPasswordException();
-        }
-        log.info("Access Admin Information  ::: " + adminId);
-        return APIResponse.builder().success(admin).build();
+        return apiResponseBuilderFactory.success().setData(admin).build();
 
     }
 }
