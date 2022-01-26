@@ -62,7 +62,6 @@ export default {
   },
   created() {
     this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
-
     this.$addApiErrorHandler('630', this.$apiErrorHandler, false )
   }
 

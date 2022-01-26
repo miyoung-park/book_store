@@ -1,6 +1,6 @@
 package com.mi.bookvillage.common.common.exceptions;
 
-import com.mi.bookvillage.common.common.exceptions.customException.AuthenticationFailedException;
+
 import com.mi.bookvillage.common.common.exceptions.customException.VAuthException;
 import com.mi.bookvillage.common.common.response.ApiErrorResponse;
 import org.springframework.core.Ordered;

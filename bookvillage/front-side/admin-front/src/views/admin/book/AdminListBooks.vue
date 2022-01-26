@@ -40,13 +40,15 @@
       </v-data-table>
 <!--      TODO: Paging 처리 따로 진행 ! data table 사용 X  -->
     </div>
-
   </div>
+
 </template>
 
 <script>
+import AlertModal from "@/components/AlertModal";
 export default {
   name: "AdminListBooks",
+  components: {AlertModal},
   inject: ['bookService'],
   data () {
     return {
@@ -60,6 +62,7 @@ export default {
         { text: '대여현황' , value: '' }
       ],
       books: [],
+      alertModal:true,
     }
   },
   async mounted() {

@@ -36,6 +36,8 @@ public class AdminController {
         // store 에 저장할 정보 전달
         Map<String, Object> adminInfoMap = new HashMap<>();
         adminInfoMap.put("token" , authToken);
+        adminInfoMap.put("userId" , admin.getUserId());
+        adminInfoMap.put("userName" , admin.getUserName());
 
         log.info("LOGIN_USER_ID  >>>>>  " + adminVO.getUserId() );
         return apiResponseBuilderFactory.success().setData(adminInfoMap).build();

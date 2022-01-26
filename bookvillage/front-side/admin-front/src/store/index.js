@@ -10,15 +10,25 @@ export const store = new Vuex.Store({
     ],
     state: {
         token: null,
+        userId: null,
+        userName: null
     },
     getters: {
         getToken(state){
             return state.token;
         },
+        getUserId(state){
+            return state.userId;
+        },
+        getUserName(state){
+            return state.userName;
+        }
     },
     mutations: {  // commit 으로 부를 수 있다.
-        setToken(state, payloads){
+        setPayloads(state, payloads){
             state.token = payloads.token;
+            state.userId = payloads.userId;
+            state.userName = payloads.userName;
             alert('로그인 되었습니다.');
         },
         logout(state){

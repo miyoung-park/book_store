@@ -7,7 +7,7 @@
   > <!--expand-on-hover-->
 
     <!-- profile section -->
-    <v-list-item v-if="getToken != null">
+    <v-list-item v-if="isAdminLogin">
       <v-list-item-content>
         <v-list-item-title class="text-h6">
           {{info.userId}}
@@ -22,7 +22,7 @@
     <v-divider></v-divider>
 
     <!-- menu section admin -->
-    <v-list v-if="getToken">
+    <v-list v-if="getToken != null">
       <v-list-group
           v-for="item in adminItems"
           :key="item.title"
@@ -66,15 +66,16 @@
       </v-list-item-group>
     </v-list>
 
-
-
   </v-navigation-drawer>
+
   </div>
 </template>
 
 <script>
+import AlertModal from "@/components/AlertModal";
 export default {
   name: "AdminNavBar",
+  components: { AlertModal },
   inject: ['adminService'],
   data () {
     return {
@@ -104,17 +105,15 @@ export default {
             { title: '대여목록', url: '/admin/rental/list'}
           ]
         },
-      ]
+      ],
+      alertModal: false
     }
   },
   methods: {
     async isAdminLogin() {
-      this.token = this.$store.getters.getToken;
-      if( this.token != null) {
-        const response = await this.adminService.getDetailAdmin();
-        this.info = response;
-      }
-
+      this.info.userId = this.$store.getters.getUserId;
+      this.info.userName = this.$store.getters.getUserName;
+      console.log(this.info)
     },
     logout(){
       if(confirm('로그아웃 하시겠습니까?')){
@@ -124,11 +123,12 @@ export default {
       return;
     },
     $apiErrorHandler(apiServiceError){
-      console.log( apiServiceError );
-      // 404
-      // 405
-      console.log(`adminDetailView handler ${apiServiceError.toString()}`);
-    }
+      const errorMessage = apiServiceError.errorMessage;
+     // 토큰 관련 문제이기 때문에 alert 후에 로그아웃 처리
+      alert(errorMessage);
+      this.$store.commit('logout');
+
+    },
   },
   async mounted() {
     await this.isAdminLogin();

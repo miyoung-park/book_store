@@ -38,8 +38,9 @@ const ApiServices = {
         /**
          * TODO: Vue 자체 기능 중 하나, Vue document 참고 !
          **/
-        Vue.config.errorHandler = function(err, vm, info) {
-            console.log( vm , info)
+        Vue.config.errorHandler = function(err, vm, info) {  // eslint-disable-line no-unused-vars
+
+
             if( err instanceof ApiServiceError ){
                 serviceErrorEventBus.emit( err.errorCode , err);
             }
