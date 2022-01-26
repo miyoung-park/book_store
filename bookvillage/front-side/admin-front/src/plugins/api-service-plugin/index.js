@@ -1,24 +1,34 @@
 // import Vue from "vue";
 // import axios from 'axios';
 // import _ from 'lodash';
-
-import ApiServiceError from "./api-service-error";
 // import ApiServiceFactory from "./api-service-factory";
+import { store } from '@/store/index';
+import ApiServiceError from "./api-service-error";
 import {ApiServiceErrorEventBus} from './api-service-error'
 
 const ApiServices = {
-    install(Vue) {
+    install(Vue , options) {
 
-        /** event emitter **/
+        /** Event emitter **/
         const serviceErrorEventBus = new ApiServiceErrorEventBus();  // 만들어 놓은 이벤트에 관심있으면 알려주는 용도
 
-        // TODO: 꼭 여기 안 있어도 되지만 여기 저기서 사용되서도 안된다. 반드시 의도한 케이스로 되게끔 책임자 한명이 박아두고 써야 한다.
-        // TODO: 여기서는 전역적으로 사용할 것들은 처리하면 될듯 ( 토큰 만료 같은... ) (e)를 까보면 에러가 나올 것.
-        // TODO: 여러 처리를 한 번에 하고 싶으면 분기처리로 진행
-        /** Default error handler **/
+
+        /** Default error handler
+         TODO: 한번에 처리되길 원하는, 공통되는 에러로직은 전역적으로 처리해주기( 토큰문제로 인한 로그아웃 처리 ) (완)
+         : 에러처리 로직이 무조건 이 위치에 있을 필요는 없지만 그렇다고 여기 저기서 사용되서도 안된다. 반드시 의도한 케이스로 되게끔 책임자 한 명이 박아두고 써야 한다.
+        **/
         serviceErrorEventBus.setDefaultErrorHandler(  (e)=>{
+            const errorCode = e.errorCode;
+            const errorMessage = e.errorMessage;
+
+            if( errorCode == '610' || errorCode == '620' || errorCode == '630') { // Token Error
+                alert(errorMessage);
+                store.commit('logout');
+            }
             console.log( `my site default handler ${e.toString()}` )
         });
+
+
         /**
          * 전역 메소드
          * @param errorCode
@@ -35,8 +45,11 @@ const ApiServices = {
             serviceErrorEventBus.off(handler);
         }
 
+
         /**
-         * TODO: Vue 자체 기능 중 하나, Vue document 참고 !
+         * TODO: Vue 자체 기능 중 하나, Vue document 참고 (완)
+         * : 잡히지 않은 오류에 대한 핸들러를 할당하는 역할( axios 에서 catch 로 오류를 잡아버리면 안됨)
+         * 핸들러는 오류 및 Vue 인스턴스와 함께 호출된다.
          **/
         Vue.config.errorHandler = function(err, vm, info) {  // eslint-disable-line no-unused-vars
 

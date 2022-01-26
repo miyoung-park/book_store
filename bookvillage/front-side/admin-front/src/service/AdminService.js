@@ -15,12 +15,4 @@ export class AdminService {
             })
     }
 
-    getDetailAdmin(){
-        return $axiosInst
-            .post('/admin/detail')
-            .then( response => {
-                return response.data;
-            })
-    }
-
 }

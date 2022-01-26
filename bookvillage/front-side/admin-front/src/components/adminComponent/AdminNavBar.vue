@@ -10,10 +10,10 @@
     <v-list-item v-if="isAdminLogin">
       <v-list-item-content>
         <v-list-item-title class="text-h6">
-          {{info.userId}}
+          {{userId}}
         </v-list-item-title>
         <v-list-item-subtitle>
-          {{info.userName}}
+          {{userName}}
         </v-list-item-subtitle>
       </v-list-item-content>
       <button class="logout_btn" small @click="logout" v-if="getToken != null"> 로그아웃</button>
@@ -72,14 +72,14 @@
 </template>
 
 <script>
-import AlertModal from "@/components/AlertModal";
+
 export default {
   name: "AdminNavBar",
-  components: { AlertModal },
   inject: ['adminService'],
   data () {
     return {
-      info: {},
+      userId: '',
+      userName: '',
       token: null,
       items: [
         { title: '로그인', icon: 'mdi-account' , url:'/admin/login'},
@@ -111,9 +111,8 @@ export default {
   },
   methods: {
     async isAdminLogin() {
-      this.info.userId = this.$store.getters.getUserId;
-      this.info.userName = this.$store.getters.getUserName;
-      console.log(this.info)
+      this.userId = this.$store.getters.getUserId;
+      this.userName = this.$store.getters.getUserName;
     },
     logout(){
       if(confirm('로그아웃 하시겠습니까?')){
@@ -122,13 +121,13 @@ export default {
       }
       return;
     },
-    $apiErrorHandler(apiServiceError){
+   /* $apiErrorHandler(apiServiceError){
       const errorMessage = apiServiceError.errorMessage;
      // 토큰 관련 문제이기 때문에 alert 후에 로그아웃 처리
       alert(errorMessage);
       this.$store.commit('logout');
 
-    },
+    }, */
   },
   async mounted() {
     await this.isAdminLogin();
@@ -139,12 +138,12 @@ export default {
       return this.$store.getters.getToken;
     }
   },
-  created() {
-    // TODO: 공통되는 에러로직은 전역에서 처리 //  alert는 띄우는게 기본 정책이라면 공통에 가있어야 한다.
+ /* created() {
+
     this.$addApiErrorHandler('610', this.$apiErrorHandler, false );
     this.$addApiErrorHandler('620', this.$apiErrorHandler, false );
     this.$addApiErrorHandler('630', this.$apiErrorHandler, false );
-  }
+  } */
 }
 </script>
 

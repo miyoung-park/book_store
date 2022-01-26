@@ -11,8 +11,6 @@ export class CustomerService {
             .get(`${this.host}/user/list`)
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 
@@ -22,8 +20,6 @@ export class CustomerService {
             .post(`${this.host}/user/add` , customerObj)
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 
@@ -32,8 +28,6 @@ export class CustomerService {
             .get(`${this.host}/user/detail/` + userSeq)
             .then(response => {
                 return response.data;
-            }).catch(error => {
-                console.log(error);
             })
     }
 
@@ -43,8 +37,6 @@ export class CustomerService {
             .put(`${this.host}/user/update/` + userSeq , customerObj)
             .then( () => {
                 return;
-            }).catch( error => {
-                console.log(error);
             })
     }
 
@@ -53,8 +45,6 @@ export class CustomerService {
             .delete(`${this.host}/user/delete/` + userSeq)
             .then( () => {
                 return;
-            }).catch( error => {
-                console.log(error);
             })
     }
 

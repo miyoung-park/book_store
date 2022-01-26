@@ -17,10 +17,7 @@
             <td>{{item.rentalDt}}</td>
             <td>{{item.predictReturnDt}}</td>
             <td>{{item.returnDt}}</td>
-              <td v-if="item.rentalStatus == '00'" style="background-color: skyblue">대여신청</td>
-              <td v-if="item.rentalStatus == '01'" style="background-color: cornflowerblue">대여中</td>
-              <td v-if="item.rentalStatus == '02'" style="background-color: crimson">연체</td>
-              <td v-if="item.rentalStatus == '04'" style="background-color: crimson">대여취소</td>
+            <td>{{getRentalStatus(item.rentalStatus)}}</td>
             <td>{{item.rentalRegDt}}</td>
             <td>{{item.rentalUpdateDt}}</td>
           </tr>
@@ -60,6 +57,19 @@ export default {
       const response = await this.rentalService.getRentalListBySeq(this.userSeq);
       this.rentalList = response;
     },
+    getRentalStatus( status ){
+      if( status === '00'){
+        return "대여신청중";
+      } else if( status === '01') {
+        return "대여中";
+      } else if( status === '02') {
+        return "반납완료";
+      } else if( status === '03') {
+        return "연체";
+      } else if( status === '04') {
+        return "대여취소";
+      }
+    }
   },
   mounted() {
     this.getRentalList();

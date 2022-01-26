@@ -20,8 +20,6 @@ export class BookService {
             .post(`${this.host}/book/add/`, formData )
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 
@@ -30,8 +28,6 @@ export class BookService {
             .get(`${this.host}/book/list`)
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 
@@ -40,8 +36,6 @@ export class BookService {
             .get(`${this.host}/book/detail/` + bookSeq)
             .then( response => {
                 return response.data;
-            }).catch(error => {
-                console.log(error);
             })
     }
 
@@ -65,8 +59,6 @@ export class BookService {
             .put(`${this.host}/book/update/` + bookObj.bookSeq, formData )
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
 
     }
@@ -76,8 +68,6 @@ export class BookService {
             .delete(`${this.host}/book/delete/` + bookSeq)
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 

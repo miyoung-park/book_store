@@ -27,6 +27,7 @@ class ServiceErrorEventHandlerWrapper {
     handleError(error){
         try {
             this.handler(error);
+
         }catch (e) {
             console.warn(e)
         }
@@ -115,7 +116,6 @@ export class ApiServiceErrorEventBus{
 
     _getListeners(errorCode ){
         if( this.listenerGroup[errorCode] ){
-            console.log();
         }else{
             this.listenerGroup[errorCode] = [];
             this.listenerGroup[errorCode].push(this.defaultHandler);

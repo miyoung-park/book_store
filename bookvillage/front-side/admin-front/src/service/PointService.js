@@ -10,8 +10,6 @@ export class PointService {
             .get(`${this.host}/point/list/` + userSeq)
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 
