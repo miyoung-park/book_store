@@ -25,10 +25,10 @@ public class UserService {
         UserVO authUser = userMapper.loginUser(user);
 
         if( authUser == null ){
-            throw new ApiException(ApiServiceErrorCode.DATA_NOT_FOUND, "아이디 정보가 존재하지 않습니다.");
+            throw new ApiException(ApiServiceErrorCode.INVALID_USER, "헤당 아이디가 존재하지 않습니다.");
         }
         if( !encoder.matches( user.getUserPw(), authUser.getUserPw()) ){
-            throw new ApiException(ApiServiceErrorCode.DATA_NOT_FOUND, "비밀번호를 다시 입력해주세요.");
+            throw new ApiException(ApiServiceErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
 
         return authUser;
@@ -38,7 +38,7 @@ public class UserService {
 
         UserVO user = userMapper.getUserDetailById(userId);
         if( user == null ){
-            throw new ApiException(ApiServiceErrorCode.DATA_NOT_FOUND, "해당 회원이 존재하지 않습니다.");
+            throw new ApiException(ApiServiceErrorCode.INVALID_USER, "헤당 아이디가 존재하지 않습니다.");
         }
 
         return user;

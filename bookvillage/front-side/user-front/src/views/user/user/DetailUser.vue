@@ -1,30 +1,30 @@
 <template>
   <div class="detail_section">
     <h3> [ 프로필 ] </h3>
-      <div class="customer_info_section">
+      <div class="user_info_section">
         <v-card>
           <v-simple-table class="table">
             <tbody>
             <tr>
-              <td>고객번호 : </td><td class="td">{{customerInfo.userSeq}}</td>
+              <td>고객번호 : </td><td class="td">{{userInfo.userSeq}}</td>
             </tr>
             <tr>
-              <td>아이디 : </td><td class="td">{{customerInfo.userId}}</td>
+              <td>아이디 : </td><td class="td">{{userInfo.userId}}</td>
             </tr>
             <tr>
-              <td>고객명 : </td><td class="td">{{customerInfo.userName}}</td>
+              <td>고객명 : </td><td class="td">{{userInfo.userName}}</td>
             </tr>
             <tr>
-              <td>포인트 : </td><td class="td">{{customerInfo.userPoint}} point</td>
+              <td>포인트 : </td><td class="td">{{userInfo.userPoint}} point</td>
             </tr>
             <tr>
-              <td>생년월일 : </td><td class="td">{{customerInfo.userBirth}}</td>
+              <td>생년월일 : </td><td class="td">{{userInfo.userBirth}}</td>
             </tr>
             <tr>
-              <td>전화번호 : </td><td class="td">{{customerInfo.userTell}}</td>
+              <td>전화번호 : </td><td class="td">{{userInfo.userTell}}</td>
             </tr>
             <tr>
-              <td>등록일자 : </td><td class="td">{{customerInfo.userRegDt}}</td>
+              <td>등록일자 : </td><td class="td">{{userInfo.userRegDt}}</td>
             </tr>
             </tbody>
           </v-simple-table>
@@ -35,11 +35,11 @@
 
 <script>
 export default {
-  name: "DetailCustomer",
-  inject: ['customerService'],
+  name: "DetailUser",
+  inject: ['userService'],
   data() {
     return {
-      customerInfo: {
+      userInfo: {
         userSeq: '',
         userId: '',
         userName: '',
@@ -51,13 +51,15 @@ export default {
     }
   },
   methods: {
-    async getCustomerDetail(){
-      const data = await this.customerService.getCustomerDetailById();
-      this.customerInfo = data;
+    async getUserDetail(){
+      const data = await this.userService.getUserDetailById();
+
+      // TODO: userPoint 는 store 에 저장해서 꺼내쓰는걸로 하고 point 충전시 dispatch 로 포인트를 가져와서 업데이트 시킨다.
+      this.userInfo = data;
     }
   },
   mounted() {
-    this.getCustomerDetail();
+    this.getUserDetail();
   }
 }
 </script>
@@ -69,12 +71,12 @@ export default {
   align-items: center;
   margin: 10% auto 0 auto
 }
-.customer_info_section {
+.user_info_section {
   margin-top: 30px;
   font-size: large;
   color: black;
 }
-.customer_info_section a{
+.user_info_section a{
   font-size: large;
   font-weight: bold ;
   color: darkslategrey;

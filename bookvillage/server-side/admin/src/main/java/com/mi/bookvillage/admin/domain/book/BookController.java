@@ -5,10 +5,12 @@ import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.util.file.FileUtil;
 import com.mi.bookvillage.common.common.util.file.FileVO;
+import com.mi.bookvillage.common.common.util.string.StringUtil;
 import com.mi.bookvillage.common.domain.Book.BookVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -52,13 +54,14 @@ public class BookController {
     }
 
 
-    // TODO: @Transactional 에 대해서 알아보기 (완)
-    // Transaction 의 속성을 지키게 된다.
-    // 하지만 @Transactional 은 기본적으로 UncheckedException( 예상하지 못한 에러 ), Error 만을 Rollback 한다고 한다.
-    // 모든 예외( CheckedException 예상되는 예외 포함 )에 대해서 Rollback 을 적용하고 싶을 때
-    // (rollbackFor = Exception.class) 를 붙여주면 된다.
+
     /**
      * 도서 등록
+     * TODO: @Transactional 에 대해서 알아보기 (완)
+     * Transaction 의 속성을 지키게 된다.
+     * 하지만 @Transactional 은 기본적으로 UncheckedException( 예상하지 못한 에러 ), Error 만을 Rollback 한다고 한다.
+     * 모든 예외( CheckedException 예상되는 예외 포함 )에 대해서 Rollback 을 적용하고 싶을 때
+     * (rollbackFor = Exception.class) 를 붙여주면 된다.
      */
     @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/book/add" , method = RequestMethod.POST)
@@ -68,6 +71,7 @@ public class BookController {
         bookService.addBook(book);
         List<FileVO> fileList = fileUtil.uploadFiles(files, book.getBookSeq());
         bookService.addFiles(fileList);
+
         return apiResponseBuilderFactory.success().build();
 
     }
@@ -85,12 +89,13 @@ public class BookController {
 
         // book 정보 업데이트
         bookService.updateBook(book);
+
         // new image 추가
         List<FileVO> fileList = fileUtil.uploadFiles(files, bookSeq);
-        bookService.addFiles(fileList);
+         bookService.addFiles(fileList);
+
         // 기존 image 삭제
         bookService.deleteFiles(deleteFiles);
-
         return apiResponseBuilderFactory.success().build();
     }
 

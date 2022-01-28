@@ -88,8 +88,8 @@ export default {
         {   title: '고객관리'
           , icon: 'mdi-account-circle'
           , items: [
-                    { title: '고객목록', url: '/admin/customer/list'},
-                    { title: '고객등록', url: '/admin/customer/add'}
+                    { title: '고객목록', url: '/admin/user/list'},
+                    { title: '고객등록', url: '/admin/user/add'}
                     ]
         },
         {   title: '도서관리'
@@ -121,13 +121,6 @@ export default {
       }
       return;
     },
-   /* $apiErrorHandler(apiServiceError){
-      const errorMessage = apiServiceError.errorMessage;
-     // 토큰 관련 문제이기 때문에 alert 후에 로그아웃 처리
-      alert(errorMessage);
-      this.$store.commit('logout');
-
-    }, */
   },
   async mounted() {
     await this.isAdminLogin();
@@ -138,12 +131,7 @@ export default {
       return this.$store.getters.getToken;
     }
   },
- /* created() {
 
-    this.$addApiErrorHandler('610', this.$apiErrorHandler, false );
-    this.$addApiErrorHandler('620', this.$apiErrorHandler, false );
-    this.$addApiErrorHandler('630', this.$apiErrorHandler, false );
-  } */
 }
 </script>
 

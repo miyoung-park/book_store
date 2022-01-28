@@ -1,6 +1,7 @@
 package com.mi.bookvillage.user.domain.point;
 
 import com.mi.bookvillage.common.common.exceptions.ApiException;
+import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
 import com.mi.bookvillage.common.common.util.string.StringUtil;
 import com.mi.bookvillage.common.domain.Point.PointMapper;
 import com.mi.bookvillage.common.domain.Point.PointVO;
@@ -28,8 +29,8 @@ public class PointService {
 
     public void transactionPoint(PointVO point, UserVO user){
         // 포인트 유효성 검사
-        if( !StringUtil.checkNegativeNumber( point.getPointTransaction() ) ){
-            throw new ApiException("포인트는 양수만 입력가능합니다.");
+        if( !StringUtil.checkPositiveNumber( point.getPointTransaction() ) ){
+            throw new ApiException(ApiServiceErrorCode.NOT_POSITIVE_POINT, "포인트는 양수만 입력해주세요.");
         }
         // 유저 아이디 / 이전 포인트 SET
         int previousPoint = getPreviousTotalPoint(user.getUserSeq());

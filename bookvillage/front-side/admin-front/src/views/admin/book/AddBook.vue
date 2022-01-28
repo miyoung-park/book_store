@@ -65,7 +65,7 @@ export default {
     }
   },
   methods: {
-    // TODO: Book 정보나, 파일, Customer 정보 등의 유효성 검사 Validation 만들어보기
+    // TODO: Book 정보나, 파일, User 정보 등의 유효성 검사 Validation 만들어보기
     async addBook(){
       await this.bookService.addBook(this.bookInfo , this.bookImage);
       alert('도서 정보가 등록되었습니다.');

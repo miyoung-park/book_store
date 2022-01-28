@@ -2,7 +2,7 @@
  <div class="whole_section">
      <header>
        <div>
-         <CustomerNavBar/>
+         <UserNavBar/>
          <div class="header-section">
            <div>
              <a><router-link to='/'>📗 Book Village 📙</router-link></a>
@@ -18,11 +18,11 @@
 </template>
 
 <script>
-import CustomerNavBar from './CustomerNavBar';
+import UserNavBar from './UserNavBar';
 export default {
-  name: "Customer",
+  name: "User",
   components: {
-    CustomerNavBar
+    UserNavBar
   },
   methods: {
   }

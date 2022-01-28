@@ -11,6 +11,7 @@ import com.mi.bookvillage.user.common.PointUtil;
 import com.mi.bookvillage.user.common.RentalFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -29,13 +30,17 @@ public class RentalService {
     private static String CODE_LATE ="03";
 
 
-
+    /**
+     * 대여 목록 확인
+     */
     public List<RentalVO> getRentalList(int userSeq){
         List<RentalVO> rentalList = rentalMapper.getRentalList(userSeq);
         return rentalList;
     }
 
-
+    /**
+     * 대여 정보 확인
+     */
     public RentalVO getRentalDetail(int rentalSeq){
         RentalVO rental =  rentalMapper.getRentalDetail(rentalSeq);
         if( rental == null ) {
@@ -44,18 +49,25 @@ public class RentalService {
         return rental;
     }
 
-
+    /**
+     * 도서 대여
+     */
+    @Transactional(rollbackFor = Exception.class)
     public void rentalBook(RentalVO rentalVO) throws ParseException {
         // 대여하기
         rentalMapper.rentalBook(rentalVO);
         // 대여정보 GET
         RentalVO rental = getRentalDetail(rentalVO.getRentalSeq());
         // 대여정보 기준으로 포인트 차감 객체생성
-        PointVO pointVO = pointUtil.minusPoint(rental , CODE_RENTAL);
+        PointVO pointVO = pointUtil.getMinusPointInstance(rental , PointUtil.pointStatusCode.RENTAL_MINUS_POINT);
         // 포인트 차감
         pointMapper.transactionPoint(pointVO);
     }
 
+    /**
+     * 대여도서 반납
+     */
+    @Transactional(rollbackFor = Exception.class)
     public void returnBook(RentalVO rentalVO) throws ParseException {
         Date now = new Date();
         SimpleDateFormat format = new SimpleDateFormat("yyyy-mm-dd");
@@ -64,7 +76,7 @@ public class RentalService {
 
         // 연체 된 경우
         if( diff > 0 ) {
-            PointVO point = pointUtil.minusPoint(rentalVO, CODE_LATE);
+            PointVO point = pointUtil.getMinusPointInstance( rentalVO, PointUtil.pointStatusCode.LATE_FEE_MINUS_POINT );
             pointMapper.transactionPoint(point);
         }
         // 연체 안된 경우

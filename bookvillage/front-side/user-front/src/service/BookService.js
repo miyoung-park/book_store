@@ -11,8 +11,6 @@ export class BookService {
             .get(`${this.host}/book/list`)
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 
@@ -21,8 +19,6 @@ export class BookService {
             .get(`${this.host}/book/detail/` + bookSeq)
             .then( response => {
                 return response.data;
-            }).catch(error => {
-                console.log(error);
             })
     }
 

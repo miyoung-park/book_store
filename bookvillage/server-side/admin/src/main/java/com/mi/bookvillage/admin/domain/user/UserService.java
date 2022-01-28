@@ -26,35 +26,23 @@ public class UserService {
         return userMapper.getUserList();
     }
 
-
-    public UserVO loginUser(UserVO userVO) {
-        UserVO authUser = userMapper.loginUser(userVO);
-        if(authUser == null){
-            throw new ApiException(ApiServiceErrorCode.INVALID_USER, "아이디 정보가 존재하지 않습니다.");
+    /**
+     * 고객정보 추가
+     */
+    public void addUser(UserVO newUser){
+        UserVO user = userMapper.getUserDetailById(newUser.getUserId() );
+        if( user != null ){
+            throw new ApiException(ApiServiceErrorCode.JOINED_USER, "이미 해당 아이디로 가입된 유저가 있습니다.");
         }
-        if( !encoder.matches( userVO.getUserPw(), authUser.getUserPw()) ){
-            throw new ApiException(ApiServiceErrorCode.INVALID_PASSWORD, "비밀번호를 다시 확인해주세요.");
-        }
-        return authUser;
+        String encodedPassword = encoder.encode(newUser.getUserPw());
+        newUser.setUserPw(encodedPassword);
+        userMapper.addUser(newUser);
     }
 
 
-    public void addUser(UserVO userVO){
-        String encodedPassword = encoder.encode(userVO.getUserPw());
-        userVO.setUserPw(encodedPassword);
-        userMapper.addUser(userVO);
-    }
-
-
-    public UserVO getUserDetailById(String userId){
-        UserVO customer = userMapper.getUserDetailById(userId);
-        if(customer == null){
-            throw new NullPointerException("null");
-        }
-        return customer;
-    }
-
-
+    /**
+     * 고객정보 조회 By Seq
+     */
     public UserVO getUserDetailBySeq(int userSeq){
         UserVO user = userMapper.getUserDetailBySeq(userSeq);
         if(user == null){
@@ -66,12 +54,15 @@ public class UserService {
     }
 
 
+    /**
+     * 고객 정보 업데이트
+     */
     public void updateUser(UserVO userVO){
+        // 고객이 비밀번호 변경한 경우
         if( userVO.getUserPw() != null ){
             String encodedPassword = encoder.encode(userVO.getUserPw());
             userVO.setUserPw(encodedPassword);
         }
-        // 고객이 비밀번호 변경한 경우
         userMapper.updateUser(userVO);
     }
     public void deleteUser(int userSeq){

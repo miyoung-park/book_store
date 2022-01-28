@@ -14,10 +14,15 @@ public class AdminService {
 
     private final AdminMapper adminMapper;
     
-    public AdminVO loginAdmin(AdminVO adminVo){
-        AdminVO admin = adminMapper.loginAdmin(adminVo);
+    public AdminVO loginAdmin(AdminVO admin){
+
+        AdminVO authAdmin = adminMapper.loginAdmin(admin);
+
         if( admin == null ){
-            throw new ApiException( ApiServiceErrorCode.INVALID_USER , "회원정보가 존재하지 않습니다.");
+            throw new ApiException( ApiServiceErrorCode.INVALID_USER , "헤당 아이디가 존재하지 않습니다.");
+        }
+        if( !admin.getUserPw().equals( authAdmin.getUserPw() ) ){
+            throw new ApiException( ApiServiceErrorCode.INVALID_PASSWORD, "비밀번호가 틀렸습니다.");
         }
         return admin;
     }
@@ -25,7 +30,7 @@ public class AdminService {
     public AdminVO getAdminInfo(String userId){
         AdminVO admin = adminMapper.getAdminInfo(userId);
         if(admin == null){
-            throw new ApiException( ApiServiceErrorCode.INVALID_USER , "회원정보가 존재하지 않습니다.");
+            throw new ApiException( ApiServiceErrorCode.INVALID_USER , "헤당 아이디가 존재하지 않습니다.");
         }
         return admin;
     }

@@ -4,6 +4,7 @@ package com.mi.bookvillage.admin.domain.book;
 import com.mi.bookvillage.common.common.exceptions.ApiException;
 import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
 import com.mi.bookvillage.common.common.util.file.FileVO;
+import com.mi.bookvillage.common.common.util.string.StringUtil;
 import com.mi.bookvillage.common.domain.Book.BookMapper;
 import com.mi.bookvillage.common.domain.Book.BookVO;
 import lombok.RequiredArgsConstructor;
@@ -60,9 +61,8 @@ public class BookService {
      * 도서 파일 등록
      */
     public void addFiles(List<FileVO> files){
-        System.out.println(files);
-        for(int i = 0; i < files.size(); i ++) {
-            bookMapper.addFiles(files.get(i));
+        if(StringUtil.listHasSize( files )){
+            bookMapper.addFiles(files);
         }
     }
 
@@ -92,10 +92,8 @@ public class BookService {
      */
     // TODO: 실제로도 삭제되게끔 !
     public void deleteFiles(List<Integer> deleteFiles){
-        if( deleteFiles != null && deleteFiles.size() > 0 ){
-            for( int i = 0; i < deleteFiles.size(); i++) {
-                bookMapper.deleteFiles(deleteFiles.get(i));
-            }
+        if(StringUtil.listHasSize( deleteFiles ) ){
+            bookMapper.deleteFiles(deleteFiles);
         }
     }
 

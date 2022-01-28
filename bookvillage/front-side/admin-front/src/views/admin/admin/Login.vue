@@ -42,24 +42,22 @@ export default {
   },
   methods: {
      async adminLogin(){
-      try {
-        const payloads = await this.adminService.adminLogin(this.userObj);
-        if( payloads != null){
-          this.$store.commit('setPayloads', payloads)
-          this.$router.push({
-            path: '/admin/book/list'
-          }).catch( e => { console.log(e) })
-        }
-      } catch ( error ) {
-        console.log(error);
+      const payloads = await this.adminService.adminLogin(this.userObj);
+      if( payloads != null){
+        this.$store.commit('setPayloads', payloads)
+        await this.$router.push( '/admin/book/list')
       }
+
     },
-    $apiErrorHandler(apiServiceError) {
-       console.log(`LoginView handler ${apiServiceError.toString()}`);
+    $apiErrorHandler(error) {
+       const errorMessage = error.errorMessage;
+       alert(errorMessage + '\n다시 시도해주세요.')
+
     }
   },
   created() {
-    this.$addApiErrorHandler('630')
+    this.$addApiErrorHandler( this.$errorCode.INVALID_USER , this.$apiErrorHandler , false );
+    this.$addApiErrorHandler( this.$errorCode.INVALID_PASSWORD , this.$apiErrorHandler , false );
   }
 }
 </script>

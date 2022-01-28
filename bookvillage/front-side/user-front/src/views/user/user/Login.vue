@@ -21,7 +21,7 @@
     <div class="login_btn">
       <v-btn class="ma-2"
              style="background-color: #E6EE9C"
-             @click="customerLogin"
+             @click="userLogin"
       >사용자로그인</v-btn>
     </div>
   </div>
@@ -30,7 +30,7 @@
 <script>
 export default {
   name: "Login",
-  inject: ['customerService'],
+  inject: ['userService'],
   data(){
     return {
       userObj : {
@@ -45,8 +45,8 @@ export default {
     }
   },
   methods: {
-    async customerLogin() {
-      try {
+    async userLogin() {
+
         if( this.userObj.userId  === '' ) {
             this.validId = '아이디를 입력해주세요.';
             return;
@@ -59,15 +59,21 @@ export default {
         }
         this.validPw = '';
 
-        const payloads = await this.customerService.loginCustomer(this.userObj);
+        const payloads = await this.userService.loginUser(this.userObj);
         if( payloads != null){
-          this.$store.commit('setToken', payloads);
+          this.$store.commit('setPayloads', payloads);
           location.href = '/'
         }
-      } catch ( error ) {
-        console.log(error);
-      }
-     }
+     },
+    $apiErrorHandler(error) {
+      const errorMessage = error.errorMessage;
+      alert(errorMessage + '\n다시 시도해주세요.')
+
+    }
+  },
+  created() {
+    this.$addApiErrorHandler( this.$errorCode.INVALID_USER , this.$apiErrorHandler , false );
+    this.$addApiErrorHandler( this.$errorCode.INVALID_PASSWORD , this.$apiErrorHandler , false );
   }
 }
 </script>

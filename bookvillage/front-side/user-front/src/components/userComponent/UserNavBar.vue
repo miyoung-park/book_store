@@ -7,25 +7,25 @@
   ><!-- expand-on-hover-->
 
     <!-- profile section -->
-    <v-list-item  v-if="customerLogin != null">
+    <v-list-item  v-if="isUserLogin">
       <v-list-item-content>
         <v-list-item-title class="text-h6">
-          {{info.userId}}
+          {{ userId }}
         </v-list-item-title>
         <v-list-item-subtitle>
-          {{info.userName}}
+          {{ userName }}
         </v-list-item-subtitle>
       </v-list-item-content>
-      <button class="logout_btn" small @click="logout" v-if="customerLogin != null">로그아웃</button>
+      <button class="logout_btn" small @click="logout" v-if="getToken != null">로그아웃</button>
     </v-list-item>
 
     <v-divider></v-divider>
 
     <!-- menu section user -->
     <v-list shaped>
-      <v-list-item-group color="primary" v-if="customerLogin != null">
+      <v-list-item-group color="primary" v-if="getToken != null">
         <v-list-item
-            v-for="(item, i) in customerItems"
+            v-for="(item, i) in userItems"
             :key="i"
             :to="item.url"
         >
@@ -40,7 +40,7 @@
     </v-list>
     <!-- menu section none user -->
     <v-list shaped>
-      <v-list-item-group color="primary" v-if="customerLogin == null">
+      <v-list-item-group color="primary" v-if="getToken == null">
         <v-list-item
             v-for="(item, i) in items"
             :key="i"
@@ -61,33 +61,30 @@
 
 <script>
 export default {
-  name: "BasicNavBar",
-  inject: ['customerService'],
+  name: "userNavBar",
+  inject: ['userService'],
   data () {
     return {
-      info: {},
+      userId: '',
+      userName: '',
       token: null,
       role: null,
       items: [
         { title: '로그인', icon: 'mdi-account' , url:'/login'},
         { title: '도서목록', icon: 'mdi-book', url:'/'}
       ],
-      customerItems: [
-        { title: '프로필', icon: 'mdi-account-settings' , url:'/customer/detail'},
-        { title: '포인트', icon: 'mdi-credit-card-multiple' , url:'/customer/point/list'},
-        { title: '대여목록', icon: 'mdi-book-multiple', url:'/customer/rental/list'},
+      userItems: [
+        { title: '프로필', icon: 'mdi-account-settings' , url:'/user/detail'},
+        { title: '포인트', icon: 'mdi-credit-card-multiple' , url:'/user/point/list'},
+        { title: '대여목록', icon: 'mdi-book-multiple', url:'/user/rental/list'},
         { title: '도서목록', icon: 'mdi-book', url:'/'}
       ],
     }
   },
   methods: {
-    async isCustomerLogin(){
-      this.token = this.$store.getters.getToken;
-      if( this.token != null){
-        const response = await this.customerService.getCustomerDetailById();
-        this.info = response;
-        return;
-      }
+    async isUserLogin(){
+      this.userId = this.$store.getters.getUserId;
+      this.userName = this.$store.getters.getUserName;
     },
     logout(){
       if(confirm('로그아웃 하시겠습니까?')){
@@ -95,27 +92,17 @@ export default {
         location.reload();
       }
       return;
-    },
-    $apiErrorHandler(apiServiceError){
-      console.log(apiServiceError);
-      console.log(`adminDetailView handler ${apiServiceError.toString()}`);
     }
   },
   async mounted() {
-    await this.isCustomerLogin();
+    await this.isUserLogin();
   },
   computed: {
-     customerLogin(){
-       this.isCustomerLogin();
+     getToken(){
+       this.isUserLogin();
       return this.$store.getters.getToken;
     }
   },
-  created() {
-    // TODO: 공통되는 에러로직은 전역에서 처리 //  alert는 띄우는게 기본 정책이라면 공통에 가있어야 한다.
-    this.$addApiErrorHandler('610', this.$apiErrorHandler, false );
-    this.$addApiErrorHandler('620', this.$apiErrorHandler, false );
-    this.$addApiErrorHandler('630', this.$apiErrorHandler, false );
-  }
 }
 </script>
 

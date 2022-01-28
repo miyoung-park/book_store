@@ -67,6 +67,7 @@ public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
      */
     @ExceptionHandler(value = { RuntimeException.class })
     protected ResponseEntity<ApiErrorResponse> handleRuntimeException(RuntimeException e) {
+        logger.error( e );
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body( ApiErrorResponse.build( "50000", e.getMessage() ) );
@@ -88,6 +89,7 @@ public class CommonExceptionHandler extends ResponseEntityExceptionHandler {
                                                              HttpHeaders headers,
                                                              HttpStatus status,
                                                              WebRequest request) {
+        logger.error( e );
         return super.handleExceptionInternal(e, ApiErrorResponse.build( "50000", e.getMessage() ), headers, status, request);
     }
 

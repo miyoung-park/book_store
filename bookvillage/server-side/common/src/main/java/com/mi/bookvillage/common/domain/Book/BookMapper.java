@@ -12,12 +12,12 @@ public interface BookMapper {
     List<BookVO> getBookList();
     BookVO getBookDetail(int bookSeq);
     int addBook(BookVO bookVO);
-    void addFiles(FileVO fileVO);
+    void addFiles(List<FileVO> files);
     List<FileVO> getBookFile(int bookSeq);
     void updateBook(BookVO book);
     void deleteBook(int bookSeq);
     void deleteFilesWithBook(int bookSeq);
-    void deleteFiles(int fileSeq);
+    void deleteFiles(List<Integer> fileSeq);
 
 
 }

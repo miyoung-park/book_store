@@ -1,5 +1,4 @@
 import $axiosInst from "@/axios/AxiosInst";
-import { store } from "@/store/index";
 
 export class RentalService {
 
@@ -12,9 +11,6 @@ export class RentalService {
             .get(`${this.host}/rental/list`)
             .then( response => {
                 return response.data;
-            }).catch( () => {
-                console.log( "토큰이 만료되었습니다 .다시 로그인 해주세요.");
-                store.commit("logout");
             })
     }
 
@@ -23,8 +19,6 @@ export class RentalService {
            .post(`${this.host}/rental/book/` + bookSeq , rentalInfo)
            .then( response => {
                return response.data;
-           }).catch( error => {
-               console.log(error);
            })
     }
 
@@ -33,8 +27,6 @@ export class RentalService {
             .get(`${this.host}/rental/detail/` + rentalSeq )
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 
@@ -43,8 +35,6 @@ export class RentalService {
             .put(`${this.host}/rental/book/return`, rentalInfo )
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 

@@ -3,13 +3,13 @@
     <div class="input_section">
       <v-form>
         <v-text-field
-            v-model="customerInfo.userId"
+            v-model="userInfo.userId"
             label="아이디"
             required
             readonly
         ></v-text-field>
         <v-text-field
-            v-model="customerInfo.userPw"
+            v-model="userInfo.userPw"
             label= "새 비밀번호"
             type="password"
             required
@@ -23,7 +23,7 @@
         ></v-text-field>
         <p style="font-size: small; color: crimson">{{validPw}}</p>
         <v-text-field
-            v-model="customerInfo.userName"
+            v-model="userInfo.userName"
             label="이름"
             required
         ></v-text-field>
@@ -31,14 +31,14 @@
             ref="menu"
             v-model="menu"
             :close-on-content-click="false"
-            :return-value.sync="customerInfo.userBirth"
+            :return-value.sync="userInfo.userBirth"
             transition="scale-transition"
             offset-y
             min-width="auto"
         >
           <template v-slot:activator="{ on, attrs }">
             <v-text-field
-                v-model="customerInfo.userBirth"
+                v-model="userInfo.userBirth"
                 prepend-icon="mdi-calendar"
                 readonly
                 v-bind="attrs"
@@ -47,25 +47,25 @@
             ></v-text-field>
           </template>
           <v-date-picker
-              v-model="customerInfo.userBirth"
+              v-model="userInfo.userBirth"
               no-title
               scrollable
           >
             <v-spacer></v-spacer>
             <v-btn text color="primary" @click="menu = false"> 닫기 </v-btn>
-            <v-btn text color="primary" @click="$refs.menu.save(customerInfo.userBirth)">입력</v-btn>
+            <v-btn text color="primary" @click="$refs.menu.save(userInfo.userBirth)">입력</v-btn>
           </v-date-picker>
         </v-menu>
         <v-text-field
-            v-model="customerInfo.userTell"
+            v-model="userInfo.userTell"
             label="전화번호"
             required
             @change="validationTell"
         ></v-text-field>
         <p style="font-size: small; color: crimson">{{validTell}}</p>
         <div class="btn_section">
-          <v-btn class="mr-4" @click="updateCustomer" style="background-color: #FFE082">수정하기</v-btn>
-          <v-btn class="mr-4" @click="goCustomerDetail" style="background-color: #FFE082">취소</v-btn>
+          <v-btn class="mr-4" @click="updateUser" style="background-color: #FFE082">수정하기</v-btn>
+          <v-btn class="mr-4" @click="goUserDetail" style="background-color: #FFE082">취소</v-btn>
         </div>
       </v-form>
     </div>
@@ -74,11 +74,11 @@
 
 <script>
 export default {
-  name: "UpdateCustomer",
-  inject: ['customerService'],
+  name: "UpdateUser",
+  inject: ['userService'],
   data() {
     return {
-      customerInfo: {
+      userInfo: {
         userSeq: '',
         userId : '' ,
         userPw : null ,
@@ -93,15 +93,15 @@ export default {
     }
   },
   created() {
-    this.customerInfo.userSeq = this.$route.params.userSeq;
+    this.userInfo.userSeq = this.$route.params.userSeq;
   },
   methods:{
-    async getCustomerDetail(){
-      const response = await this.customerService.getCustomerDetail(this.customerInfo.userSeq);
-      this.customerInfo = response;
+    async getUserDetail(){
+      const response = await this.userService.getUserDetail(this.userInfo.userSeq);
+      this.userInfo = response;
     },
     validationPassword(){
-      if(this.customerInfo.userPw != this.checkPw){
+      if(this.userInfo.userPw != this.checkPw){
         this.validPw = '비밀번호가 다릅니다. 다시 입력해주세요.';
         this.checkPw = ''; //초기화
         return;
@@ -110,28 +110,28 @@ export default {
     },
     validationTell(){
       const numCheck=/^[0-9]*$/;
-      if (!numCheck.test(this.customerInfo.userTell)) {
+      if (!numCheck.test(this.userInfo.userTell)) {
         this.validTell = '숫자만 입력하실 수 있습니다.';
-        this.customerInfo.userTell = ''; //초기화
+        this.userInfo.userTell = ''; //초기화
         return;
       }
       this.validTell = ''; //초기화
     },
-    async updateCustomer(){
-      await this.customerService.updateCustomer(this.customerInfo);
+    async updateUser(){
+      await this.userService.updateUser(this.userInfo);
       alert('고객정보가 수정되었습니다.');
       await this.$router.push({
-        path: '/admin/customer/detail/' + this.customerInfo.userSeq
+        path: '/admin/user/detail/' + this.userInfo.userSeq
       })
     },
-    goCustomerDetail(){
+    goUserDetail(){
       this.$router.push({
-        path: '/admin/customer/detail/'+ this.customerInfo.userSeq
+        path: '/admin/user/detail/'+ this.userInfo.userSeq
       })
     }
   },
   async mounted() {
-    await this.getCustomerDetail();
+    await this.getUserDetail();
   }
 }
 </script>

@@ -18,7 +18,7 @@ import java.util.Map;
 
 
 /**
- * CustomerAPI
+ * UserController
  */
 @Slf4j
 @RestController
@@ -35,23 +35,24 @@ public class UserController {
      * 고객 로그인
      */
     @RequestMapping(value="/user/login" , method = RequestMethod.POST)
-    public ApiResponse LoginCustomer(@RequestBody UserVO user) throws Exception {
+    public ApiResponse LoginUser(@RequestBody UserVO user) throws Exception {
         String token;
 
-        // 해당 아이디로 userId가 있는지 확인하고 비밀번호 matched
-        UserVO authCustomer = userService.loginUser(user);
+        // 해당 아이디가 존재하는지, 비밀번호가 matched 되는지 확인
+        UserVO authUser = userService.loginUser(user);
 
-        Map<String, Object> authCustomerMap = new HashMap<>();
+        // 토큰발급
+        Map<String, Object> tokenMap = new HashMap<>();
+        tokenMap.put("userId" , authUser.getUserId());
+        String authToken = JWTokenUtil.createJwToken(tokenMap);
+
+        // store 에 저장할 정보 전달
         Map<String, Object> adminInfoMap = new HashMap<>();
+        adminInfoMap.put("token" , authToken);
+        adminInfoMap.put("userId" , authUser.getUserId());
+        adminInfoMap.put("userName" , authUser.getUserName());
 
-        // 토큰 저장 정보 Object / 토큰 발급 및 return
-        authCustomerMap.put("userId" , authCustomer.getUserId());
-        token = JWTokenUtil.createJwToken(authCustomerMap);
-
-        // store 저장 정보 Object
-        adminInfoMap.put("token" , token);
-
-        // log.info("Login Success  ::: " + customerObj.getUserId() + " Login Access");
+        log.info("LOGIN_USER_ID  >>>>>  " + authUser.getUserId() );
         return apiResponseBuilderFactory.success().setData(adminInfoMap).build();
 
     }

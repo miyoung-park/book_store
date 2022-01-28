@@ -33,21 +33,14 @@ export default {
       userInfo: [],
     }
   },
-  created() {
-    this.rentalSeq = this.$route.params.rentalSeq;
-  },
   methods: {
     async getRentalDetail(){
-      try {
-        const response = await this.rentalService.getRentalDetail(this.rentalSeq);
-        this.rentalInfo = response.rentalInfo;
-        this.userInfo = response.userInfo;
-      } catch ( error ){
-        console.log(error);
-      }
+      const response = await this.rentalService.getRentalDetail(this.rentalSeq);
+      this.rentalInfo = response.rentalInfo;
+      this.userInfo = response.userInfo;
+
     },
     getStatus(){
-
       if(this.rentalInfo.rentalStatus === '01') {
         return '반납하기'
       }
@@ -78,14 +71,22 @@ export default {
     async returnBook( ){
         await this.rentalService.returnBook( this.rentalInfo);
         alert('도서가 반납되었습니다.');
-        this.$router.push('/customer/rental/list').catch(e => { console.log(e);});
-
+        this.$router.push('/user/rental/list').catch(e => { console.log(e);});
+    },
+    $apiErrorHandler(error) {
+      const errorMessage = error.errorMessage;
+      alert(errorMessage);
+      this.$router.push('/user/rental/list');
 
     }
   },
   async mounted() {
     await this.getRentalDetail();
-  }
+  },
+  created() {
+    this.rentalSeq = this.$route.params.rentalSeq;
+    this.$addApiErrorHandler( this.$errorCode.DATA_NOT_FOUND , this.$apiErrorHandler , false );
+  },
 }
 </script>
 

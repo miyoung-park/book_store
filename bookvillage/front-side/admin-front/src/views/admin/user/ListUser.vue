@@ -14,7 +14,7 @@
     <div class="table_section">
       <v-data-table
           :headers="headers"
-          :items="customers"
+          :items="users"
           :search="search"
           @click:row="goDetail"
           :items-per-page="5"
@@ -28,8 +28,8 @@
 <script>
 
 export default {
-  name: "ListCustomer",
-  inject: ['customerService'],
+  name: "ListUser",
+  inject: ['userService'],
   data () {
     return {
       search: '',
@@ -42,22 +42,22 @@ export default {
         { text: '등록일자', value: 'userRegDt' },
         { text: '수정일자', value: 'userUpdateDt' },
       ],
-      customers: [],
+      users: [],
     }
   },
   async mounted() {
     await this.getList();
   },
   methods: {
-    goDetail(customer){
-      const _userSeq = customer.userSeq
+    goDetail(user){
+      const _userSeq = user.userSeq
       this.$router.push({
-        path: '/admin/customer/detail/'+ _userSeq
+        path: '/admin/user/detail/'+ _userSeq
       });
     },
     async getList(){
-     const response = await this.customerService.getCustomerList();
-     this.customers = response;
+     const response = await this.userService.getUserList();
+     this.users = response;
     }
   }
 }

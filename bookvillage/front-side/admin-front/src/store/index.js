@@ -44,7 +44,7 @@ export const store = new Vuex.Store({
     }, // TODO : 서버에서 받아온 데이터를 조작하는 경우 actions 를 이용, 프론트에서만 조작하는 경우는 Mutation 이용!(완)
     actions: { // dispatch 로 부를 수 있다.
         setToken: (context, payloads ) => {
-            context.commit('setToken', payloads);
+            context.commit('setPayloads', payloads);
         },
         logout:(context) => {
             context.commit('logout');

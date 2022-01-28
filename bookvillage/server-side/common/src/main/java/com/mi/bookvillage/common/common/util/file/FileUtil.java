@@ -60,7 +60,7 @@ public class FileUtil {
         String savePath =  "/images/upload/"
                           + cal.get(Calendar.YEAR)+"/"
                           + (cal.get(Calendar.MONTH) + 1) +"/"
-                          +  cal.get(Calendar.DAY_OF_MONTH) +"/";
+                          + cal.get(Calendar.DAY_OF_MONTH) +"/";
         return savePath;
     }
 
@@ -72,20 +72,16 @@ public class FileUtil {
      */
     private void saveFile(FileVO fileVO , MultipartFile multipartFiles) throws IOException {
         // 파일로 저장
-        File file_admin = new File(Base_Path + getSavePath() + fileVO.getRenameFileName());
-        if(!file_admin.exists()) { // 예외처리 -- 폴더가 존재하지 않을 경우엔 새로 만들어주기
+        File file = new File(Base_Path + getSavePath() + fileVO.getRenameFileName());
+        if(!file.exists()) { // 예외처리 -- 폴더가 존재하지 않을 경우엔 새로 만들어주기
             new File( Base_Path + getSavePath() ).mkdirs();
         }
 
         // 파일로 저장
         File file_user = new File(Base_Path + getSavePath() + fileVO.getRenameFileName());
 
-        if(!file_user.exists()) { // 예외처리 -- 폴더가 존재하지 않을 경우엔 새로 만들어주기
-            new File( Base_Path + getSavePath() ).mkdirs();
-        }
-
         //파일객체 한 번에 옮겨주기
-        multipartFiles.transferTo(file_admin);
+        multipartFiles.transferTo(file);
 
     }
 

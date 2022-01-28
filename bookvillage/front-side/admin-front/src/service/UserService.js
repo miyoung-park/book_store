@@ -1,12 +1,12 @@
 import $axiosInst from '@/axios/AxiosInst'
 
-export class CustomerService {
+export class UserService {
 
     constructor(host) {
         this.host = host;
     }
 
-    getCustomerList(){
+    getUserList(){
         return $axiosInst
             .get(`${this.host}/user/list`)
             .then( response => {
@@ -15,15 +15,15 @@ export class CustomerService {
     }
 
 
-    addCustomer(customerObj){
+    addUser(userObj){
         return $axiosInst
-            .post(`${this.host}/user/add` , customerObj)
+            .post(`${this.host}/user/add` , userObj)
             .then( response => {
                 return response.data;
             })
     }
 
-    getCustomerDetail(userSeq) {
+    getUserDetail(userSeq) {
         return $axiosInst
             .get(`${this.host}/user/detail/` + userSeq)
             .then(response => {
@@ -31,16 +31,16 @@ export class CustomerService {
             })
     }
 
-    updateCustomer(customerObj) {
-        const userSeq = customerObj.userSeq
+    updateUser(userObj) {
+        const userSeq = userObj.userSeq
         return $axiosInst
-            .put(`${this.host}/user/update/` + userSeq , customerObj)
+            .put(`${this.host}/user/update/` + userSeq , userObj)
             .then( () => {
                 return;
             })
     }
 
-    deleteCustomer(userSeq){
+    deleteUser(userSeq){
         return $axiosInst
             .delete(`${this.host}/user/delete/` + userSeq)
             .then( () => {

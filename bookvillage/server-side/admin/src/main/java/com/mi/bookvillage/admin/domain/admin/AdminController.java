@@ -4,10 +4,10 @@ package com.mi.bookvillage.admin.domain.admin;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
+import com.mi.bookvillage.common.common.util.string.StringUtil;
 import com.mi.bookvillage.common.domain.Admin.AdminVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -27,19 +27,20 @@ public class AdminController {
 
 
     @RequestMapping(value = "/admin/login" , method = RequestMethod.POST)
-    public ApiResponse loginAdmin(@RequestBody AdminVO adminVO) {
-        AdminVO admin = adminService.loginAdmin(adminVO);
+    public ApiResponse loginAdmin(@RequestBody AdminVO admin) {
+
+        AdminVO authAdmin = adminService.loginAdmin(admin);
         // 토큰 발급
         Map<String, Object> tokenMap = new HashMap<>();
-        tokenMap.put("userId", admin.getUserId());
+        tokenMap.put("userId", authAdmin.getUserId());
         String authToken = JWTokenUtil.createJwToken(tokenMap);
         // store 에 저장할 정보 전달
         Map<String, Object> adminInfoMap = new HashMap<>();
         adminInfoMap.put("token" , authToken);
-        adminInfoMap.put("userId" , admin.getUserId());
-        adminInfoMap.put("userName" , admin.getUserName());
+        adminInfoMap.put("userId" , authAdmin.getUserId());
+        adminInfoMap.put("userName" , authAdmin.getUserName());
 
-        log.info("LOGIN_USER_ID  >>>>>  " + adminVO.getUserId() );
+        log.info("LOGIN_USER_ID  >>>>>  " + admin.getUserId() );
         return apiResponseBuilderFactory.success().setData(adminInfoMap).build();
     }
 

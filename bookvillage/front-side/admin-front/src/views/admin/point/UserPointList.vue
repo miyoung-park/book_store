@@ -28,7 +28,7 @@
 <script>
 
 export default {
-  name: "CustomerPointList",
+  name: "UserPointList",
   inject: ['pointService'],
   data () {
     return {

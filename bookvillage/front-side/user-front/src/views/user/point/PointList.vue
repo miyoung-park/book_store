@@ -63,7 +63,8 @@
             <td>{{item.previousPoint}}</td>
             <td>{{item.pointTransaction}}</td>
             <td>{{item.totalPoint}}</td>
-            <td>{{item.pointStatus}}</td>
+            <td>{{ getPointStatus(item) }}</td>
+            <td>{{item.statusReason}}</td>
             <td>{{item.transactionRegDt}}</td>
           </tr>
         </template>
@@ -83,10 +84,11 @@ export default {
       headers: [
         { text: '번호', align: 'start' },
         { text: '대여 번호', value: 'rentalSeq'},
-        { text: '이전 포인트', value: 'previousP oint' },
+        { text: '이전 포인트', value: 'previousPoint' },
         { text: '거래 포인트', value: 'pointTransaction' },
         { text: '남은 포인트', value: 'totalPoint' },
         { text: '거래 상태', value: 'pointStatus' },
+        { text: '거래 사유', value: 'statusReason' },
         { text: '등록날짜', value: 'transactionRegDt' }
       ],
       pointList: [],
@@ -101,6 +103,14 @@ export default {
     async getList(){
       const response = await this.pointService.getPointList();
       this.pointList = response;
+    },
+    getPointStatus(item){
+      const status = item.pointStatus;
+      if(status === '00') {
+        return '적립';
+      } else if(status === '01') {
+        return '차감';
+      }
     },
     async chargePoint(){
       const numCheck = /^[0-9]*$/;

@@ -56,7 +56,7 @@ export default {
     },
     goDetailRental(_rentalSeq , _rentalStatus){
       if( _rentalStatus === '01' || _rentalStatus === '03') {
-        this.$router.push('/customer/rental/detail/' + _rentalSeq , );
+        this.$router.push('/user/rental/detail/' + _rentalSeq , );
       }
       return;
     },
@@ -78,13 +78,11 @@ export default {
       }
     }
   },
-  created() {
-    this.$addApiErrorHandler('610', this.$apiErrorHandler, false )
-    this.$addApiErrorHandler('620', this.$apiErrorHandler, false )
-    this.$addApiErrorHandler('630', this.$apiErrorHandler, false )
-  },
   mounted() {
     this.getRentalList();
+  },
+  created() {
+
   }
 }
 </script>

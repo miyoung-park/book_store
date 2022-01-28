@@ -42,12 +42,12 @@ public class UserController {
 
 
     /**
-     * 고객정보 조회
+     * 고객정보 조회 By Seq
      */
     @RequestMapping(value ="/user/detail/{userSeq}" , method = RequestMethod.GET)
     public ApiResponse getUserDetailBySeq(  @PathVariable("userSeq") int userSeq ){
 
-        // TODO: customer point 도 service 안에 추가(완)
+        // TODO: user point 도 service 안에 추가(완)
         UserVO user = userService.getUserDetailBySeq(userSeq);
 
         return apiResponseBuilderFactory.success().setData(user).build();
@@ -57,7 +57,7 @@ public class UserController {
     /**
      * 고객정보 업데이트
      */
-    @RequestMapping(value="/customer/update/{userSeq}" , method = RequestMethod.PUT)
+    @RequestMapping(value="/user/update/{userSeq}" , method = RequestMethod.PUT)
     public ApiResponse updateUser( @RequestBody UserVO user ){
         userService.updateUser(user);
         return apiResponseBuilderFactory.success().build();

@@ -10,8 +10,6 @@ export class PointService {
             .get(`${this.host}/point/list`)
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 
@@ -20,8 +18,6 @@ export class PointService {
             .post(`${this.host}/point/charge` , pointVO)
             .then( response => {
                 return response.data;
-            }).catch( error => {
-                console.log(error);
             })
     }
 

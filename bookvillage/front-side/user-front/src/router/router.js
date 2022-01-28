@@ -2,10 +2,10 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import {store} from "@/store";
 import ListBooks from "@/views/user/book/ListBooks";
-import detailBook from '@/views/user/book/DetailBook'
-import Customer from "@/components/customerComponent/Customer";
+import DetailBook from '@/views/user/book/DetailBook'
+import User from "@/components/userComponent/User";
 import Login from "@/views/user/user/Login";
-import DetailCustomer from "@/views/user/user/DetailCustomer";
+import DetailUser from "@/views/user/user/DetailUser";
 import ListRentals from "@/views/user/rental/ListRental";
 import PointList from "@/views/user/point/PointList";
 import DetailRental from "@/views/user/rental/DetailRental";
@@ -37,7 +37,7 @@ const routes = [
                 {
                     path: '/',
                     redirect: 'book/list',
-                    component: Customer,
+                    component: User,
                     children: [
                         {
                             path: 'login',
@@ -50,25 +50,25 @@ const routes = [
                         },
                         {
                             path: 'book/detail/:bookSeq',
-                            component: detailBook
+                            component: DetailBook
                         },
                         {
-                            path: 'customer/detail/',
-                            component: DetailCustomer,
+                            path: 'user/detail/',
+                            component: DetailUser,
                             beforeEnter: RequiredLogin
                         },
                         {
-                            path: 'customer/point/list',
+                            path: 'user/point/list',
                             component: PointList,
                             beforeEnter: RequiredLogin
                         },
                         {
-                            path: 'customer/rental/list',
+                            path: 'user/rental/list',
                             component: ListRentals,
                             beforeEnter: RequiredLogin
                         },
                         {
-                            path: 'customer/rental/detail/:rentalSeq',
+                            path: 'user/rental/detail/:rentalSeq',
                             component: DetailRental,
                             beforeEnter: RequiredLogin
                         }

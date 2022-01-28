@@ -47,29 +47,30 @@ export default {
     }
   },
   inject:['bookService'],
-  created() {
-    this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
-  },
-  async mounted() {
-    await this.getBookDetail();
-  },
   methods: {
     async getBookDetail() {
-      try {
-        const data = await this.bookService.getBookDetail(this.bookSeq);
-        this.bookInfo = data.responseBodyMap.bookInfo;
-        this.files = data.responseBodyMap.files;
-        if(this.bookInfo.bookRentalStatus != null){
-          this.$emit("rentalStatus" , this.bookInfo.bookRentalStatus);
-        }
-      } catch (e) {
-        console.log(e.response);
+      const response = await this.bookService.getBookDetail(this.bookSeq);
+      this.bookInfo = response.bookInfo;
+      this.files = response.files;
+      if(this.bookInfo.bookRentalStatus != null){
+        this.$emit("rentalStatus" , this.bookInfo.bookRentalStatus);
       }
     },
     concat(file) {
       return file.savePath + file.renameFileName
     },
+    $apiErrorHandler( error ){
+      alert( error.errorMessage );
+      this.$router.push('/admin/book/list');
+    }
   },
+  async mounted() {
+    await this.getBookDetail();
+  },
+  created() {
+    this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
+    this.$addApiErrorHandler( this.$errorCode.DATA_NOT_FOUND , this.$apiErrorHandler, false )
+  }
 }
 </script>
 

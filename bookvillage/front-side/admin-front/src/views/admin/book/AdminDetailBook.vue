@@ -56,13 +56,10 @@ export default {
         path: '/admin/book/list'
       })
     },
-    $apiErrorHandler(apiServiceError){
-      console.log(`detailBookView handler ${apiServiceError.toString()}`);
-    }
   },
   created() {
     this.bookSeq = this.$route.params.bookSeq; // 데이터 매핑
-    this.$addApiErrorHandler('630', this.$apiErrorHandler, false )
+    // Detail Error 는 Component 에서 처리
   }
 
 }

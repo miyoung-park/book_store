@@ -3,12 +3,12 @@
       <div class="input_section">
         <v-form>
           <v-text-field
-              v-model="customerInfo.userId"
+              v-model="userInfo.userId"
               label="아이디"
               required
           ></v-text-field>
           <v-text-field
-              v-model="customerInfo.userPw"
+              v-model="userInfo.userPw"
               label="비밀번호"
               type="password"
               required
@@ -22,7 +22,7 @@
           ></v-text-field>
           <p style="font-size: small; color: crimson">{{validPw}}</p>
           <v-text-field
-              v-model="customerInfo.userName"
+              v-model="userInfo.userName"
               label="이름"
               required
           ></v-text-field>
@@ -30,14 +30,14 @@
               ref="menu"
               v-model="menu"
               :close-on-content-click="false"
-              :return-value.sync="customerInfo.userBirth"
+              :return-value.sync="userInfo.userBirth"
               transition="scale-transition"
               offset-y
               min-width="auto"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
-                  v-model="customerInfo.userBirth"
+                  v-model="userInfo.userBirth"
                   prepend-icon="mdi-calendar"
                   readonly
                   v-bind="attrs"
@@ -46,22 +46,22 @@
               ></v-text-field>
             </template>
             <v-date-picker
-                v-model="customerInfo.userBirth"
+                v-model="userInfo.userBirth"
                 no-title
                 scrollable
             >
               <v-spacer></v-spacer>
               <v-btn text color="primary" @click="menu = false"> 닫기 </v-btn>
-              <v-btn text color="primary" @click="$refs.menu.save(customerInfo.userBirth)">입력</v-btn>
+              <v-btn text color="primary" @click="$refs.menu.save(userInfo.userBirth)">입력</v-btn>
             </v-date-picker>
           </v-menu>
           <v-text-field
-              v-model="customerInfo.userTell"
+              v-model="userInfo.userTell"
               label="전화번호"
               required
           ></v-text-field>
           <div class="btn_section">
-            <v-btn class="mr-4" @click="addCustomer" style="background-color: #FFE082">등록하기</v-btn>
+            <v-btn class="mr-4" @click="addUser" style="background-color: #FFE082">등록하기</v-btn>
           </div>
         </v-form>
       </div>
@@ -70,11 +70,11 @@
 <script>
 
 export default {
-  name: "AddCustomer",
-  inject: ['customerService'],
+  name: "addUser",
+  inject: ['userService'],
   data(){
     return{
-      customerInfo: {
+      userInfo: {
         userId : '' ,
         userPw : '' ,
         userName: '' ,
@@ -83,26 +83,34 @@ export default {
       },
       checkPw: '',
       validPw: null,
-      menu: false
+      menu: false,
+      isAuth: true
     }
   },
   methods: {
     checkPassword(){
-      if(this.customerInfo.userPw != this.checkPw){
+      if(this.userInfo.userPw !== this.checkPw){
         this.validPw = '비밀번호가 다릅니다. 다시 입력해주세요.'
         this.checkPw = '';
+        this.isAuth = false;
       }
     },
-    async addCustomer(){
+    async addUser(){
+      // TODO: Validation 추가하기 --- Javascript 로 만들어보기
       if(confirm('고객정보를 등록하시겠습니까 ?')){
-        await this.customerService.addCustomer(this.customerInfo);
+        await this.userService.addUser(this.userInfo);
         alert('고객 정보가 등록되었습니다.');
-        this.$router.push({
-          path : '/admin/customer/list'
-        }).catch(e => {console.log(e)})
+        await this.$router.push('/admin/user/list');
       }
       return;
+    },
+    $apiErrorHandler(error) {
+      const errorMessage = error.errorMessage;
+      alert( errorMessage );
     }
+  },
+  created(){
+    this.$addApiErrorHandler( this.$errorCode.JOINED_USER , this.$apiErrorHandler , false ); // 이미 가입한 유저가 있는 경우
   }
 }
 </script>

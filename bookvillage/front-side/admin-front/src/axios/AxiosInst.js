@@ -19,13 +19,12 @@ AxiosInst.interceptors.request.use(
     }
 );
 
-// TODO: study , 모든 응답 Interceptor
+//
 AxiosInst.interceptors.response.use(function (response) {
     return response;
-},  (error) => {  // TODO : Response 를 받았을 때 200 OK 아닌 경우 !
-
-    // console.dir(error)
+},  (error) => {  // TODO : Response 를 받았을 때 200 OK 아닌 경우 ! (참고)
     if(error.response){
+
         return Promise.reject(new ApiServiceError( error.response.data ));  // { errorCode: '', errorMessage: '' } 형태
     }else{
         return Promise.reject( new ApiServiceError( {errorCode:'NETWORK_ERROR', errorMessage:'Network Error'} ) );

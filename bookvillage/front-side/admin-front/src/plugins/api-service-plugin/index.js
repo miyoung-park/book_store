@@ -20,12 +20,11 @@ const ApiServices = {
         serviceErrorEventBus.setDefaultErrorHandler(  (e)=>{
             const errorCode = e.errorCode;
             const errorMessage = e.errorMessage;
-
-            if( errorCode == '610' || errorCode == '620' || errorCode == '630') { // Token Error
+            if( errorCode === '610' || errorCode === '620' || errorCode === '630') { // Token Error
                 alert(errorMessage);
                 store.commit('logout');
             }
-            console.log( `my site default handler ${e.toString()}` )
+            // console.log( `my site default handler ${e.toString()}` )
         });
 
 
@@ -52,7 +51,6 @@ const ApiServices = {
          * 핸들러는 오류 및 Vue 인스턴스와 함께 호출된다.
          **/
         Vue.config.errorHandler = function(err, vm, info) {  // eslint-disable-line no-unused-vars
-
 
             if( err instanceof ApiServiceError ){
                 serviceErrorEventBus.emit( err.errorCode , err);

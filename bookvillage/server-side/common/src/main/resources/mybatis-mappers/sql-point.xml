@@ -8,14 +8,8 @@
                ,USER_SEQ
                ,RENTAL_SEQ
                ,PREVIOUS_POINT
-               ,(
-                 CASE POINT_STATUS <!-- 00은 적립으로,  01은 차감으로 출력 -->
-                 WHEN '00' THEN '적립'
-                 WHEN '01' THEN '차감'
-                 WHEN '03' THEN '연체차감'
-                 WHEN '04' THEN '취소'
-                  END
-                ) AS POINT_STATUS
+               ,POINT_STATUS
+               ,STATUS_REASON
                ,POINT_TRANSACTION
                ,TOTAL_POINT
                ,TRANSACTION_REG_DT
@@ -29,14 +23,8 @@
                 ,USER_SEQ
                 ,RENTAL_SEQ
                 ,PREVIOUS_POINT
-                ,(
-                   CASE POINT_STATUS <!-- 00은 적립으로,  01은 차감으로 출력 -->
-                   WHEN '00' THEN '적립'
-                   WHEN '01' THEN '차감'
-                   WHEN '03' THEN '연체차감'
-                   WHEN '04' THEN '취소'
-                    END
-                  ) AS POINT_STATUS
+                ,POINT_STATUS
+                ,STATUS_REASON
                 ,POINT_TRANSACTION
                 ,TOTAL_POINT
                 ,TRANSACTION_REG_DT
@@ -86,6 +74,7 @@
                POINT_TRANSACTION,
                TOTAL_POINT,
                POINT_STATUS,
+               STATUS_REASON,
                TRANSACTION_REG_DT
           FROM POINT
          WHERE RENTAL_SEQ = #{rentalSeq}

@@ -66,19 +66,24 @@
     </insert>
 
 
-    <insert id="addFiles">
-        INSERT INTO BOOK_FILE(
-                                BOOK_SEQ,
-                                ORIGIN_FILE_NAME,
-                                RENAME_FILE_NAME,
-                                SAVE_PATH
+    <insert id="addFiles" parameterType="java.util.List">
+
+            INSERT INTO BOOK_FILE(
+                                    BOOK_SEQ,
+                                    ORIGIN_FILE_NAME,
+                                    RENAME_FILE_NAME,
+                                    SAVE_PATH
+                                 )
+                                 VALUES
+        <foreach collection="list" item="file" separator=",">
+                                (
+                                    #{file.bookSeq},
+                                    #{file.originFileName},
+                                    #{file.renameFileName},
+                                    #{file.savePath}
                                 )
-                        VALUES (
-                                   #{bookSeq},
-                                   #{originFileName},
-                                   #{renameFileName},
-                                   #{savePath}
-                               )
+
+        </foreach>
     </insert>
 
 
@@ -122,7 +127,11 @@
     <delete id="deleteFiles">
         DELETE
           FROM BOOK_FILE
-         WHERE FILE_SEQ = #{fileSeq}
+         WHERE FILE_SEQ IN (
+                                <foreach collection="list" item="seq" separator=",">
+                                    #{seq}
+                                </foreach>
+                            )
     </delete>
 
 

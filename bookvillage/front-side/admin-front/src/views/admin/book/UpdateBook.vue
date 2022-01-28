@@ -99,8 +99,8 @@ export default {
   methods: {
     async getBookDetail(){
       const response = await this.bookService.getBookDetail(this.bookSeq);
-      this.bookInfo = response.responseBodyMap.bookInfo;
-      this.bookImages = response.responseBodyMap.files
+      this.bookInfo = response. bookInfo;
+      this.bookImages = response.files
     },
     goDetail() {
       this.$router.push({

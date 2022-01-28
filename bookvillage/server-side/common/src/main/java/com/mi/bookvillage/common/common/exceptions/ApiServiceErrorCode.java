@@ -15,9 +15,19 @@ public enum ApiServiceErrorCode {
     INVALID_PASSWORD("U10002"),
 
     /**
+     * 이미 가입한 회원
+     */
+    JOINED_USER("U10003"),
+
+    /**
      * 포인트 부족
      */
     NOT_ENOUGH_POINT("P50001"),
+
+    /**
+     * 잘못된 포인트 입력
+     */
+    NOT_POSITIVE_POINT("P50002"),
 
     /**
      * 데이터 정보 없음
