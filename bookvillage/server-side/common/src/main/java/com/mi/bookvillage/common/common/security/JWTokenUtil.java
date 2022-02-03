@@ -17,7 +17,7 @@ import java.util.Map;
 public class JWTokenUtil {
 
     private static final String SECRET_KEY = "AccessTokenForAuthentication"; // TODO: 너무 짧음 -->  Secret Key 가 똑같이 겹칠 확률이 있다. 길게 바꾸기
-    private static final long EXPIRE_MINUTE = 20 * 60 * 1000; // 30min
+    private static final long EXPIRE_MINUTE = 1 * 60 * 1000; // 30min
 
 
 

@@ -20,11 +20,11 @@ AxiosInst.interceptors.request.use(
 
 )
 
-AxiosInst.interceptors.response.use(function (response) {
+AxiosInst.interceptors.response.use(async function (response) {
     return response;
-},  (error) => {
-    if(error.response){
-        return Promise.reject(new ApiServiceError( error.response.data ));  // { errorCode: '', errorMessage: '' } 형태
+},  async (error) => {
+    if ( error.response ) {
+        return Promise.reject(await new ApiServiceError( error.response.data ));  // { errorCode: '', errorMessage: '' } 형태
     }else{
         return Promise.reject( new ApiServiceError( {errorCode:'NETWORK_ERROR', errorMessage:'Network Error'} ) );
     }                           // 404 같은 뜬금없는 행위 다른 홈페이지나 다른 url 탔을 때 정보 없음이 뜬다 ( payloads 가 없다 ! )

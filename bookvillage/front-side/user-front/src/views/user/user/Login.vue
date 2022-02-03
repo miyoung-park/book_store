@@ -66,14 +66,12 @@ export default {
         }
      },
     $apiErrorHandler(error) {
-      const errorMessage = error.errorMessage;
-      alert(errorMessage + '\n다시 시도해주세요.')
+
 
     }
   },
   created() {
-    this.$addApiErrorHandler( this.$errorCode.INVALID_USER , this.$apiErrorHandler , false );
-    this.$addApiErrorHandler( this.$errorCode.INVALID_PASSWORD , this.$apiErrorHandler , false );
+
   }
 }
 </script>
