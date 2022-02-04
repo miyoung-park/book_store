@@ -14,8 +14,8 @@ export class UserService {
             })
     }
 
-    getUserDetailById() {
-        return $axiosInst
+    async getUserDetailById() {
+        return await $axiosInst
             .post(`${this.host}/user/detail` )
             .then(response => {
                 return response.data;

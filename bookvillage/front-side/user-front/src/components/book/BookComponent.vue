@@ -46,10 +46,10 @@ export default {
       files: []
     }
   },
-  inject:['bookService'],
+  inject: ['bookServiceUser'],
   methods: {
     async getBookDetail() {
-      const response = await this.bookService.getBookDetail(this.bookSeq);
+      const response = await this.bookServiceUser.getBookDetail(this.bookSeq);
       this.bookInfo = response.bookInfo;
       this.files = response.files;
 

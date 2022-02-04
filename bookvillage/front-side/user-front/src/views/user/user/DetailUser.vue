@@ -53,7 +53,6 @@ export default {
   methods: {
     async getUserDetail(){
       const data = await this.userService.getUserDetailById();
-
       // TODO: userPoint 는 store 에 저장해서 꺼내쓰는걸로 하고 point 충전시 dispatch 로 포인트를 가져와서 업데이트 시킨다.
       this.userInfo = data;
     }

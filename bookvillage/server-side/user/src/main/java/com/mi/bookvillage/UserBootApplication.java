@@ -1,6 +1,5 @@
 package com.mi.bookvillage;
 
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

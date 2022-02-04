@@ -6,7 +6,7 @@ import { store } from '@/store'
 import axios from 'axios'
 import axiosInst from '@/axios/AxiosInst'
 import { UserService } from "@/service/UserService";
-import { BookService } from "@/service/BookService";
+import {BookService} from "@/service/BookService";
 import { PointService} from "@/service/PointService";
 import { RentalService} from "@/service/RentalService";
 import ApiServices from "@/plugins/api-service-plugin";
@@ -37,7 +37,7 @@ new Vue({
   store,
   dateFormat,
   provide: {
-    'bookService' : new BookService(API_URL_HOST),
+    'bookServiceUser' : new BookService(API_URL_HOST),
     'userService' : new UserService(API_URL_HOST),
     'pointService' : new PointService(API_URL_HOST),
     'rentalService' : new RentalService(API_URL_HOST)

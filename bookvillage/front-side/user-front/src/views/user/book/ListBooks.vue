@@ -40,7 +40,7 @@
 <script>
 export default {
   name: "Books",
-  inject: ['bookService'],
+  inject: ['bookServiceUser'],
   data () {
     return {
       search: '',
@@ -63,7 +63,7 @@ export default {
       });
     },
      async getList() {
-       const response = await this.bookService.getBookList();
+       const response = await this.bookServiceUser.getBookList();
        this.books = response;
      },
     getStatus(item){
