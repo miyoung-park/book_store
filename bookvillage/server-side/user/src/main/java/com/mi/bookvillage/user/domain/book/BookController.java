@@ -1,12 +1,10 @@
 package com.mi.bookvillage.user.domain.book;
 
 
-import com.mi.bookvillage.common.common.exceptions.ApiException;
-import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.util.file.FileVO;
-import com.mi.bookvillage.common.domain.Book.BookVO;
+import com.mi.bookvillage.common.domain.book.BookVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

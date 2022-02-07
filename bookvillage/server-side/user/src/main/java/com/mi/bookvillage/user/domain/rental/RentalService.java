@@ -3,10 +3,10 @@ package com.mi.bookvillage.user.domain.rental;
 
 import com.mi.bookvillage.common.common.exceptions.ApiException;
 import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
-import com.mi.bookvillage.common.domain.Point.PointMapper;
-import com.mi.bookvillage.common.domain.Rental.RentalMapper;
-import com.mi.bookvillage.common.domain.Point.PointVO;
-import com.mi.bookvillage.common.domain.Rental.RentalVO;
+import com.mi.bookvillage.common.domain.point.PointMapper;
+import com.mi.bookvillage.common.domain.rental.RentalMapper;
+import com.mi.bookvillage.common.domain.point.PointVO;
+import com.mi.bookvillage.common.domain.rental.RentalVO;
 import com.mi.bookvillage.user.common.PointUtil;
 import com.mi.bookvillage.user.common.RentalFactory;
 import lombok.RequiredArgsConstructor;

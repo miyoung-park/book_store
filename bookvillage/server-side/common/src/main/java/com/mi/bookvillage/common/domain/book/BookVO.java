@@ -1,4 +1,4 @@
-package com.mi.bookvillage.common.domain.Book;
+package com.mi.bookvillage.common.domain.book;
 
 import lombok.*;
 

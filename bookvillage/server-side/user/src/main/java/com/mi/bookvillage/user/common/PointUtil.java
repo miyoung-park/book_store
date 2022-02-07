@@ -3,9 +3,9 @@ package com.mi.bookvillage.user.common;
 
 import com.mi.bookvillage.common.common.exceptions.ApiException;
 import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
-import com.mi.bookvillage.common.domain.Book.BookVO;
-import com.mi.bookvillage.common.domain.Point.PointVO;
-import com.mi.bookvillage.common.domain.Rental.RentalVO;
+import com.mi.bookvillage.common.domain.book.BookVO;
+import com.mi.bookvillage.common.domain.point.PointVO;
+import com.mi.bookvillage.common.domain.rental.RentalVO;
 import com.mi.bookvillage.user.domain.book.BookService;
 import com.mi.bookvillage.user.domain.point.PointService;
 import lombok.Getter;

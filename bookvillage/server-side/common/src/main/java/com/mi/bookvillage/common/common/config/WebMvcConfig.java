@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
@@ -32,5 +33,19 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .resourceChain(true)
                 .addResolver(new PathResourceResolver());
     }
+
+
+    /**
+     * Interceptor 등록 / 제외 URL 추가 ---- 2022.02.07 Interceptor 기능 주석처리 ( Annotation 으로 구현 )
+     * */
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+       // registry.addInterceptor(jwtTokenInterceptor)
+               // .addPathPatterns("/**")
+               // .excludePathPatterns("/**/login", "/book/list", "/book/detail/*");
+
+    }
+
+
 
 }

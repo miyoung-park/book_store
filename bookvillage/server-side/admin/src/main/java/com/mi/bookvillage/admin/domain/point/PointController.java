@@ -3,7 +3,7 @@ package com.mi.bookvillage.admin.domain.point;
 import com.mi.bookvillage.common.common.annotation.JwtAuthorization;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
-import com.mi.bookvillage.common.domain.Point.PointVO;
+import com.mi.bookvillage.common.domain.point.PointVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 

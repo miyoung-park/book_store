@@ -2,10 +2,7 @@ package com.mi.bookvillage.user.common;
 
 
 
-import com.mi.bookvillage.common.domain.Rental.RentalVO;
-
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import com.mi.bookvillage.common.domain.rental.RentalVO;
 
 public class RentalFactory {
 

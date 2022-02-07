@@ -1,6 +1,6 @@
 package com.mi.bookvillage.admin.common.factory;
 
-import com.mi.bookvillage.common.domain.Rental.RentalVO;
+import com.mi.bookvillage.common.domain.rental.RentalVO;
 
 
 public class RentalFactory {

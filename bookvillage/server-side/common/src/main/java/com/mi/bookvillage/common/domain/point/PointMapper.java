@@ -1,4 +1,4 @@
-package com.mi.bookvillage.common.domain.Point;
+package com.mi.bookvillage.common.domain.point;
 
 import org.apache.ibatis.annotations.Mapper;
 

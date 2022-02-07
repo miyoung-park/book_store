@@ -4,7 +4,7 @@ package com.mi.bookvillage.user.domain.user;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
-import com.mi.bookvillage.common.domain.User.UserVO;
+import com.mi.bookvillage.common.domain.user.UserVO;
 import com.mi.bookvillage.user.domain.point.PointService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

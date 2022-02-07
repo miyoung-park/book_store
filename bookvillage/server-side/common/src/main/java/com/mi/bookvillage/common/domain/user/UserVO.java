@@ -1,4 +1,4 @@
-package com.mi.bookvillage.common.domain.User;
+package com.mi.bookvillage.common.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;

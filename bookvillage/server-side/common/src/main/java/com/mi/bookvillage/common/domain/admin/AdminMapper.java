@@ -1,4 +1,4 @@
-package com.mi.bookvillage.common.domain.Admin;
+package com.mi.bookvillage.common.domain.admin;
 
 
 import org.apache.ibatis.annotations.Mapper;

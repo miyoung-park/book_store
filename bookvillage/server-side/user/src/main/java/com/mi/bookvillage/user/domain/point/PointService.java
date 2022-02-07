@@ -3,9 +3,9 @@ package com.mi.bookvillage.user.domain.point;
 import com.mi.bookvillage.common.common.exceptions.ApiException;
 import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
 import com.mi.bookvillage.common.common.util.string.StringUtil;
-import com.mi.bookvillage.common.domain.Point.PointMapper;
-import com.mi.bookvillage.common.domain.Point.PointVO;
-import com.mi.bookvillage.common.domain.User.UserVO;
+import com.mi.bookvillage.common.domain.point.PointMapper;
+import com.mi.bookvillage.common.domain.point.PointVO;
+import com.mi.bookvillage.common.domain.user.UserVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

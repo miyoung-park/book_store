@@ -4,8 +4,8 @@ package com.mi.bookvillage.user.domain.book;
 import com.mi.bookvillage.common.common.exceptions.ApiException;
 import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
 import com.mi.bookvillage.common.common.util.file.FileVO;
-import com.mi.bookvillage.common.domain.Book.BookMapper;
-import com.mi.bookvillage.common.domain.Book.BookVO;
+import com.mi.bookvillage.common.domain.book.BookMapper;
+import com.mi.bookvillage.common.domain.book.BookVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

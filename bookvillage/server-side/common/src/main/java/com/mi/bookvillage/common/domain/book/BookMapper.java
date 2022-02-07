@@ -1,4 +1,4 @@
-package com.mi.bookvillage.common.domain.Book;
+package com.mi.bookvillage.common.domain.book;
 
 import com.mi.bookvillage.common.common.util.file.FileVO;
 import org.apache.ibatis.annotations.Mapper;

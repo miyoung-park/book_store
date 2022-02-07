@@ -3,8 +3,8 @@ package com.mi.bookvillage.admin.domain.admin;
 
 import com.mi.bookvillage.common.common.exceptions.ApiException;
 import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
-import com.mi.bookvillage.common.domain.Admin.AdminMapper;
-import com.mi.bookvillage.common.domain.Admin.AdminVO;
+import com.mi.bookvillage.common.domain.admin.AdminMapper;
+import com.mi.bookvillage.common.domain.admin.AdminVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -3,7 +3,7 @@ package com.mi.bookvillage.admin.domain.user;
 import com.mi.bookvillage.common.common.annotation.JwtAuthorization;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
-import com.mi.bookvillage.common.domain.User.UserVO;
+import com.mi.bookvillage.common.domain.user.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

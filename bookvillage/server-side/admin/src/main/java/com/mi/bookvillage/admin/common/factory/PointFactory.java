@@ -5,11 +5,9 @@ import com.mi.bookvillage.admin.domain.book.BookService;
 import com.mi.bookvillage.admin.domain.point.PointService;
 import com.mi.bookvillage.common.common.exceptions.ApiException;
 import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
-import com.mi.bookvillage.common.common.util.string.StringUtil;
-import com.mi.bookvillage.common.domain.Book.BookVO;
-import com.mi.bookvillage.common.domain.User.UserVO;
-import com.mi.bookvillage.common.domain.Point.PointVO;
-import com.mi.bookvillage.common.domain.Rental.RentalVO;
+import com.mi.bookvillage.common.domain.book.BookVO;
+import com.mi.bookvillage.common.domain.point.PointVO;
+import com.mi.bookvillage.common.domain.rental.RentalVO;
 import org.springframework.stereotype.Component;
 
 @Component

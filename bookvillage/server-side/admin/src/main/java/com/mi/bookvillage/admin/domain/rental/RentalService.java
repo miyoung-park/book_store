@@ -1,10 +1,10 @@
 package com.mi.bookvillage.admin.domain.rental;
 
 import com.mi.bookvillage.admin.common.factory.PointFactory;
-import com.mi.bookvillage.common.domain.Point.PointMapper;
-import com.mi.bookvillage.common.domain.Rental.RentalMapper;
-import com.mi.bookvillage.common.domain.Point.PointVO;
-import com.mi.bookvillage.common.domain.Rental.RentalVO;
+import com.mi.bookvillage.common.domain.point.PointMapper;
+import com.mi.bookvillage.common.domain.rental.RentalMapper;
+import com.mi.bookvillage.common.domain.point.PointVO;
+import com.mi.bookvillage.common.domain.rental.RentalVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

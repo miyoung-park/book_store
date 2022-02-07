@@ -5,12 +5,10 @@ import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.util.file.FileUtil;
 import com.mi.bookvillage.common.common.util.file.FileVO;
-import com.mi.bookvillage.common.common.util.string.StringUtil;
-import com.mi.bookvillage.common.domain.Book.BookVO;
+import com.mi.bookvillage.common.domain.book.BookVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 

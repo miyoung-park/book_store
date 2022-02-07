@@ -2,14 +2,12 @@ package com.mi.bookvillage.user.domain.user;
 
 import com.mi.bookvillage.common.common.exceptions.ApiException;
 import com.mi.bookvillage.common.common.exceptions.ApiServiceErrorCode;
-import com.mi.bookvillage.common.domain.User.UserMapper;
-import com.mi.bookvillage.common.domain.User.UserVO;
+import com.mi.bookvillage.common.domain.user.UserMapper;
+import com.mi.bookvillage.common.domain.user.UserVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Slf4j
 @Service
