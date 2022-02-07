@@ -90,7 +90,7 @@ public class BookService {
     /**
      * 도서 파일 정보 삭제
      */
-    // TODO: 실제로도 삭제되게끔 !
+    // TODO: 실제로도 삭제되게끔 구현!
     public void deleteFiles(List<Integer> deleteFiles){
         if(StringUtil.listHasSize( deleteFiles ) ){
             bookMapper.deleteFiles(deleteFiles);

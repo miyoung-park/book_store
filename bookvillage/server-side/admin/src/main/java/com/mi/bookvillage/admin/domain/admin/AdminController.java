@@ -1,10 +1,10 @@
 package com.mi.bookvillage.admin.domain.admin;
 
 
+import com.mi.bookvillage.common.common.annotation.JwtAuthorization;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
-import com.mi.bookvillage.common.common.util.string.StringUtil;
 import com.mi.bookvillage.common.domain.Admin.AdminVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -44,8 +44,9 @@ public class AdminController {
         return apiResponseBuilderFactory.success().setData(adminInfoMap).build();
     }
 
+    @JwtAuthorization
     @RequestMapping(value= "/admin/detail" , method = RequestMethod.POST)
-    public ApiResponse detailAdmin(HttpServletRequest request){
+    public ApiResponse detailAdmin( HttpServletRequest request){
         // adminId GET
         String adminId = JWTokenUtil.getUserIdFromToken( request );
         AdminVO admin = adminService.getAdminInfo(adminId);

@@ -3,7 +3,7 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import router from '@/router/router'
 import { store } from '@/store/index'
-import axios from 'axios'
+// import axios from 'axios'
 import axiosInst from '@/axios/AxiosInst'
 import { AdminService } from '@/service/AdminService'
 import { UserService } from "@/service/UserService";
@@ -16,10 +16,11 @@ import ErrorCode from "@/service/enum/EnumErrorCode";
 const API_URL_HOST = process.env.VUE_APP_API_HOST;
 
 Vue.config.productionTip = false
-Vue.prototype.$axios = axios
-Vue.prototype.$axiosInst = axiosInst // TODO: prototype 의 역할에 대해서 공부하기
+// TODO: prototype 의 역할에 대해서 공부하기 (완)
+// 많은 컴포넘트에서 사용하고 싶지만 global scope 에 의해 오염되는 것은 원치 않을 때 prototype 에서 정의하면 Vue instance 에서 사용 할 수 있다.
+Vue.prototype.$axiosInst = axiosInst
 Vue.prototype.$errorCode = ErrorCode // ErrorCode Class
-Vue.use(ApiServices , { host:API_URL_HOST})
+Vue.use(ApiServices , { host:API_URL_HOST}) // 플러그인 추가
 
 Vue.mixin({
   beforeDestroy() {

@@ -22,7 +22,7 @@ AxiosInst.interceptors.request.use(
 //
 AxiosInst.interceptors.response.use(function (response) {
     return response;
-},  (error) => {  // TODO : Response 를 받았을 때 200 OK 아닌 경우 ! (참고)
+},  (error) => {  // Response 를 받았을 때 200 OK 아닌 경우 ! (참고)
     if(error.response){
 
         return Promise.reject(new ApiServiceError( error.response.data ));  // { errorCode: '', errorMessage: '' } 형태

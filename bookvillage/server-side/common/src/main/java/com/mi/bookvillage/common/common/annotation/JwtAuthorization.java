@@ -1,6 +1,5 @@
 package com.mi.bookvillage.common.common.annotation;
 
-import javax.servlet.http.HttpServletRequest;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -27,14 +26,14 @@ import java.lang.annotation.Target;
  */
 
 /**
- * @Retention : 컴파일러가 어노테이션을 다루는 방법, 어느 시점까지 영향을 미칠 건지 결정하는 역할
+ * @Retention : 컴파일러가 어노테이션을 다루는 방법, 어느 시점까지 영향을 미칠 건지 결정하는 역할 ( = 어노테이션의 지속시간 )
  * - RetentionPolicy.SOURCE : 컴파일 전까지만 유효
  * - RetentionPolicy.CLASS : 컴파일러가 클래스를 참조할 때까지 유효
  * - RetentionPolicy.RUNTIME : 컴파일 이후에 런타임 시기에도 참조 가능 !
  */
 
-@Target({ElementType.TYPE_PARAMETER})
+@Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface JwtAuthorization {
+public @interface JwtAuthorization { // interface 로 정의
 
 }

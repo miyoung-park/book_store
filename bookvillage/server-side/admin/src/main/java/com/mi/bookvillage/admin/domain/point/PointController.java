@@ -1,10 +1,13 @@
 package com.mi.bookvillage.admin.domain.point;
 
+import com.mi.bookvillage.common.common.annotation.JwtAuthorization;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.domain.Point.PointVO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -21,8 +24,10 @@ public class PointController {
     /**
      * 포인트 목록 조회
      */
+    @JwtAuthorization
     @RequestMapping(value = "/point/list/{userSeq}", method = RequestMethod.GET)
-    public ApiResponse getPointListBySeq( @PathVariable int userSeq ){
+    public ApiResponse getPointListBySeq(@PathVariable int userSeq,
+                                          HttpServletRequest request ){
 
         List<PointVO> pointList = pointService.getPointListBySeq(userSeq);
 

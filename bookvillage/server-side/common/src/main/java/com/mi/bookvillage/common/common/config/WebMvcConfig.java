@@ -1,15 +1,15 @@
 package com.mi.bookvillage.common.common.config;
 
-import com.mi.bookvillage.common.common.interceptor.JwtTokenInterceptor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.resource.PathResourceResolver;
 
 @Configuration
+@RequiredArgsConstructor
 @Slf4j
 public class WebMvcConfig implements WebMvcConfigurer {
 
@@ -18,13 +18,6 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Value("${resources.path_patterns}")
     String path_patterns;
-
-    private JwtTokenInterceptor jwtTokenInterceptor;
-
-    public WebMvcConfig(JwtTokenInterceptor jwtTokenInterceptor) {
-        this.jwtTokenInterceptor = jwtTokenInterceptor;
-    }
-
 
     /**
      * 정적리소스 연결을 위한... -- 더 알아봐야 함
@@ -40,15 +33,4 @@ public class WebMvcConfig implements WebMvcConfigurer {
                 .addResolver(new PathResourceResolver());
     }
 
-    /**
-     * Interceptor 등록 / 제외 URL 추가
-     * @param registry
-     */
-    @Override
-    public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtTokenInterceptor)
-                .addPathPatterns("/**")
-                .excludePathPatterns("/**/login", "/book/list", "/book/detail/*");
-
-    }
 }

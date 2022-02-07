@@ -1,6 +1,7 @@
 package com.mi.bookvillage.admin.domain.rental;
 
 import com.mi.bookvillage.admin.common.factory.RentalFactory;
+import com.mi.bookvillage.common.common.annotation.JwtAuthorization;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.domain.Rental.RentalVO;
@@ -8,6 +9,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -25,8 +28,9 @@ public class RentalController {
     /**
      * 모든 대여 목록 조회
      */
+    @JwtAuthorization
     @RequestMapping(value = "/rental/all-list", method = RequestMethod.GET)
-    public ApiResponse getRentalAllList(){
+    public ApiResponse getRentalAllList(  HttpServletRequest request ){
         List<RentalVO> rentalAllList = rentalService.getAllRentalList();
         return apiResponseBuilderFactory.success().setData(rentalAllList).build();
     }
@@ -34,8 +38,10 @@ public class RentalController {
     /**
      * 고객 대여 목록 조회
      */
+    @JwtAuthorization
     @RequestMapping(value = "/rental/list/{userSeq}", method = RequestMethod.GET)
-    public ApiResponse getRentalListBySeq(@PathVariable int userSeq){
+    public ApiResponse getRentalListBySeq(@PathVariable int userSeq,
+                                           HttpServletRequest request){
 
         List<RentalVO> rentalList = rentalService.getRentalList(userSeq);
 
@@ -48,6 +54,7 @@ public class RentalController {
     /**
      * 대여 승인
      */
+    @JwtAuthorization
     @RequestMapping(value = "/rental/approve/{rentalSeq}", method = RequestMethod.PUT)
     public ApiResponse approveRental( @PathVariable("rentalSeq") int rentalSeq ){
 
@@ -59,6 +66,7 @@ public class RentalController {
     /**
      * 대여 거절
      */
+    @JwtAuthorization
     @RequestMapping(value = "/rental/reject/{rentalSeq}" , method = RequestMethod.PUT)
     public ApiResponse rejectRental(  @PathVariable("rentalSeq") int rentalSeq ){
 

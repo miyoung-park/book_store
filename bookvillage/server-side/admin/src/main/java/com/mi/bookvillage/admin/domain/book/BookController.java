@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Slf4j
 @RestController
-@RequiredArgsConstructor // TODO: 생성자 주입방식 + @RequiredArgsConstructor 공부해보기
+@RequiredArgsConstructor // TODO: 생성자 주입방식 + @RequiredArgsConstructor (완)
 public class BookController {
 
     private final BookService bookService;
@@ -65,7 +65,7 @@ public class BookController {
      */
     @Transactional(rollbackFor = Exception.class)
     @RequestMapping(value = "/book/add" , method = RequestMethod.POST)
-    public ApiResponse addBook( @ModelAttribute BookVO book, // TODO : 프론트에서 어떻게 보내느냐에 따라 @ModelAttribute / @RequestPart("bookObj") 다르게 적용 가능
+    public ApiResponse addBook( @ModelAttribute BookVO book, // TODO : 프론트에서 어떻게 보내느냐에 따라 @ModelAttribute / @RequestPart("bookObj") 다르게 적용 가능 (@RequestPart 정리 완)
                                 @RequestParam(required = false) List<MultipartFile> files ) throws IOException {
 
         bookService.addBook(book);
