@@ -1,20 +1,11 @@
 package com.mi.bookvillage.common.common.security;
 
 
-import com.mi.bookvillage.common.common.annotation.JwtAuthorization;
 import com.mi.bookvillage.common.common.exceptions.customException.VAuthException;
 import io.jsonwebtoken.*;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.ProceedingJoinPoint;
-import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
-import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
-import org.springframework.web.context.request.RequestContextHolder;
-import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;

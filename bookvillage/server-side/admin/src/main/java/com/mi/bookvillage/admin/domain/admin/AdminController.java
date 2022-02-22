@@ -1,7 +1,8 @@
 package com.mi.bookvillage.admin.domain.admin;
 
 
-import com.mi.bookvillage.common.common.annotation.JwtAuthorization;
+
+import com.mi.bookvillage.common.common.annotation.NoJwtAuthorization;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
@@ -26,6 +27,7 @@ public class AdminController {
     private final ApiResponseBuilderFactory apiResponseBuilderFactory;
 
 
+    @NoJwtAuthorization  // Jwtoken 인증 필요X
     @RequestMapping(value = "/admin/login" , method = RequestMethod.POST)
     public ApiResponse loginAdmin(@RequestBody AdminVO admin) {
 
@@ -44,7 +46,7 @@ public class AdminController {
         return apiResponseBuilderFactory.success().setData(adminInfoMap).build();
     }
 
-    @JwtAuthorization
+
     @RequestMapping(value= "/admin/detail" , method = RequestMethod.POST)
     public ApiResponse detailAdmin( HttpServletRequest request){
         // adminId GET

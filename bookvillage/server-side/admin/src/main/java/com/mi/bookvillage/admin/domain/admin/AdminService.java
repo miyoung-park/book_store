@@ -18,7 +18,7 @@ public class AdminService {
 
         AdminVO authAdmin = adminMapper.loginAdmin(admin);
 
-        if( admin == null ){
+        if( authAdmin == null ){
             throw new ApiException( ApiServiceErrorCode.INVALID_USER , "헤당 아이디가 존재하지 않습니다.");
         }
         if( !admin.getUserPw().equals( authAdmin.getUserPw() ) ){

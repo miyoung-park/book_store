@@ -34,6 +34,6 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface JwtAuthorization { // interface 로 정의
+public @interface NoJwtAuthorization { // interface 로 정의
 
 }

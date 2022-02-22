@@ -1,6 +1,5 @@
 package com.mi.bookvillage.admin.domain.user;
 
-import com.mi.bookvillage.common.common.annotation.JwtAuthorization;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.domain.user.UserVO;
@@ -27,7 +26,6 @@ public class UserController {
      * 고객 리스트
      * @return
      */
-    @JwtAuthorization
     @RequestMapping(value = "/user/list" , method = RequestMethod.GET)
     public ApiResponse getUserList( ){
         List<UserVO> userList = userService.getUserList();
@@ -38,7 +36,6 @@ public class UserController {
     /**
      * 고객정보 추가
      */
-    @JwtAuthorization
     @RequestMapping(value="/user/add" , method = RequestMethod.POST)
     public ApiResponse addUser(@RequestBody UserVO user,
                                 HttpServletRequest request){
@@ -50,7 +47,6 @@ public class UserController {
     /**
      * 고객정보 조회 By Seq
      */
-    @JwtAuthorization
     @RequestMapping(value ="/user/detail/{userSeq}" , method = RequestMethod.GET)
     public ApiResponse getUserDetailBySeq(  @PathVariable("userSeq") int userSeq,
                                              HttpServletRequest request){
@@ -65,7 +61,6 @@ public class UserController {
     /**
      * 고객정보 업데이트
      */
-    @JwtAuthorization
     @RequestMapping(value="/user/update/{userSeq}" , method = RequestMethod.PUT)
     public ApiResponse updateUser( @RequestBody UserVO user,
                                     HttpServletRequest request){
@@ -78,7 +73,6 @@ public class UserController {
     /**
      * 고객정보 삭제
      */
-    @JwtAuthorization
     @RequestMapping(value="/user/delete/{userSeq}" , method = RequestMethod.DELETE)
     public ApiResponse deleteUser(@PathVariable("userSeq") int userSeq,
                                    HttpServletRequest request){
