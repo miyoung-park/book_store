@@ -1,6 +1,7 @@
 package com.mi.bookvillage.user.domain.user;
 
 
+import com.mi.bookvillage.common.common.annotation.NoJwtAuthorization;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
@@ -32,6 +33,7 @@ public class UserController {
     /**
      * 고객 로그인
      */
+    @NoJwtAuthorization
     @RequestMapping(value="/user/login" , method = RequestMethod.POST)
     public ApiResponse LoginUser(@RequestBody UserVO user) throws Exception {
         String token;
