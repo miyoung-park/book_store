@@ -1,4 +1,5 @@
 <template>
+  <!-- TODO: 컴포넌트 분리해보기 -->
   <div class="detail_section" ref="bookComponent">
     <v-card
         class="mx-auto my-8"
