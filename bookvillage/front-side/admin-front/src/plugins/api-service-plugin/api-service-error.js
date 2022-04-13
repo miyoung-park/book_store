@@ -116,6 +116,7 @@ export class ApiServiceErrorEventBus{
 
     _getListeners(errorCode ){
         if( this.listenerGroup[errorCode] ){
+            console.log("")
         }else{
             this.listenerGroup[errorCode] = [];
             this.listenerGroup[errorCode].push(this.defaultHandler);

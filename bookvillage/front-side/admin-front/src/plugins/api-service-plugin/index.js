@@ -9,6 +9,8 @@ import {ApiServiceErrorEventBus} from './api-service-error'
 const ApiServices = {
     install(Vue , options) {
 
+        console.log(options)
+
         /** Event emitter **/
         const serviceErrorEventBus = new ApiServiceErrorEventBus();  // 만들어 놓은 이벤트에 관심있으면 알려주는 용도
 

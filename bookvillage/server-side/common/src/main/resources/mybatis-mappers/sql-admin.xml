@@ -12,8 +12,7 @@
     <select id="getAdminInfo" resultType="AdminVO">
         SELECT USER_SEQ,
                USER_ID,
-               USER_NAME,
-               USER_ROLE
+               USER_NAME
          FROM ADMIN
         WHERE USER_ID = #{userId}
     </select>

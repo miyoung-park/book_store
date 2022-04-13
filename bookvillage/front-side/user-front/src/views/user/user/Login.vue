@@ -65,11 +65,11 @@ export default {
           location.href = '/'
         }
      },
-    $apiErrorHandler(error) {
 
-
-    }
-  },
+  }, // $apiErrorHandler(error) {
+  //
+  //
+  // }
   created() {
 
   }

@@ -55,13 +55,15 @@
                           BOOK_TITLE,
                           BOOK_PRICE,
                           BOOK_RENTAL_FEE,
-                          BOOK_MEMO
+                          BOOK_MEMO,
+                          BOOK_REG_DT
                           )
                    VALUES (
                            #{bookTitle},
                            #{bookPrice},
                            #{bookRentalFee},
-                           #{bookMemo}
+                           #{bookMemo},
+                           DATE_FORMAT(NOW() , '%Y%m%d%H%i%s')
                           )
     </insert>
 
@@ -72,7 +74,8 @@
                                     BOOK_SEQ,
                                     ORIGIN_FILE_NAME,
                                     RENAME_FILE_NAME,
-                                    SAVE_PATH
+                                    SAVE_PATH,
+                                    REG_DATE
                                  )
                                  VALUES
         <foreach collection="list" item="file" separator=",">
@@ -80,7 +83,8 @@
                                     #{file.bookSeq},
                                     #{file.originFileName},
                                     #{file.renameFileName},
-                                    #{file.savePath}
+                                    #{file.savePath},
+                                    DATE_FORMAT(NOW() , '%Y%m%d%H%i%s')
                                 )
 
         </foreach>
@@ -105,7 +109,7 @@
                BOOK_PRICE = #{bookPrice},
                BOOK_RENTAL_FEE = #{bookRentalFee},
                BOOK_MEMO = #{bookMemo},
-               BOOK_UPDATE_DT = NOW()
+               BOOK_UPDATE_DT = DATE_FORMAT(NOW() , '%Y%m%d%H%i%s')
          WHERE BOOK_SEQ = #{bookSeq}
     </update>
 

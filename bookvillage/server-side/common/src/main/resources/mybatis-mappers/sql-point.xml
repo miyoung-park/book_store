@@ -53,7 +53,8 @@
                             PREVIOUS_POINT, <!-- 이전 포인트 -->
                             POINT_STATUS, <!-- 거래 상태 -->
                             POINT_TRANSACTION, <!-- 거래 금액 -->
-                            TOTAL_POINT
+                            TOTAL_POINT,
+                            TRANSACTION_REG_DT
                             )
                     VALUE (
                              #{userSeq}
@@ -62,6 +63,7 @@
                             ,#{pointStatus}
                             ,#{pointTransaction}
                             ,#{previousPoint} + #{pointTransaction} <!-- 적립 / 차감 -->
+                            , DATE_FORMAT(NOW() , '%Y%m%d%H%i%s')
                             )
     </insert>
 

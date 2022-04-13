@@ -117,12 +117,14 @@
         INSERT INTO RENTAL (
                             BOOK_SEQ,
                             USER_SEQ,
-                            PREDICT_RETURN_DT
+                            PREDICT_RETURN_DT,
+                            RENTAL_DT
                             )
                     VALUES (
                             #{bookSeq},
                             #{userSeq},
-                            #{predictReturnDt}
+                            #{predictReturnDt},
+                            DATE_FORMAT(NOW() , '%Y%m%d%H%i%s')
                            )
     </insert>
 
@@ -131,7 +133,7 @@
     <update id="updateRentalStatus">
         UPDATE RENTAL
            SET RENTAL_STATUS = #{rentalStatus},
-               RENTAL_UPDATE_DT = NOW()
+               RENTAL_UPDATE_DT = DATE_FORMAT(NOW() , '%Y%m%d%H%i%s')
          WHERE RENTAL_SEQ = #{rentalSeq}
     </update>
 

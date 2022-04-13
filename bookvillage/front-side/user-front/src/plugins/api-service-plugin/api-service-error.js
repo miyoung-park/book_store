@@ -76,6 +76,7 @@ export class ApiServiceErrorEventBus{
             handler = errorCode;
             //해당 handler 로 등록된 모든 구독 취소.
             _.forEach(this.listenerGroup, function(listeners, errorCode) {
+                console.log("errorCode ::: " + errorCode)
                 _.remove( listeners, (listenerWrapper)=>{
                     return listenerWrapper.handler === handler;
                 })
@@ -115,6 +116,7 @@ export class ApiServiceErrorEventBus{
 
     _getListeners(errorCode ){
         if( this.listenerGroup[errorCode] ){
+            console.log("");
         }else{
             this.listenerGroup[errorCode] = [];
             this.listenerGroup[errorCode].push(this.defaultHandler);

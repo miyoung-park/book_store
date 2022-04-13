@@ -29,7 +29,7 @@ public class FileUtil {
     // SAVE_PATH 설정
     String savePath = getSavePath();
     // IMAGE_WEB_PATH 설정
-    String Base_Path= "/Users/miyoung/Desktop/ebrainSoft_study/study/personal_project/book_village/bookvillage/front-side/admin-front/public";
+    String Base_Path= "/Users/miyoung/Desktop/ebrainSoft_study/personal_project/bookvillage/book_village/bookvillage/front-side/admin-front/public";
 
 
     public List<FileVO> uploadFiles( List<MultipartFile> files , int bookSeq ) throws IOException {

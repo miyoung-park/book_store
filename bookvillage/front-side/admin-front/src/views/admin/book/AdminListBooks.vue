@@ -48,7 +48,7 @@
 import AlertModal from "@/components/AlertModal";
 export default {
   name: "AdminListBooks",
-  components: {AlertModal},
+  component: AlertModal,
   inject: ['bookService'],
   data () {
     return {

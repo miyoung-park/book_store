@@ -35,14 +35,16 @@
                               USER_PW ,
                               USER_NAME,
                               USER_BIRTH,
-                              USER_TELL
+                              USER_TELL,
+                              USER_REG_DT
                              )
                     VALUES (
                             #{userId},
                             #{userPw},
                             #{userName},
                             #{userBirth},
-                            #{userTell}
+                            #{userTell},
+                            DATE_FORMAT(NOW() , '%Y%m%d%H%i%s')
                            )
     </insert>
 
@@ -82,7 +84,7 @@
                 <if test="userName != null">USER_NAME = #{userName},</if>
                 <if test="userBirth != null">USER_BIRTH = #{userBirth},</if>
                 <if test="userTell != null">USER_TELL = #{userTell},</if>
-               USER_UPDATE_DT = NOW()
+               USER_UPDATE_DT = DATE_FORMAT(NOW() , '%Y%m%d%H%i%s')
             </set>
          WHERE USER_SEQ = #{userSeq}
     </update>
