@@ -1,7 +1,6 @@
 package com.mi.bookvillage.user.domain.point;
 
 
-import com.mi.bookvillage.common.common.annotation.JwtAuthorization;
 import com.mi.bookvillage.common.common.response.ApiResponse;
 import com.mi.bookvillage.common.common.response.ApiResponseBuilderFactory;
 import com.mi.bookvillage.common.common.security.JWTokenUtil;
@@ -31,7 +30,6 @@ public class PointController {
     /**
      * 포인트 목록 조회
      */
-    @JwtAuthorization
     @RequestMapping(value = "/point/list", method = RequestMethod.GET)
     public ApiResponse getPointListById( HttpServletRequest request ){
        // 토큰 해독 , return userId
@@ -45,7 +43,6 @@ public class PointController {
     /**
      * 포인트 충전
      */
-    @JwtAuthorization
     @RequestMapping(value = "/point/charge", method = RequestMethod.POST)
     public ApiResponse transactionPoint(@RequestBody PointVO point,
                                          HttpServletRequest request ) {
