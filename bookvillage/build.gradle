@@ -58,7 +58,7 @@ subprojects {
 
 }
 
-// Q: common 에서 service를 공통모듈로 사용하는게 나은지 아니면 각 프로젝트마다 세팅을 하는게 나은지..
+// Q: common 에서 service 를 공통모듈로 사용하는게 나은지 아니면 각 프로젝트마다 세팅을 하는게 나은지..
 project(':server-side:common') {
     dependencies {
         // compileOnly project(':server-side:admin')

@@ -16,6 +16,7 @@ build/
 bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
+node_modules
 
 ### IntelliJ IDEA ###
 .idea
@@ -35,5 +36,13 @@ out/
 
 ### VS Code ###
 .vscode/
-
 /.idea/
+
+### properties ###
+application-db.properties
+
+### package-lock/json ###
+package-lock.json
+
+.DS_Store
+/dist
